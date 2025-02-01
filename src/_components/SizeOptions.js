@@ -1,9 +1,5 @@
-"use client";
-import { useState } from "react";
-
-function SizeOptions({ data }) {
+function SizeOptions({ data, currentSize, setCurrentSize }) {
   const { sizes } = data;
-  const [currentSize, setCurrentSize] = useState(sizes?.[0]);
 
   if (!sizes) return;
 

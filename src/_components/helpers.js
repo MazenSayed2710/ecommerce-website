@@ -26,3 +26,10 @@ export function createUrlName(name) {
   words.forEach((name) => capitalizedWords.push(capitalize(name)));
   return capitalizedWords.join(" ");
 }
+
+export const createPathName = (name, id) => {
+  return `${id}-${name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}`;
+};

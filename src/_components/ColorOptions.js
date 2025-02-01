@@ -1,9 +1,6 @@
-"use client";
-import { useState } from "react";
-
-function ColorOptions({ data, setActiveImg }) {
+function ColorOptions({ data, setActiveImg, currentColor, setCurrentColor }) {
   const { colors } = data;
-  const [currentColor, setCurrentColor] = useState(colors?.[0].colorName);
+
   const handleClick = (color) => {
     setCurrentColor(color.colorName);
     setActiveImg(color.img);

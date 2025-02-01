@@ -10,6 +10,9 @@ import ProductButtons from "./ProductButtons";
 import { useState } from "react";
 export default function ProductCardDetails({ data }) {
   const [activeImg, setActiveImg] = useState(data.images[0]);
+  const [currentColor, setCurrentColor] = useState(data.colors?.[0].colorName);
+  const [currentSize, setCurrentSize] = useState(data.sizes?.[0]);
+
   return (
     <div className="py-4">
       <div className="flex flex-col sm:flex-row gap-5">
@@ -26,11 +29,25 @@ export default function ProductCardDetails({ data }) {
         <div className="sm:w-1/2 flex flex-col gap-5">
           <ProductInfo data={data} />
 
-          <ColorOptions data={data} setActiveImg={setActiveImg} />
+          <ColorOptions
+            data={data}
+            setActiveImg={setActiveImg}
+            currentColor={currentColor}
+            setCurrentColor={setCurrentColor}
+          />
 
-          <SizeOptions data={data} />
+          <SizeOptions
+            data={data}
+            currentSize={currentSize}
+            setCurrentSize={setCurrentSize}
+          />
 
-          <ProductButtons id={data.id} />
+          <ProductButtons
+            data={data}
+            currentColor={currentColor}
+            currentSize={currentSize}
+            activeImg={activeImg}
+          />
 
           <ProductMeta data={data} />
 
