@@ -76,12 +76,12 @@ export const shoppingCardSlice = createSlice({
         state.products = [...state.products, action.payload];
       }
     },
-    deleteProduct: (state, action) => {
+    deleteProductFromShoppingcard: (state, action) => {
       state.products = state.products.filter(
         (product) => product.id !== action.payload.id
       );
     },
-    updateQuantity: (state, action) => {
+    updateProduct: (state, action) => {
       state.products = state.products.map((product) =>
         product.id === action.payload.id ? action.payload : product
       );
@@ -89,7 +89,7 @@ export const shoppingCardSlice = createSlice({
   },
 });
 
-export const { setProduct, deleteProduct, updateQuantity } =
+export const { setProduct, deleteProductFromShoppingcard, updateProduct } =
   shoppingCardSlice.actions;
 
 export default shoppingCardSlice.reducer;

@@ -8,15 +8,14 @@ import { MdDeleteOutline } from "react-icons/md";
 import { capitalize, createPathName, formatNumberWithCommas } from "./helpers";
 import Quantity from "./Quantity";
 import {
-  deleteProduct,
-  updateQuantity,
+  deleteProductFromShoppingcard,
+  updateProduct,
 } from "@/lib/features/shoppingCardSlice";
 import PopupModal from "./PopupModal";
 import EditPopup from "./EditPopup";
 
 function ShoppingCardProduct({ data }) {
-  const [quantityValue, setQuantityValue] = useState(data.quantity);
-  const [openEditComponent, setOpenEditComponent] = useState(true);
+  const [openEditComponent, setOpenEditComponent] = useState(false);
   const dispatch = useDispatch();
 
   return (
@@ -58,7 +57,7 @@ function ShoppingCardProduct({ data }) {
               )}
               <button
                 onClick={() => {
-                  dispatch(deleteProduct(data));
+                  dispatch(deleteProductFromShoppingcard(data));
                 }}
               >
                 <MdDeleteOutline />
@@ -74,7 +73,7 @@ function ShoppingCardProduct({ data }) {
           inputWidth="w-16"
           handleChange={(value) => {
             dispatch(
-              updateQuantity({
+              updateProduct({
                 ...data,
                 quantity: value,
                 total: data.price * value,

@@ -17,7 +17,10 @@ async function page({ params }) {
   const products = await getSpecificProducts(collectionType);
   return (
     <div className="py-10">
-      <CollectionHeader collectionName={collectionName} />
+      <CollectionHeader
+        collectionName={collectionName}
+        img="/woman-heading.jpg"
+      />
       <FilterSection />
       <Products data={products} />
     </div>

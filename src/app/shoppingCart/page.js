@@ -1,4 +1,4 @@
-import CollectionHeader from "@/_components/CollectionHeader";
+import HeaderWithImg from "@/_components/HeaderWithImg";
 import ShoppingCardContent from "@/_components/ShoppingCardContent";
 
 export const metadata = {
@@ -7,7 +7,9 @@ export const metadata = {
 function page() {
   return (
     <div>
-      <CollectionHeader collectionName="shopping card" />
+      <HeaderWithImg img="/shopping-cart-head.jpg">
+        <span className="uppercase font-semibold">shopping card</span>
+      </HeaderWithImg>
       <ShoppingCardContent />
     </div>
   );
@@ -16,7 +18,7 @@ function page() {
 export default page;
 /*
 -metadata =>done
--editButton 
+-editButton => done
 -confirm quantity=>done
 -responsive
 -check out button => done

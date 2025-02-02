@@ -1,14 +1,19 @@
 "use client";
 import { setProduct } from "@/lib/features/shoppingCardSlice";
-import { setWishlistProducts } from "@/lib/features/wishlistSlice";
 import { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { GoGitCompare } from "react-icons/go";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Quantity from "./Quantity";
+import { setWishlistProducts } from "@/lib/features/wishlistSlice";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import Link from "next/link";
+
 function ProductButtons({ data, currentColor, currentSize, activeImg }) {
   const [value, setValue] = useState(1);
   const dispatch = useDispatch();
+  const products = useSelector((state) => state.wishlist.products);
+  const ids = products?.map((product) => product.id);
   const newproduct = {
     ...data,
     quantity: value,
@@ -30,12 +35,23 @@ function ProductButtons({ data, currentColor, currentSize, activeImg }) {
       >
         Add to Cart
       </button>
-      <button
-        className="w-10 h-10 rounded-full border border-gray-700  text-2xl flex items-center justify-center font-thin hover:text-blue-400 hover:border-blue-400"
-        // onClick={() => dispatch(setWishlistProducts(id))}
-      >
-        <CiHeart />
-      </button>
+
+      {ids.includes(data.id) ? (
+        <Link
+          className="w-10 h-10 rounded-full border   text-2xl flex items-center justify-center font-thin  border-red-700"
+          href="/wishlist"
+        >
+          <FaHeart className="text-red-700" />
+        </Link>
+      ) : (
+        <button
+          className="w-10 h-10 rounded-full border   text-2xl flex items-center justify-center font-thin  border-gray-700 hover:text-blue-400 hover:border-blue-400"
+          onClick={() => dispatch(setWishlistProducts(data))}
+        >
+          <FaRegHeart />
+        </button>
+      )}
+
       <button className="w-10 h-10 rounded-full border border-gray-700  text-2xl flex items-center justify-center font-thin hover:text-blue-400 hover:border-blue-400">
         <GoGitCompare />
       </button>

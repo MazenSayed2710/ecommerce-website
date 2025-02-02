@@ -1,9 +1,9 @@
 import Link from "next/link";
 import HeaderWithImg from "./HeaderWithImg";
 
-function CollectionHeader({ collectionName }) {
+function CollectionHeader({ collectionName, img }) {
   return (
-    <HeaderWithImg img="/woman-heading.jpg">
+    <HeaderWithImg img={img}>
       <div className="grid items-center justify-center">
         <h1 className=" text-center font-semibold">{collectionName}</h1>
         <div className=" text-base">

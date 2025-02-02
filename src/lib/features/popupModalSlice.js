@@ -3,7 +3,7 @@ const { createSlice } = require("@reduxjs/toolkit");
 const popupSlice = createSlice({
   name: "popup",
   initialState: {
-    isOpen: true,
+    isOpen: false,
   },
   reducers: {
     openPopup(state) {

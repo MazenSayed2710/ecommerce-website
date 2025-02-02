@@ -4,7 +4,7 @@ import { capitalize, formatNumberWithCommas } from "./helpers";
 import Quantity from "./Quantity";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateQuantity } from "@/lib/features/shoppingCardSlice";
+import { updateProduct } from "@/lib/features/shoppingCardSlice";
 import { CiHeart } from "react-icons/ci";
 import { GoGitCompare } from "react-icons/go";
 import { IoMdClose } from "react-icons/io";
@@ -20,7 +20,6 @@ function EditPopup({ data, setOpenEditComponent }) {
     dispatch(closePopup());
     setOpenEditComponent(false);
   };
-  console.log(data);
   const ref = useClickOutside(handleClosePopup);
   return (
     <div
@@ -78,7 +77,7 @@ function EditPopup({ data, setOpenEditComponent }) {
           className="bg-blue-400 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-500 uppercase w-full mb-3"
           onClick={() => {
             dispatch(
-              updateQuantity({
+              updateProduct({
                 ...data,
                 quantity: quantityValue,
                 color: curentColor,

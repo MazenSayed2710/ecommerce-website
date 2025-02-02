@@ -1,9 +1,23 @@
+"use client";
 import Image from "next/image";
-import { FaRegEye } from "react-icons/fa";
+import { FaHeart, FaRegEye } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { GoGitCompare } from "react-icons/go";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProductFromWishlist,
+  setWishlistProducts,
+} from "@/lib/features/wishlistSlice";
+import Link from "next/link";
 import { FaRegHeart } from "react-icons/fa";
+import { usePathname } from "next/navigation";
+import { AiOutlineDelete } from "react-icons/ai";
+
 function ProductHoverDetails({ data }) {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.wishlist.products);
+  const ids = products?.map((product) => product.id);
+  const pathName = usePathname();
   return (
     <div className=" relative  overflow-hidden">
       <div className="relative aspect-[2/3]">
@@ -18,10 +32,36 @@ function ProductHoverDetails({ data }) {
         className="absolute left-0 top-0 w-full h-full flex justify-center items-center flex-col gap-3"
         style={{ backgroundColor: "rgb(0 0 0 / 21%)" }}
       >
-        <div className=" absolute left-3 top-3 grid gap-2 items-center text-gray-100">
-          <FaRegHeart />
-          <GoGitCompare />
-        </div>
+        {pathName === "/wishlist" ? (
+          <div className=" absolute left-3 top-3 grid items-center text-gray-100">
+            <button
+              className="font-thin text-xl w-8 h-8 rounded-full  bg-white flex items-center justify-center hover:bg-custom-black hover:text-gray-100"
+              onClick={() => dispatch(deleteProductFromWishlist(data.id))}
+            >
+              <AiOutlineDelete />
+            </button>
+            <button className=" font-thin text-xl w-8 h-8  flex items-center justify-center  hover:text-gray-700">
+              <GoGitCompare />
+            </button>
+          </div>
+        ) : (
+          <div className=" absolute left-3 top-3 grid gap-2 items-center text-gray-100">
+            {ids.includes(data.id) ? (
+              <Link className=" font-thin text-lg" href="/wishlist">
+                <FaHeart className="text-red-700" />
+              </Link>
+            ) : (
+              <button
+                className="font-thin hover:text-blue-400 text-lg"
+                onClick={() => dispatch(setWishlistProducts(data))}
+              >
+                <FaRegHeart />
+              </button>
+            )}
+            <GoGitCompare />
+          </div>
+        )}
+
         <div>
           <p className=" uppercase text-gray-100 absolute bottom-3 left-1/2 -translate-x-1/2">
             xs,s,m,l,xl

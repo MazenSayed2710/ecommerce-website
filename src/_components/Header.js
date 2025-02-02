@@ -30,9 +30,9 @@ function Header() {
           </button>
         </li>
         <li className="text-xl  hover:text-blue-300">
-          <button className="duration-[0.5s] hover:scale-[1.2]">
+          <Link href="/wishlist" className="duration-[0.5s] hover:scale-[1.2]">
             <FaRegHeart />
-          </button>
+          </Link>
         </li>
         <li className="text-xl  hover:text-blue-300">
           <Link
