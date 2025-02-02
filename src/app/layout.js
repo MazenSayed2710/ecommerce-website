@@ -6,7 +6,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <StoreProvider>
-        <body className="">
+        <body className="open">
           <Header />
           <main className="">{children}</main>
           <Footer />

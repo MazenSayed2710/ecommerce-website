@@ -19,6 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 } */
+body.open {
+  overflow: hidden;
+}
 select:focus {
   outline: none;
 }
