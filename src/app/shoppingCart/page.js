@@ -16,10 +16,3 @@ function page() {
 }
 
 export default page;
-/*
--metadata =>done
--editButton => done
--confirm quantity=>done
--responsive
--check out button => done
-*/
