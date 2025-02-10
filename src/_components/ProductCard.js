@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 import { deleteProductFromWishlist } from "@/lib/features/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { formatNumberWithCommas } from "./helpers";
 
 function ProductCard({ data }) {
   const pathName = usePathname();
@@ -53,7 +54,7 @@ function ProductCard({ data }) {
       >
         {data.name}
       </Link>
-      <p className="text-gray-custom">$30.00</p>
+      <p className="text-gray-custom">${formatNumberWithCommas(data.price)}</p>
     </div>
   );
 }

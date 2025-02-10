@@ -3,8 +3,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import Link from "next/link";
+import { auth } from "@/lib/auth";
+import Account from "./Account";
 
-function Header() {
+async function Header() {
+  const session = await auth();
+  console.log(session);
   return (
     <div className="flex gap-5 h-14 w-full justify-between items-center p-5 ">
       <Link href="/" className="font-bold text-4xl">
@@ -25,9 +29,13 @@ function Header() {
           </button>
         </li>
         <li className="text-xl  hover:text-blue-300">
-          <button className="duration-[0.5s] hover:scale-[1.2]">
-            <VscAccount />
-          </button>
+          {session?.user ? (
+            <Account name={session.user.name} img={session.user.image} />
+          ) : (
+            <Link href="/signIn" className="duration-[0.5s] hover:scale-[1.2]">
+              <VscAccount />
+            </Link>
+          )}
         </li>
         <li className="text-xl  hover:text-blue-300">
           <Link href="/wishlist" className="duration-[0.5s] hover:scale-[1.2]">

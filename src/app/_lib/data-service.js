@@ -38,11 +38,22 @@ export async function getCollections() {
   if (error) throw Error(error.message);
   return collections;
 }
-export async function getSpecificProducts(categore) {
-  let { data: products, error } = await supabase
+
+export async function getSpecificProducts(categore, sortAndfilter) {
+  let query = supabase
     .from("products")
     .select("*")
     .eq("mainCategorie", categore);
+  const sort = sortAndfilter.sort.split("-")[0];
+  const isAscending = sortAndfilter.sort.split("-")[1] === "ascending";
+
+  if (sortAndfilter.sort !== "all") {
+    query = query.order(sort, {
+      ascending: isAscending,
+    });
+  }
+
+  let { data: products, error } = await query;
 
   if (error) throw Error(error.message);
   return products;
@@ -56,4 +67,21 @@ export async function getProductById(id) {
 
   if (error) throw Error(error.message);
   return product;
+}
+
+export async function signUp(obj) {
+  let { error } = await supabase.auth.signUp(obj);
+
+  if (error) throw Error(error.message);
+}
+
+export async function signInwithSupabase({ email, password }) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) console.error(error.message);
+
+  return data;
 }
