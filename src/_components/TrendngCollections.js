@@ -9,7 +9,7 @@ function TrendngCollections() {
   return (
     <div className="max-w-[1200px] m-auto grid grid-cols-custom grid-rows-custom justify-center gap-5 py-5">
       <TrendCollection
-        collectionName="Woman"
+        collectionName="Women"
         className=" col-span-2 row-span-2"
       >
         <Image

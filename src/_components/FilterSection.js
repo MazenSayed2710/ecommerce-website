@@ -1,27 +1,34 @@
 "use client";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IoFilterOutline } from "react-icons/io5";
+import FilterSidebar from "./FilterSidebar";
+import { useState } from "react";
 
 function FilterSection({ sortOptions }) {
-  const roter = useRouter();
+  const router = useRouter();
   const params = useParams();
-  // console.log(params);
-
+  const searchParams = useSearchParams();
+  const [openSidebar, setOpenSidebar] = useState(false);
   return (
-    <div className="max-w-[1200px] m-auto py-5 flex justify-between items-center text-custom-white">
-      <button className="flex items-center gap-1 hover:text-blue-400 duration-500 font-semibold">
+    <div className="max-w-[1200px] m-auto py-5 flex justify-between items-center text-custom-white relative">
+      <button
+        className="flex items-center gap-1 hover:text-blue-400 duration-500 font-semibold"
+        onClick={() => {
+          setOpenSidebar(true);
+          document.body.classList.add("open");
+        }}
+      >
         <IoFilterOutline />
         <p>Filter</p>
       </button>
       <form>
         <select
           className="bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5"
-          defaultValue="featured"
+          defaultValue={searchParams.get("sort") || "popularity"}
           onChange={(e) => {
-            roter.push(
+            router.push(
               `/collections/${params.collectionType}?sort=${e.target.value}`
             );
-            console.log(e.target.value);
           }}
         >
           {sortOptions.map((option) => (
@@ -31,6 +38,7 @@ function FilterSection({ sortOptions }) {
           ))}
         </select>
       </form>
+      {openSidebar && <FilterSidebar setOpenSidebar={setOpenSidebar} />}
     </div>
   );
 }
