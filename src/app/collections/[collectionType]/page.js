@@ -57,14 +57,13 @@ async function page({ params, searchParams }) {
     sort: sort || "all",
   };
   const products = await getSpecificProducts(collectionType, sortAndfilter);
-  console.log(sortAndfilter);
   return (
     <div className="py-10">
       <CollectionHeader
         collectionName={collectionName}
         img="/woman-heading.jpg"
       />
-      <FilterSection sortOptions={sortOptions} />
+      <FilterSection sortOptions={sortOptions} products={products} />
       <Products data={products} />
     </div>
   );

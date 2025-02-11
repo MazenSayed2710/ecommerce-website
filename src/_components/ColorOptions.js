@@ -1,9 +1,9 @@
 function ColorOptions({ data, setActiveImg, currentColor, setCurrentColor }) {
   const { colors } = data;
-
   const handleClick = (color) => {
+    console.log(color.img);
     setCurrentColor(color.colorName);
-    setActiveImg(color.img);
+    color.img && setActiveImg(color.img);
   };
   if (!colors) return;
   return (

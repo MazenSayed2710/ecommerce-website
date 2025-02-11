@@ -44,7 +44,6 @@ function ProductCard({ data }) {
           )
         )}
       </div>
-
       <Link
         href={`/collections/${data.mainCategorie}/${data.id}-${data.name
           .toLowerCase()
@@ -55,6 +54,18 @@ function ProductCard({ data }) {
         {data.name}
       </Link>
       <p className="text-gray-custom">${formatNumberWithCommas(data.price)}</p>
+      <div className="flex gap-3 mb-4">
+        {data.colors?.map((color) => (
+          <button
+            className={`w-6 h-6 rounded-full  border-2 border-gray-300"`}
+            style={{
+              boxShadow: "inset 0px 0px 0 2px #ffffff",
+              backgroundColor: color.color,
+            }}
+            key={color.color}
+          ></button>
+        ))}
+      </div>
     </div>
   );
 }

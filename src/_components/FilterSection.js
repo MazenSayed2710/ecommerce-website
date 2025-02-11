@@ -1,10 +1,11 @@
 "use client";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IoFilterOutline } from "react-icons/io5";
-import FilterSidebar from "./FilterSidebar";
+import Sidebar from "./Sidebar";
 import { useState } from "react";
+import FilterSidebar from "./FilterSidebar";
 
-function FilterSection({ sortOptions }) {
+function FilterSection({ sortOptions, products }) {
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
@@ -38,7 +39,11 @@ function FilterSection({ sortOptions }) {
           ))}
         </select>
       </form>
-      {openSidebar && <FilterSidebar setOpenSidebar={setOpenSidebar} />}
+      {openSidebar && (
+        <Sidebar>
+          <FilterSidebar setOpenSidebar={setOpenSidebar} products={products} />
+        </Sidebar>
+      )}
     </div>
   );
 }
