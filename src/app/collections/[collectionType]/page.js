@@ -3,6 +3,7 @@ import FilterSection from "@/_components/FilterSection";
 import { capitalize } from "@/_components/helpers";
 import Products from "@/_components/Products";
 import { getSpecificProducts } from "@/app/_lib/data-service";
+import { supabase } from "@/app/_lib/supabase";
 
 export async function generateMetadata({ params }) {
   const collectionName = (await params).collectionType;
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }) {
 async function page({ params, searchParams }) {
   const collectionType = (await params).collectionType;
   const collectionName = capitalize(collectionType);
-  const sort = searchParams.sort;
+  const sort = (await searchParams).sort;
   const sortOptions = [
     {
       text: "Featured",
@@ -52,19 +53,32 @@ async function page({ params, searchParams }) {
       value: "created_at-ascending",
     },
   ];
-
+  const searchParamsValues = await searchParams;
   const sortAndfilter = {
-    sort: sort || "all",
+    outStock: "false",
+    inStock: "false",
+    sort: "all",
+    size: "",
+    price: 0,
+    ...searchParamsValues,
   };
   const products = await getSpecificProducts(collectionType, sortAndfilter);
+  let { data: productForFilterData, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("mainCategorie", collectionType);
+  if (!products) return;
   return (
     <div className="py-10">
       <CollectionHeader
         collectionName={collectionName}
         img="/woman-heading.jpg"
       />
-      <FilterSection sortOptions={sortOptions} products={products} />
-      <Products data={products} />
+      <FilterSection
+        sortOptions={sortOptions}
+        products={productForFilterData}
+      />
+      {products && <Products data={products} />}
     </div>
   );
 }

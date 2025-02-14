@@ -1,5 +1,12 @@
 "use client";
-function Sizes({ products }) {
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+function Sizes({ products, handleClose }) {
+  const searchParams = useSearchParams();
+  const urlSearchParams = new URLSearchParams(searchParams);
+  const pathname = usePathname();
+  const router = useRouter();
   const sizes = products
     .filter((product) => product.sizes)
     .map((product) => product.sizes)
@@ -14,7 +21,20 @@ function Sizes({ products }) {
       <div>
         {uniqueSizes.map((size) => (
           <div key={size}>
-            <input type="checkbox" name={size} id={size} className="mr-2" />
+            <input
+              type="checkbox"
+              name={size}
+              id={size}
+              className="mr-2"
+              onChange={(e) => {
+                e.target.checked
+                  ? urlSearchParams.append("size", e.target.name)
+                  : urlSearchParams.delete("size", e.target.name);
+                handleClose();
+                router.push(`${pathname}?${urlSearchParams.toString()}`);
+              }}
+              defaultChecked={searchParams.get("size")?.includes(size)}
+            />
             <label htmlFor={size} className="uppercase">
               {size} ({sizes.filter((s) => s === size).length})
             </label>

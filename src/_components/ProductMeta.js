@@ -1,5 +1,6 @@
 function ProductMeta({ data }) {
   const { isAvailable, categories } = data;
+  console.log(isAvailable);
   return (
     <>
       <button className="font-semibold  w-fit hover:text-blue-400">

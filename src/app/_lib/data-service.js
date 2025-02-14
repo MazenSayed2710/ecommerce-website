@@ -44,13 +44,38 @@ export async function getSpecificProducts(categore, sortAndfilter) {
     .from("products")
     .select("*")
     .eq("mainCategorie", categore);
-  const sort = sortAndfilter.sort.split("-")[0];
-  const isAscending = sortAndfilter.sort.split("-")[1] === "ascending";
-
+  const sort = sortAndfilter?.sort?.split("-")[0];
+  const isAscending = sortAndfilter?.sort?.split("-")[1] === "ascending";
   if (sortAndfilter.sort !== "all") {
     query = query.order(sort, {
       ascending: isAscending,
     });
+  }
+
+  if (sortAndfilter.inStock === "true" && sortAndfilter.outStock !== "true") {
+    query = query.eq("isAvailable", true);
+  } else if (
+    sortAndfilter.outStock === "true" &&
+    sortAndfilter.inStock !== "true"
+  ) {
+    query = query.eq("isAvailable", false);
+  }
+
+  if (sortAndfilter.size) {
+    query = query.contains(
+      "sizes",
+      sortAndfilter.size.length === 1
+        ? [...sortAndfilter.size]
+        : sortAndfilter.size
+    );
+  }
+
+  // Filter by Size
+
+  if (sortAndfilter.price) {
+    query = query
+      .gte("price", Number(sortAndfilter.price[0]))
+      .lte("price", Number(sortAndfilter.price[1]));
   }
 
   let { data: products, error } = await query;

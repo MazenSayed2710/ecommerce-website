@@ -12,9 +12,12 @@ function FilterSidebar({
   products,
   filterButtonRef,
 }) {
-  const ref = useClickOutside(() => {
+  const handleClose = () => {
     setOpenSidebar(false);
     document.body.classList.remove("open");
+  };
+  const ref = useClickOutside(() => {
+    handleClose();
   }, filterButtonRef);
   return (
     <div
@@ -25,12 +28,12 @@ function FilterSidebar({
     >
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-custom-black uppercase">Filter</h3>
-        <button onClick={() => setOpenSidebar(false)}>X</button>
+        <button onClick={() => handleClose()}>X</button>
       </div>
-      <Availability products={products} />
-      <Price products={products} />
+      <Availability products={products} handleClose={handleClose} />
+      <Price products={products} handleClose={handleClose} />
       <Color products={products} />
-      <Sizes products={products} />
+      <Sizes products={products} handleClose={handleClose} />
     </div>
   );
 }

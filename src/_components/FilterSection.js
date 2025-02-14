@@ -9,6 +9,7 @@ function FilterSection({ sortOptions, products }) {
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
+  const urlParams = new URLSearchParams(searchParams);
   const filterButtonRef = useRef(null);
   const [openSidebar, setOpenSidebar] = useState(false);
   return (
@@ -29,8 +30,9 @@ function FilterSection({ sortOptions, products }) {
           className="bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5"
           defaultValue={searchParams.get("sort") || "popularity"}
           onChange={(e) => {
+            urlParams.set("sort", e.target.value);
             router.push(
-              `/collections/${params.collectionType}?sort=${e.target.value}`
+              `/collections/${params.collectionType}?${urlParams.toString()}`
             );
           }}
         >
