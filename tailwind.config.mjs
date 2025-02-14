@@ -21,7 +21,6 @@ export default {
       animation: {
         "zoom-in": "zoom-in 0.4s ease-in-out ",
         "zoom-out": "zoom-in 0.4s ease-in-out reverse",
-        "left-to-right": "left-to-right 0.3s linear",
       },
       keyframes: {
         "zoom-in": {
@@ -31,11 +30,6 @@ export default {
           "60%": { transform: "scale(1.06)" },
           "80%": { transform: "scale(1.08)" },
           "100%": { transform: "scale(1.1)" },
-        },
-        "left-to-right": {
-          "0%": { transform: "translateX(-300px)" },
-          "50%": { transform: "translateX(-150px)" },
-          "100%": { transform: "translateX(0)" },
         },
       },
     },

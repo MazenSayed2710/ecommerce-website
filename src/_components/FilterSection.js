@@ -2,13 +2,14 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IoFilterOutline } from "react-icons/io5";
 import Sidebar from "./Sidebar";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import FilterSidebar from "./FilterSidebar";
 
 function FilterSection({ sortOptions, products }) {
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
+  const filterButtonRef = useRef(null);
   const [openSidebar, setOpenSidebar] = useState(false);
   return (
     <div className="max-w-[1200px] m-auto py-5 flex justify-between items-center text-custom-white relative">
@@ -18,6 +19,7 @@ function FilterSection({ sortOptions, products }) {
           setOpenSidebar(true);
           document.body.classList.add("open");
         }}
+        ref={filterButtonRef}
       >
         <IoFilterOutline />
         <p>Filter</p>
@@ -39,11 +41,14 @@ function FilterSection({ sortOptions, products }) {
           ))}
         </select>
       </form>
-      {openSidebar && (
-        <Sidebar>
-          <FilterSidebar setOpenSidebar={setOpenSidebar} products={products} />
-        </Sidebar>
-      )}
+      <Sidebar openSidebar={openSidebar}>
+        <FilterSidebar
+          openSidebar={openSidebar}
+          setOpenSidebar={setOpenSidebar}
+          products={products}
+          filterButtonRef={filterButtonRef}
+        />
+      </Sidebar>
     </div>
   );
 }

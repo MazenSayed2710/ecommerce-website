@@ -6,19 +6,26 @@ import Price from "./Price";
 import Sizes from "./Sizes";
 import { useClickOutside } from "./useClickOutside";
 
-function FilterSidebar({ setOpenSidebar, products }) {
+function FilterSidebar({
+  openSidebar,
+  setOpenSidebar,
+  products,
+  filterButtonRef,
+}) {
   const ref = useClickOutside(() => {
     setOpenSidebar(false);
     document.body.classList.remove("open");
-  });
+  }, filterButtonRef);
   return (
     <div
-      className="bg-white h-full w-[300px] duration-200 animate-left-to-right *:border-b *:border-gray-300 *:p-5 text-custom-black"
+      className={`bg-white h-full w-[300px] duration-500  -translate-x-[300px] *:border-b *:border-gray-300 *:p-5 text-custom-black ${
+        openSidebar ? "translate-x-[0]" : "-translate-x-[300px]"
+      }`}
       ref={ref}
     >
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-custom-black uppercase">Filter</h3>
-        <button>X</button>
+        <button onClick={() => setOpenSidebar(false)}>X</button>
       </div>
       <Availability products={products} />
       <Price products={products} />
