@@ -28,7 +28,7 @@ function FilterSidebar({
     >
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-custom-black uppercase">Filter</h3>
-        <button onClick={() => handleClose()}>X</button>
+        <button onClick={handleClose}>X</button>
       </div>
       <Availability products={products} handleClose={handleClose} />
       <Price products={products} handleClose={handleClose} />

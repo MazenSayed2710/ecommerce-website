@@ -1,7 +1,7 @@
 import CollectionHeader from "@/_components/CollectionHeader";
 import FilterSection from "@/_components/FilterSection";
-import { capitalize } from "@/_components/helpers";
 import Products from "@/_components/Products";
+import { capitalize } from "@/_components/helpers";
 import { getSpecificProducts } from "@/app/_lib/data-service";
 import { supabase } from "@/app/_lib/supabase";
 
@@ -15,7 +15,6 @@ export async function generateMetadata({ params }) {
 async function page({ params, searchParams }) {
   const collectionType = (await params).collectionType;
   const collectionName = capitalize(collectionType);
-  const sort = (await searchParams).sort;
   const sortOptions = [
     {
       text: "Featured",
@@ -67,6 +66,7 @@ async function page({ params, searchParams }) {
     .from("products")
     .select("*")
     .eq("mainCategorie", collectionType);
+  if (error) throw Error(error.message);
   if (!products) return;
   return (
     <div className="py-10">
@@ -78,7 +78,7 @@ async function page({ params, searchParams }) {
         sortOptions={sortOptions}
         products={productForFilterData}
       />
-      {products && <Products data={products} />}
+      <Products data={products} />
     </div>
   );
 }

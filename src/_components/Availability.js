@@ -7,12 +7,13 @@ function Availability({ products, handleClose }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = new URLSearchParams(searchParams);
-  const numOfAvailable = products.filter(
-    (product) => product.isAvailable === true
-  ).length;
-  const numOfOutOfStock = products.filter(
-    (product) => product.isAvailable === false
-  ).length;
+  const numOfAvailable = products.filter((p) => p.isAvailable).length;
+  const numOfOutOfStock = products.filter((p) => !p.isAvailable).length;
+  const handleChange = (isChecked, availability) => {
+    params.set(availability, isChecked);
+    router.push(`${pathname}?${params.toString()}`);
+    handleClose();
+  };
   return (
     <div>
       <h2 className="font-semibold w-fit py-1 mb-3 relative before:absolute before:w-16 before:h-[2px] before:bg-black before:left-0 before:bottom-0">
@@ -26,9 +27,7 @@ function Availability({ products, handleClose }) {
             id="in-stock"
             className="mr-2"
             onChange={(e) => {
-              params.set("inStock", e.target.checked);
-              router.push(`${pathname}?${params.toString()}`);
-              handleClose();
+              handleChange(e, "inStock");
             }}
             defaultChecked={searchParams.get("inStock") === "true"}
           />
@@ -41,9 +40,7 @@ function Availability({ products, handleClose }) {
             id="out-stock"
             className="mr-2"
             onClick={(e) => {
-              params.set("outStock", e.target.checked);
-              router.push(`${pathname}?${params.toString()}`);
-              handleClose();
+              handleChange(e.target.checked, "outStock");
             }}
             defaultChecked={searchParams.get("outStock") === "true"}
           />

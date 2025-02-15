@@ -44,6 +44,7 @@ export async function getSpecificProducts(categore, sortAndfilter) {
     .from("products")
     .select("*")
     .eq("mainCategorie", categore);
+
   const sort = sortAndfilter?.sort?.split("-")[0];
   const isAscending = sortAndfilter?.sort?.split("-")[1] === "ascending";
   if (sortAndfilter.sort !== "all") {
@@ -51,7 +52,7 @@ export async function getSpecificProducts(categore, sortAndfilter) {
       ascending: isAscending,
     });
   }
-
+  // Filter by Availability
   if (sortAndfilter.inStock === "true" && sortAndfilter.outStock !== "true") {
     query = query.eq("isAvailable", true);
   } else if (
@@ -61,16 +62,18 @@ export async function getSpecificProducts(categore, sortAndfilter) {
     query = query.eq("isAvailable", false);
   }
 
+  // Filter by Size
+
   if (sortAndfilter.size) {
     query = query.contains(
       "sizes",
-      sortAndfilter.size.length === 1
-        ? [...sortAndfilter.size]
-        : sortAndfilter.size
+      Array.isArray(sortAndfilter)
+        ? sortAndfilter.size
+        : [...sortAndfilter.size]
     );
   }
 
-  // Filter by Size
+  // Filter by Price
 
   if (sortAndfilter.price) {
     query = query
@@ -80,12 +83,11 @@ export async function getSpecificProducts(categore, sortAndfilter) {
 
   // Filter by Color
   if (sortAndfilter.color) {
-    console.log([sortAndfilter.color]);
     query.contains(
       "arrayOfColors",
-      typeof sortAndfilter.color !== "object"
-        ? [sortAndfilter.color]
-        : sortAndfilter.color
+      Array.isArray(sortAndfilter.color)
+        ? sortAndfilter.color
+        : [sortAndfilter.color]
     );
   }
 

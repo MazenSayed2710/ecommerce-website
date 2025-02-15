@@ -9,10 +9,18 @@ function Sizes({ products, handleClose }) {
   const router = useRouter();
   const sizes = products
     .filter((product) => product.sizes)
-    .map((product) => product.sizes)
-    .reduce((acc, curr) => [...acc, ...curr], []);
+    .flatMap((product) => product.sizes);
 
   const uniqueSizes = Array.from(new Set(sizes));
+
+  const handleSizeChange = (e) => {
+    e.target.checked
+      ? urlSearchParams.append("size", e.target.name)
+      : urlSearchParams.delete("size", e.target.name);
+    router.push(`${pathname}?${urlSearchParams.toString()}`);
+    handleClose();
+  };
+
   return (
     <div>
       <h2 className="font-semibold w-fit py-1 mb-3 relative before:absolute before:w-16 before:h-[2px] before:bg-black before:left-0 before:bottom-0">
@@ -26,13 +34,7 @@ function Sizes({ products, handleClose }) {
               name={size}
               id={size}
               className="mr-2"
-              onChange={(e) => {
-                e.target.checked
-                  ? urlSearchParams.append("size", e.target.name)
-                  : urlSearchParams.delete("size", e.target.name);
-                handleClose();
-                router.push(`${pathname}?${urlSearchParams.toString()}`);
-              }}
+              onChange={handleSizeChange}
               defaultChecked={searchParams.get("size")?.includes(size)}
             />
             <label htmlFor={size} className="uppercase">

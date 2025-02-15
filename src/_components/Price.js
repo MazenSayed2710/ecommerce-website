@@ -10,12 +10,22 @@ function Price({ products, handleClose }) {
   const urlParams = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const router = useRouter();
-  const maxProductPrice = Math.max(...products.map((product) => product.price));
-  const [priceRange, setPriceRange] = useState(
-    searchParams.getAll("price").length
-      ? searchParams.getAll("price")
-      : [0, maxProductPrice]
-  );
+  const maxProductPrice = Math.max(...products.map((p) => p.price));
+  const priceParams = searchParams.getAll("price");
+  const initialPriceRange = priceParams.length
+    ? priceParams.map(Number)
+    : [0, maxProductPrice];
+
+  const [priceRange, setPriceRange] = useState(initialPriceRange);
+
+  const handleClick = () => {
+    urlParams.delete("price");
+    urlParams.append("price", priceRange[0]);
+    urlParams.append("price", priceRange[1]);
+    router.push(`${pathname}?${urlParams.toString()}`);
+    handleClose();
+  };
+
   return (
     <div>
       <h2 className="font-semibold w-fit py-1 mb-3 relative before:absolute before:w-16 before:h-[2px] before:bg-black before:left-0 before:bottom-0">
@@ -37,13 +47,7 @@ function Price({ products, handleClose }) {
         </p>
         <button
           className="rounded-full px-6 py-2 border border-custom-black mt-3 font-semibold duration-200 hover:bg-blue-400 hover:text-gray-100 hover:border-blue-400"
-          onClick={() => {
-            urlParams.delete("price");
-            urlParams.append("price", priceRange[0]);
-            urlParams.append("price", priceRange[1]);
-            router.push(`${pathname}?${urlParams.toString()}`);
-            handleClose();
-          }}
+          onClick={handleClick}
         >
           Filter
         </button>
