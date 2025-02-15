@@ -78,8 +78,18 @@ export async function getSpecificProducts(categore, sortAndfilter) {
       .lte("price", Number(sortAndfilter.price[1]));
   }
 
-  let { data: products, error } = await query;
+  // Filter by Color
+  if (sortAndfilter.color) {
+    console.log([sortAndfilter.color]);
+    query.contains(
+      "arrayOfColors",
+      typeof sortAndfilter.color !== "object"
+        ? [sortAndfilter.color]
+        : sortAndfilter.color
+    );
+  }
 
+  let { data: products, error } = await query;
   if (error) throw Error(error.message);
   return products;
 }

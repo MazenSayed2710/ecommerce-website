@@ -12,7 +12,7 @@ function Price({ products, handleClose }) {
   const router = useRouter();
   const maxProductPrice = Math.max(...products.map((product) => product.price));
   const [priceRange, setPriceRange] = useState(
-    searchParams.getAll("price")
+    searchParams.getAll("price").length
       ? searchParams.getAll("price")
       : [0, maxProductPrice]
   );

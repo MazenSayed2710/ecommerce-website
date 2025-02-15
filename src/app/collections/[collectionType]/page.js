@@ -59,7 +59,7 @@ async function page({ params, searchParams }) {
     inStock: "false",
     sort: "all",
     size: "",
-    price: 0,
+    price: "",
     ...searchParamsValues,
   };
   const products = await getSpecificProducts(collectionType, sortAndfilter);

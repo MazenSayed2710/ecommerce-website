@@ -32,7 +32,7 @@ function FilterSidebar({
       </div>
       <Availability products={products} handleClose={handleClose} />
       <Price products={products} handleClose={handleClose} />
-      <Color products={products} />
+      <Color products={products} handleClose={handleClose} />
       <Sizes products={products} handleClose={handleClose} />
     </div>
   );
