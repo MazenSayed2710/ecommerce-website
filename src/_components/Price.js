@@ -1,23 +1,15 @@
 "use client";
-import { useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { formatNumberWithCommas } from "./helpers";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-function Price({ products, handleClose }) {
+function Price({ products, handleClose, priceRange, setPriceRange }) {
   const searchParams = useSearchParams();
   const urlParams = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const router = useRouter();
   const maxProductPrice = Math.max(...products.map((p) => p.price));
-  const priceParams = searchParams.getAll("price");
-  const initialPriceRange = priceParams.length
-    ? priceParams.map(Number)
-    : [0, maxProductPrice];
-
-  const [priceRange, setPriceRange] = useState(initialPriceRange);
-
   const handleClick = () => {
     urlParams.delete("price");
     urlParams.append("price", priceRange[0]);

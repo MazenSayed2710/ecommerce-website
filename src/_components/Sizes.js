@@ -20,7 +20,6 @@ function Sizes({ products, handleClose }) {
     router.push(`${pathname}?${urlSearchParams.toString()}`);
     handleClose();
   };
-
   return (
     <div>
       <h2 className="font-semibold w-fit py-1 mb-3 relative before:absolute before:w-16 before:h-[2px] before:bg-black before:left-0 before:bottom-0">
@@ -35,7 +34,11 @@ function Sizes({ products, handleClose }) {
               id={size}
               className="mr-2"
               onChange={handleSizeChange}
-              defaultChecked={searchParams.get("size")?.includes(size)}
+              checked={
+                Array.isArray(searchParams.getAll("size"))
+                  ? searchParams.getAll("size")?.includes(size)
+                  : [searchParams.getAll("size")].includes(size)
+              }
             />
             <label htmlFor={size} className="uppercase">
               {size} ({sizes.filter((s) => s === size).length})

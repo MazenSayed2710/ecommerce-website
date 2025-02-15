@@ -67,9 +67,7 @@ export async function getSpecificProducts(categore, sortAndfilter) {
   if (sortAndfilter.size) {
     query = query.contains(
       "sizes",
-      Array.isArray(sortAndfilter)
-        ? sortAndfilter.size
-        : [...sortAndfilter.size]
+      Array.isArray(sortAndfilter) ? sortAndfilter.size : [sortAndfilter.size]
     );
   }
 
@@ -121,4 +119,14 @@ export async function signInwithSupabase({ email, password }) {
   if (error) console.error(error.message);
 
   return data;
+}
+export async function searchProducts(name) {
+  let { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .ilike("name", `%${name}%`);
+
+  if (error) console.error(error.message);
+
+  return products;
 }

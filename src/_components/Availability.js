@@ -27,9 +27,9 @@ function Availability({ products, handleClose }) {
             id="in-stock"
             className="mr-2"
             onChange={(e) => {
-              handleChange(e, "inStock");
+              handleChange(e.target.checked, "inStock");
             }}
-            defaultChecked={searchParams.get("inStock") === "true"}
+            checked={searchParams.get("inStock") === "true"}
           />
           <label htmlFor="in-stock">In Stock ({numOfAvailable})</label>
         </div>
@@ -39,10 +39,10 @@ function Availability({ products, handleClose }) {
             name="out-stock"
             id="out-stock"
             className="mr-2"
-            onClick={(e) => {
+            onChange={(e) => {
               handleChange(e.target.checked, "outStock");
             }}
-            defaultChecked={searchParams.get("outStock") === "true"}
+            checked={searchParams.get("outStock") === "true"}
           />
           <label htmlFor="out-stock">Out Of Stock ({numOfOutOfStock})</label>
         </div>
