@@ -43,7 +43,7 @@ function FilterSection({ sortOptions, products }) {
           ))}
         </select>
       </form>
-      <Sidebar openSidebar={openSidebar}>
+      <Sidebar openSidebar={openSidebar} position="left">
         <FilterSidebar
           openSidebar={openSidebar}
           setOpenSidebar={setOpenSidebar}

@@ -1,12 +1,8 @@
 import Image from "next/image";
 
-function MainImage({ data, activeImg, setActiveImg }) {
-  const image = data.images[0];
+function MainImage({ activeImg }) {
   return (
-    <button
-      className="relative w-[40%] aspect-[2.5/3]"
-      onClick={() => setActiveImg(image)}
-    >
+    <div className="relative w-full aspect-[2.5/3]">
       <Image
         src={activeImg}
         fill
@@ -14,7 +10,7 @@ function MainImage({ data, activeImg, setActiveImg }) {
         className="object-cover duration-500"
         sizes=""
       />
-    </button>
+    </div>
   );
 }
 

@@ -3,7 +3,7 @@ import Image from "next/image";
 function ThumbnailList({ data, activeImg, setActiveImg }) {
   const images = data.images;
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 w-[20%]">
       {images.map((img) => (
         <button key={img} onClick={() => setActiveImg(img)}>
           <Image

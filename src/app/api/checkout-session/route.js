@@ -4,7 +4,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 export async function POST(request) {
   try {
     const { products } = await request.json(); // Receive products from frontend
-
+    console.log(products);
     // Map products to Stripe's format
     const line_items = products.map((product) => ({
       price_data: {

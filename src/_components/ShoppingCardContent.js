@@ -54,7 +54,7 @@ function ShoppingCardContent() {
             id="terms"
             name="terms"
             checked={isChecked}
-            onClick={() => setIsChecked(!isChecked)}
+            onChange={() => setIsChecked(!isChecked)}
           />
           <label htmlFor="terms">I agree with the terms and conditions.</label>
         </div>

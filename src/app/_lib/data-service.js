@@ -120,11 +120,22 @@ export async function signInwithSupabase({ email, password }) {
 
   return data;
 }
-export async function searchProducts(name) {
-  let { data: products, error } = await supabase
+export async function searchProducts(search, collection) {
+  // console.log(search.length, collection);
+  search = search.length === 1 ? search.trim() : search;
+  let query = supabase
     .from("products")
     .select("*")
-    .ilike("name", `%${name}%`);
+    .ilike("name", `%${search}%`);
+
+  if (collection !== "all categories") {
+    query = supabase
+      .from("products")
+      .select("*")
+      .eq("mainCategorie", collection)
+      .ilike("name", `%${!search ? null : search}%`); // When user click space or delete everything on input ,data will appear based on this and i want to disable that
+  }
+  let { data: products, error } = await query;
 
   if (error) console.error(error.message);
 

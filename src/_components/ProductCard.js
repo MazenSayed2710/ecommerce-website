@@ -8,12 +8,19 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { deleteProductFromWishlist } from "@/lib/features/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { formatNumberWithCommas } from "./helpers";
+import { useState } from "react";
+import PopupModal from "./PopupModal";
+import ViewPopup from "./ViewPopup";
 
 function ProductCard({ data }) {
   const pathName = usePathname();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.wishlist.products);
   const ids = products?.map((product) => product.id);
+  const [openViewModal, setOpenViewModal] = useState(false);
+  const handleClose = () => {
+    setOpenViewModal(false);
+  };
   return (
     <div className="relative">
       <div className="relative  overflow-hidden group aspect-[2/3]">
@@ -24,7 +31,10 @@ function ProductCard({ data }) {
           className="object-cover h-full w-full animate-zoom-out group-hover:hidden"
         />
         <div className="hidden group-hover:block">
-          <ProductHoverDetails data={data} />
+          <ProductHoverDetails
+            data={data}
+            setOpenViewModal={setOpenViewModal}
+          />
         </div>
         {pathName === "/wishlist" ? (
           <button
@@ -66,6 +76,15 @@ function ProductCard({ data }) {
           ></button>
         ))}
       </div>
+      {openViewModal && (
+        <PopupModal>
+          <ViewPopup
+            product={data}
+            setOpenViewModal={setOpenViewModal}
+            handleClose={handleClose}
+          />
+        </PopupModal>
+      )}
     </div>
   );
 }

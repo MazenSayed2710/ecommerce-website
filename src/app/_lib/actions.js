@@ -1,6 +1,6 @@
 "use server";
 import { signIn, signOut } from "@/lib/auth";
-import { signInwithSupabase, signUp } from "./data-service";
+import { searchProducts, signInwithSupabase, signUp } from "./data-service";
 
 export async function signUpwithSupabase(formData) {
   console.log(formData.get("email"));
@@ -33,4 +33,8 @@ export async function facebookSignIn() {
 }
 export async function signOutAccount() {
   await signOut();
+}
+export async function searchApi(search, collection) {
+  const products = await searchProducts(search, collection);
+  return products;
 }

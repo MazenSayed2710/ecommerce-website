@@ -56,7 +56,7 @@ function FilterSidebar({
       />
       <Color products={products} handleClose={handleClose} />
       <Sizes products={products} handleClose={handleClose} />
-      <div className="w-full flex justify-start border-b-0">
+      <div className="w-full flex justify-start !py-3 !border-b-0">
         <button
           className="rounded-full px-6 py-2 border border-custom-black mt-3 font-semibold duration-200 hover:bg-blue-400 hover:text-gray-100 hover:border-blue-400"
           onClick={handleClearAll}

@@ -3,7 +3,7 @@ import "./globals.css";
 import Footer from "@/_components/Footer";
 import StoreProvider from "@/_components/StoreProvider";
 import { Toaster } from "react-hot-toast";
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <StoreProvider>

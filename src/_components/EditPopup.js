@@ -11,7 +11,7 @@ import { IoMdClose } from "react-icons/io";
 import { closePopup } from "@/lib/features/popupModalSlice";
 import { useClickOutside } from "./useClickOutside";
 
-function EditPopup({ data, setOpenEditComponent }) {
+function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
   const [quantityValue, setQuantityValue] = useState(data.quantity);
   const [curentColor, setCurentColor] = useState(data.color);
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function EditPopup({ data, setOpenEditComponent }) {
     dispatch(closePopup());
     setOpenEditComponent(false);
   };
-  const ref = useClickOutside(handleClosePopup);
+  const ref = useClickOutside(handleClosePopup, OpenModalBtnref);
   return (
     <div
       className="w-[400px] bg-white p-5 flex flex-col gap-3 font-bold text-custom-black relative"

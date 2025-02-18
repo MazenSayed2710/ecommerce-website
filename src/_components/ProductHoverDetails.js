@@ -12,12 +12,16 @@ import Link from "next/link";
 import { FaRegHeart } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
+import { useState } from "react";
+import PopupModal from "./PopupModal";
+import ViewPopup from "./ViewPopup";
 
-function ProductHoverDetails({ data }) {
+function ProductHoverDetails({ data, setOpenViewModal }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.wishlist.products);
   const ids = products?.map((product) => product.id);
   const pathName = usePathname();
+
   return (
     <div className=" relative  overflow-hidden">
       <div className="relative aspect-[2/3]">
@@ -71,9 +75,11 @@ function ProductHoverDetails({ data }) {
           <button
             className="absolute left-0 -bottom-full px-5 py-2  text-gray-100 text-lg bg-gray-900 w-[140px] h-[40px]
            flex justify-center items-center group-hover/view:translate-y-[-40px] duration-200"
+            onClick={() => setOpenViewModal(true)}
           >
             <FaRegEye />
           </button>
+
           <button className="px-5 py-2  bg-gray-100 w-[140px] h-[40px] group-hover/view:translate-y-[-40px] duration-200">
             Quick view
           </button>

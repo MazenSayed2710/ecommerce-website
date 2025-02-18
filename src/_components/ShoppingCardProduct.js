@@ -1,7 +1,7 @@
 "use cleint";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
@@ -17,7 +17,7 @@ import EditPopup from "./EditPopup";
 function ShoppingCardProduct({ data }) {
   const [openEditComponent, setOpenEditComponent] = useState(false);
   const dispatch = useDispatch();
-
+  const OpenModalBtnref = useRef(null);
   return (
     <>
       <div className="grid grid-cols-[40%_20%_20%_20%] items-center border-y-[1px] border-gray-300 py-5">
@@ -51,7 +51,10 @@ function ShoppingCardProduct({ data }) {
             )}
             <div className="flex text-2xl gap-2">
               {(data.size || data.color) && (
-                <button onClick={() => setOpenEditComponent(true)}>
+                <button
+                  onClick={() => setOpenEditComponent(true)}
+                  ref={OpenModalBtnref}
+                >
                   <FaEdit />
                 </button>
               )}
@@ -87,7 +90,11 @@ function ShoppingCardProduct({ data }) {
       </div>
       {openEditComponent && (
         <PopupModal>
-          <EditPopup data={data} setOpenEditComponent={setOpenEditComponent} />
+          <EditPopup
+            data={data}
+            setOpenEditComponent={setOpenEditComponent}
+            OpenModalBtnref={OpenModalBtnref}
+          />
         </PopupModal>
       )}
     </>

@@ -1,13 +1,15 @@
 import { VscAccount } from "react-icons/vsc";
 import { FaRegHeart } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { IoIosSearch } from "react-icons/io";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import Account from "./Account";
+import SearchComponent from "./SearchComponent";
+import { getCollections } from "@/app/_lib/data-service";
 
 async function Header() {
   const session = await auth();
+  const collections = await getCollections();
   return (
     <div className="flex gap-5 h-14 w-full justify-between items-center p-5 ">
       <Link href="/" className="font-bold text-4xl">
@@ -22,19 +24,15 @@ async function Header() {
         <li className=" hover:text-blue-400">Shopping cart</li>
       </ul>
       <ul className=" flex gap-5 items-center">
-        <li className="text-2xl hover:text-blue-300 ">
-          <button className="duration-[0.5s] hover:scale-[1.2]">
-            <IoIosSearch />
-          </button>
-        </li>
+        <SearchComponent collections={collections} />
         <li className="text-xl  hover:text-blue-300">
-          {session?.user ? (
+          {/* {session?.user ? (
             <Account name={session.user.name} img={session.user.image} />
           ) : (
             <Link href="/signIn" className="duration-[0.5s] hover:scale-[1.2]">
               <VscAccount />
             </Link>
-          )}
+          )} */}
         </li>
         <li className="text-xl  hover:text-blue-300">
           <Link href="/wishlist" className="duration-[0.5s] hover:scale-[1.2]">

@@ -1,11 +1,32 @@
+"use client";
+import { useState } from "react";
+import PopupModal from "./PopupModal";
+import DeliveryReturnsPopup from "./DeliveryReturnsPopup";
+
 function ProductMeta({ data }) {
   const { isAvailable, categories } = data;
-  console.log(isAvailable);
+  const [deliveryReturns, setDeliveryReturns] = useState(false);
+  const handleClose = () => {
+    document.body.classList.remove("open");
+    setDeliveryReturns(false);
+  };
+  const handleOpen = () => {
+    document.body.classList.add("open");
+    setDeliveryReturns(true);
+  };
   return (
     <>
-      <button className="font-semibold  w-fit hover:text-blue-400">
+      <button
+        className="font-semibold  w-fit hover:text-blue-400"
+        onClick={handleOpen}
+      >
         Delivery & Return
       </button>
+      {deliveryReturns && (
+        <PopupModal>
+          <DeliveryReturnsPopup handleClose={handleClose} />
+        </PopupModal>
+      )}
       <div>
         <p className="text-gray-500">
           Availability:
