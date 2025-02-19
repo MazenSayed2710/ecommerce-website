@@ -20,7 +20,11 @@ export default function ProductCardDetails({
   return (
     <div className={!isPopup ? "py-4" : ""}>
       <div className="flex flex-col sm:flex-row gap-5 h-full">
-        <div className="w-1/2 flex gap-3">
+        <div
+          className={`w-1/2 grid ${
+            isPopup ? "grid-cols-1" : "grid-cols-[15%_85%]"
+          } gap-3`}
+        >
           {!isPopup && (
             <ThumbnailList
               data={data}

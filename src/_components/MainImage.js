@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function MainImage({ activeImg }) {
   return (
-    <div className="relative w-full aspect-[2.5/3]">
+    <div className="relative   h-full">
       <Image
         src={activeImg}
         fill

@@ -69,6 +69,9 @@ export const shoppingCardSlice = createSlice({
                 ...product,
                 quantity:
                   Number(product.quantity) + Number(action.payload.quantity),
+                total:
+                  (Number(product.quantity) + Number(action.payload.quantity)) *
+                  product.price,
               }
             : product
         );
