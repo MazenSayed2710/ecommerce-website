@@ -3,6 +3,8 @@ import "./globals.css";
 import Footer from "@/_components/Footer";
 import StoreProvider from "@/_components/StoreProvider";
 import { Toaster } from "react-hot-toast";
+import "react-loading-skeleton/dist/skeleton.css";
+
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
