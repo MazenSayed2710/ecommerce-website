@@ -8,7 +8,7 @@ import { setWishlistProducts } from "@/lib/features/wishlistSlice";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
 import toast from "react-hot-toast";
-
+import { motion } from "framer-motion";
 function ProductButtons({
   data,
   currentColor,
@@ -51,16 +51,38 @@ function ProductButtons({
       <div className="flex items-center gap-5 mb-3">
         <Quantity value={value} setValue={setValue} inputWidth="w-16" />
 
-        <button
+        <motion.button
           className="bg-blue-400 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-500"
           onClick={() => {
             dispatch(setProduct(newproduct));
             toast.success("Successfully added to card");
-            handleClose && handleClose();
+            handleClose?.();
+          }}
+          animate={{
+            x: [
+              "10px",
+              "-10px",
+              "10px",
+              "-10px",
+              "10px",
+              "-10px",
+              "10px",
+              "-10px",
+              "10px",
+              "-10px",
+              0,
+            ],
+          }}
+          initial={{ x: "-10px" }}
+          transition={{
+            repeat: Infinity,
+            repeatDelay: 10,
+            duration: 1.5,
+            ease: "linear",
           }}
         >
           Add to Cart
-        </button>
+        </motion.button>
 
         {ids.includes(data.id) ? (
           <Link

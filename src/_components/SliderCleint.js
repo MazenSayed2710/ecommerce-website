@@ -1,34 +1,55 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 function SliderCleint({ sliderData }) {
   const [active, setActive] = useState(0);
-
-  // if (!sliderData) return <div></div>;
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.5,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: "200px" },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
   return (
     <div
       className={`h-[700px] bg-cover w-full`}
       style={{ backgroundImage: `url(${sliderData[active].imgUrl})` }}
     >
-      <div
+      <motion.div
         className={`flex relative justify-center gap-3 ${
           sliderData[active].imgPosition === "right" && "items-end"
         } flex-col max-w-[1200px] m-auto h-full`}
+        variants={container}
+        initial="hidden"
+        animate="show"
+        key={active}
       >
-        <span className="text-gray-700 font-semibold relative  bottom-[-15px] uppercase">
+        <motion.span
+          className="text-gray-700 font-semibold relative  bottom-[-15px] uppercase"
+          variants={item}
+        >
           {sliderData[active].supHeadline}
-        </span>
-        <p className="font-bold text-5xl">{sliderData[active].headline}</p>
-        <div
+        </motion.span>
+        <motion.p className="font-bold text-5xl" variants={item}>
+          {sliderData[active].headline}
+        </motion.p>
+        <motion.div
           className="w-[150px] bg-black px-4 py-3 text-gray-100 relative overflow-hidden flex justify-center items-center cursor-pointer
          before:w-[150px] before:h-full before:bg-blue-400 before:absolute before:left-0
           before:-bottom-0 before:translate-y-full  before:duration-500 hover:before:-translate-y-0 hover:z-0 hover:before:-z-10"
+          variants={item}
         >
           <Link href="/collections" className="z-10">
             Explore Now
           </Link>
-        </div>
+        </motion.div>
         <div className=" absolute flex gap-4 justify-center w-full bottom-3">
           {sliderData.map((image) => (
             <button
@@ -42,7 +63,7 @@ function SliderCleint({ sliderData }) {
             ></button>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

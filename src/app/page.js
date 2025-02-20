@@ -23,3 +23,4 @@ export default async function Home() {
     </>
   );
 }
+console.log("hiegth of product image in details page");
