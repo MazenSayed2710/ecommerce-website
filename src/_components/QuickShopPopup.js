@@ -1,8 +1,6 @@
 import { useState } from "react";
 import ColorOptions from "./ColorOptions";
 import ProductButtons from "./ProductButtons";
-import ProductCardDetails from "./ProductCardDetails";
-import ProductInfo from "./ProductInfo";
 import SizeOptions from "./SizeOptions";
 import { useClickOutside } from "./useClickOutside";
 import { formatNumberWithCommas } from "./helpers";

@@ -1,4 +1,11 @@
-function ColorOptions({ data, setActiveImg, currentColor, setCurrentColor }) {
+function ColorOptions({
+  data,
+  setActiveImg,
+  currentColor = null,
+  setCurrentColor,
+  displayText = true,
+  circleSize = "large",
+}) {
   const { colors } = data;
   const handleClick = (color) => {
     setCurrentColor(color.colorName);
@@ -7,14 +14,20 @@ function ColorOptions({ data, setActiveImg, currentColor, setCurrentColor }) {
   if (!colors) return;
   return (
     <div>
-      <p className="font-bold uppercase mb-4 text-custom-black">
-        color:<span className="ml-1">{currentColor}</span>
-      </p>
+      {displayText && (
+        <p className="font-bold uppercase mb-4 text-custom-black">
+          color:<span className="ml-1">{currentColor}</span>
+        </p>
+      )}
       <div className="flex gap-3 mb-4">
         {colors.map((color) => (
           <button
             onClick={() => handleClick(color)}
-            className={`w-8 h-8 rounded-full  border-2  ${
+            className={`${
+              circleSize === "small"
+                ? "sm:w-6 sm:h-6 w-5 h-5 border"
+                : "w-8 h-8 border-2"
+            }  rounded-full    ${
               currentColor === color.colorName
                 ? "border-gray-700"
                 : "border-gray-300"

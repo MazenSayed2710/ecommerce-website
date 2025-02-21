@@ -76,7 +76,13 @@ export const shoppingCardSlice = createSlice({
             : product
         );
       } else {
-        state.products = [...state.products, action.payload];
+        state.products = [
+          ...state.products,
+          {
+            ...action.payload,
+            total: Number(action.payload.quantity) * action.payload.price,
+          },
+        ];
       }
     },
     deleteProductFromShoppingcard: (state, action) => {
