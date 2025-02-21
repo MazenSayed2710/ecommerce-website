@@ -18,7 +18,7 @@ export default function ProductCardDetails({
   const [currentSize, setCurrentSize] = useState(data.sizes?.[0]);
 
   return (
-    <div className={!isPopup ? "py-4" : ""}>
+    <div className={isPopup ? "" : "py-4"}>
       <div className="flex flex-col sm:flex-row gap-5 h-full">
         <div
           className={`w-1/2 grid overflow-hidden ${

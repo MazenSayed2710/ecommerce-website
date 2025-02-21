@@ -23,4 +23,9 @@ export default async function Home() {
     </>
   );
 }
-console.log("hiegth of product image in details page");
+console.log(`
+  Product buttons
+  Hamburger menu
+  bg-IMAGE
+  handle errors
+  `);

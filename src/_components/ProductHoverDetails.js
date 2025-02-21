@@ -12,11 +12,12 @@ import Link from "next/link";
 import { FaRegHeart } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useState } from "react";
-import PopupModal from "./PopupModal";
-import ViewPopup from "./ViewPopup";
 
-function ProductHoverDetails({ data, setOpenViewModal }) {
+function ProductHoverDetails({
+  data,
+  setOpenViewModal,
+  setOpenQuickShopModal,
+}) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.wishlist.products);
   const ids = products?.map((product) => product.id);
@@ -33,11 +34,11 @@ function ProductHoverDetails({ data, setOpenViewModal }) {
         />
       </div>
       <div
-        className="absolute left-0 top-0 w-full h-full flex justify-center items-center flex-col gap-3"
+        className="hidden absolute left-0 top-0 w-full h-full sm:flex justify-center items-center flex-col gap-3"
         style={{ backgroundColor: "rgb(0 0 0 / 21%)" }}
       >
         {pathName === "/wishlist" ? (
-          <div className=" absolute left-3 top-3 grid items-center text-gray-100">
+          <div className="absolute left-3 top-3 grid items-center text-gray-100">
             <button
               className="font-thin text-xl w-8 h-8 rounded-full  bg-white flex items-center justify-center hover:bg-custom-black hover:text-gray-100"
               onClick={() => dispatch(deleteProductFromWishlist(data.id))}
@@ -68,14 +69,16 @@ function ProductHoverDetails({ data, setOpenViewModal }) {
 
         <div>
           <p className=" uppercase text-gray-100 absolute bottom-3 left-1/2 -translate-x-1/2">
-            xs,s,m,l,xl
+            {data.sizes?.join(",")}
           </p>
         </div>
-        <div className="group/view relative overflow-hidden w-[140px] h-[40px] rounded-full">
+        <div
+          className="group/view relative overflow-hidden w-[140px] h-[40px] rounded-full cursor-pointer"
+          onClick={() => setOpenViewModal(true)}
+        >
           <button
             className="absolute left-0 -bottom-full px-5 py-2  text-gray-100 text-lg bg-gray-900 w-[140px] h-[40px]
            flex justify-center items-center group-hover/view:translate-y-[-40px] duration-200"
-            onClick={() => setOpenViewModal(true)}
           >
             <FaRegEye />
           </button>
@@ -84,7 +87,10 @@ function ProductHoverDetails({ data, setOpenViewModal }) {
             Quick view
           </button>
         </div>
-        <div className="group/shop relative overflow-hidden w-[140px] h-[40px]  rounded-full bg-blue-400">
+        <div
+          className="group/shop relative overflow-hidden w-[140px] h-[40px]  rounded-full bg-blue-400 cursor-pointer"
+          onClick={() => setOpenQuickShopModal(true)}
+        >
           <button
             className="absolute left-0 -bottom-full px-5 py-2 rounded-full text-gray-100 text-lg w-[140px] h-[40px]
            flex justify-center items-center group-hover/shop:translate-y-[-40px] duration-200"

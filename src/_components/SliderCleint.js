@@ -19,7 +19,7 @@ function SliderCleint({ sliderData }) {
   };
   return (
     <div
-      className={`h-[700px] bg-cover w-full`}
+      className="sm:h-[700px] h-[250px] bg-cover bg-center w-full px-5 relative"
       style={{ backgroundImage: `url(${sliderData[active].imgUrl})` }}
     >
       <motion.div
@@ -32,16 +32,16 @@ function SliderCleint({ sliderData }) {
         key={active}
       >
         <motion.span
-          className="text-gray-700 font-semibold relative  bottom-[-15px] uppercase"
+          className="text-gray-700 font-semibold relative bottom-[-15px] uppercase"
           variants={item}
         >
           {sliderData[active].supHeadline}
         </motion.span>
-        <motion.p className="font-bold text-5xl" variants={item}>
+        <motion.p className="font-bold text-2xl sm:text-5xl" variants={item}>
           {sliderData[active].headline}
         </motion.p>
         <motion.div
-          className="w-[150px] bg-black px-4 py-3 text-gray-100 relative overflow-hidden flex justify-center items-center cursor-pointer
+          className="w-[150px] text-base bg-black px-3 py-2 sm:px-4 sm:py-3 text-gray-100 relative overflow-hidden flex justify-center items-center cursor-pointer
          before:w-[150px] before:h-full before:bg-blue-400 before:absolute before:left-0
           before:-bottom-0 before:translate-y-full  before:duration-500 hover:before:-translate-y-0 hover:z-0 hover:before:-z-10"
           variants={item}

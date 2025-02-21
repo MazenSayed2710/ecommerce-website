@@ -2,7 +2,7 @@
 import Image from "next/image";
 import ProductHoverDetails from "./ProductHoverDetails";
 import Link from "next/link";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegEye } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 import { deleteProductFromWishlist } from "@/lib/features/wishlistSlice";
@@ -11,6 +11,8 @@ import { formatNumberWithCommas } from "./helpers";
 import { useState } from "react";
 import PopupModal from "./PopupModal";
 import ViewPopup from "./ViewPopup";
+import { FaCartShopping } from "react-icons/fa6";
+import QuickShopPopup from "./QuickShopPopup";
 
 function ProductCard({ data }) {
   const pathName = usePathname();
@@ -18,8 +20,12 @@ function ProductCard({ data }) {
   const products = useSelector((state) => state.wishlist.products);
   const ids = products?.map((product) => product.id);
   const [openViewModal, setOpenViewModal] = useState(false);
-  const handleClose = () => {
+  const [openQuickShopModal, setOpenQuickShopModal] = useState(false);
+  const handleCloseViewModal = () => {
     setOpenViewModal(false);
+  };
+  const handleCloseQuickShopModal = () => {
+    setOpenQuickShopModal(false);
   };
   return (
     <div className="relative">
@@ -34,6 +40,7 @@ function ProductCard({ data }) {
           <ProductHoverDetails
             data={data}
             setOpenViewModal={setOpenViewModal}
+            setOpenQuickShopModal={setOpenQuickShopModal}
           />
         </div>
         {pathName === "/wishlist" ? (
@@ -53,6 +60,20 @@ function ProductCard({ data }) {
             </Link>
           )
         )}
+        <div className="grid gap-2 absolute right-1 bottom-1">
+          <button
+            className="bg-white p-2 rounded-full"
+            onClick={() => setOpenViewModal(true)}
+          >
+            <FaRegEye />
+          </button>
+          <button
+            className="bg-blue-400 text-gray-100 p-2 rounded-full"
+            onClick={() => setOpenQuickShopModal(true)}
+          >
+            <FaCartShopping />
+          </button>
+        </div>
       </div>
       <Link
         href={`/collections/${data.mainCategorie}/${data.id}-${data.name
@@ -78,10 +99,14 @@ function ProductCard({ data }) {
       </div>
       {openViewModal && (
         <PopupModal>
-          <ViewPopup
+          <ViewPopup product={data} handleClose={handleCloseViewModal} />
+        </PopupModal>
+      )}
+      {openQuickShopModal && (
+        <PopupModal>
+          <QuickShopPopup
             product={data}
-            setOpenViewModal={setOpenViewModal}
-            handleClose={handleClose}
+            handleClose={handleCloseQuickShopModal}
           />
         </PopupModal>
       )}

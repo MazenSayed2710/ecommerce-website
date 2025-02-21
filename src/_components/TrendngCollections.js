@@ -7,46 +7,50 @@ import Image from "next/image";
 
 function TrendngCollections() {
   return (
-    <div className="max-w-[1200px] m-auto grid grid-cols-custom grid-rows-custom justify-center gap-5 py-5">
-      <TrendCollection
-        collectionName="Women"
-        className=" col-span-2 row-span-2"
-      >
-        <Image
-          src={wom}
-          alt=""
-          height={630}
-          className="group-hover:scale-110 duration-500"
-        />
+    <div className="max-w-[1200px] m-auto grid sm:grid-cols-4 sm:grid-rows-2 justify-center gap-5 py-5 grid-cols-2 grid-rows-4 px-5">
+      <TrendCollection collectionName="Women" className="col-span-2 row-span-2">
+        <div className="relative aspect-[1/1]">
+          <Image
+            src={wom}
+            alt=""
+            fill
+            className="group-hover:scale-110 duration-500 object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
       </TrendCollection>
       <TrendCollection collectionName="Accessories">
-        <Image
-          src={bag}
-          width={270}
-          height={300}
-          alt=""
-          className="group-hover:scale-110 duration-500"
-        />
+        <div className="relative aspect-[1/1]">
+          <Image
+            src={bag}
+            fill
+            alt=""
+            className="group-hover:scale-110 duration-500 object-cover"
+          />
+        </div>
       </TrendCollection>
       <TrendCollection collectionName="shose">
-        <Image
-          src={shose}
-          alt=""
-          width={270}
-          height={300}
-          className="object-cover h-[300px] col group-hover:scale-110 duration-500"
-        />
+        <div className="relative aspect-[1/1]">
+          <Image
+            src={shose}
+            alt=""
+            fill
+            className="object-cover group-hover:scale-110 duration-500"
+          />
+        </div>
       </TrendCollection>
       <TrendCollection
         collectionName="whatch"
-        className="row-start-1 row-end-3 col-start-4"
+        className="sm:row-start-1 sm:row-end-3 sm:col-start-4 h-full col-start-2  row-start-3 row-span-2"
       >
-        <Image
-          src={whatch}
-          alt=""
-          width={270}
-          className="object-cover h-[630px] group-hover:scale-110 duration-500"
-        />
+        <div className="relative h-full aspect-[1/2]">
+          <Image
+            src={whatch}
+            alt=""
+            fill
+            className="object-cover group-hover:scale-110 duration-500"
+          />
+        </div>
       </TrendCollection>
     </div>
   );

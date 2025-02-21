@@ -16,6 +16,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "srjkjjkcdhzrihqwtrzw.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/slider-images/**",
+      },
+      {
+        protocol: "https",
         hostname: "platform-lookaside.fbsbx.com",
         port: "",
         pathname: "/platform/profilepic/**",
