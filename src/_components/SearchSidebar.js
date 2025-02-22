@@ -18,7 +18,7 @@ function SearchSidebar({
   }, searchButtonRef);
   return (
     <div
-      className={`bg-white h-screen w-[400px] duration-500 *:border-b *:border-gray-300 *:p-5 text-custom-black grid grid-rows-[5%_15%_5%_1fr] ${
+      className={`bg-white h-screen w-[300px] sm:w-[400px] duration-500 *:border-b *:border-gray-300 *:p-5 text-custom-black grid grid-rows-[5%_15%_5%_1fr] ${
         openSidebar ? "translate-x-[0]" : "translate-x-[400px]"
       }`}
       ref={ref}

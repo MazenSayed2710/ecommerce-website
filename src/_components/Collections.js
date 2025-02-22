@@ -3,7 +3,7 @@ import Collection from "./Collection";
 async function Collections() {
   const collections = await getCollections();
   return (
-    <div className="max-w-[1200px] m-auto grid grid-cols-3 gap-10 py-10">
+    <div className="max-w-[1200px] m-auto grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-10 py-10 px-5">
       {collections.map((collection) => (
         <Collection collection={collection} key={collection.id} />
       ))}

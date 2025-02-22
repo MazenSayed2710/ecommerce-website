@@ -10,9 +10,11 @@ function DisplayPopups({
   setOpenQuickShopModal,
 }) {
   const handleCloseViewModal = () => {
+    document.body.classList.remove("open");
     setOpenViewModal(false);
   };
   const handleCloseQuickShopModal = () => {
+    document.body.classList.remove("open");
     setOpenQuickShopModal(false);
   };
   return (

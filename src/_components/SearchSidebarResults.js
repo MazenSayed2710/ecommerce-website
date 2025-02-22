@@ -28,12 +28,14 @@ function SearchSidebarResults({ results, handleClose }) {
                   .replace(/^-|-$/g, "")}`}
                 onClick={handleClose}
               >
-                <Image
-                  alt="product-image"
-                  src={product.images[0]}
-                  width={100}
-                  height={100}
-                />
+                <div className="relative h-28 w-24">
+                  <Image
+                    alt="product-image"
+                    src={product.images[0]}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </Link>
               <div>
                 <Link

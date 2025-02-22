@@ -20,6 +20,7 @@ function ProductHoverDetails({
           src={data.images[1]}
           alt="product"
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover animate-zoom-in scale-110"
         />
       </div>

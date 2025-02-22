@@ -1,11 +1,16 @@
 import { setProduct } from "@/lib/features/shoppingCardSlice";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 
 function QuickAddButtons({ data }) {
   const [value, setValue] = useState(1);
   const dispatch = useDispatch();
+  const handleAddToCard = () => {
+    dispatch(setProduct({ ...data, quantity: value, img: data.images[0] }));
+    toast.success("Product added to cart");
+  };
   return (
     <div className="flex rounded-full overflow-hidden w-fit mb-1">
       <div className="flex items-center text-lg font-semibold bg-gray-200 text-black w-fit py-2 px-3 h-[40px] ">
@@ -38,11 +43,7 @@ function QuickAddButtons({ data }) {
       </div>
       <div
         className="group/shop relative overflow-hidden sm:w-[120px] h-[40px]  bg-blue-400 cursor-pointer flex items-center justify-center"
-        onClick={() =>
-          dispatch(
-            setProduct({ ...data, quantity: value, img: data.images[0] })
-          )
-        }
+        onClick={handleAddToCard}
       >
         <button
           className="sm:absolute left-0 -bottom-full sm:px-5 px-2 py-2 sm:rounded-full text-gray-100 text-lg sm:w-[140px] h-[40px]

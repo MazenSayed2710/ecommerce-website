@@ -7,12 +7,20 @@ function ProductHoverButtons({
   setOpenQuickShopModal,
   setOpenViewModal,
 }) {
+  const handleOpenViewModal = () => {
+    document.body.classList.add("open");
+    setOpenViewModal(true);
+  };
+  const handleOpenQuickShopModal = () => {
+    document.body.classList.add("open");
+    setOpenQuickShopModal(true);
+  };
   return (
     <div>
       <div className="flex justify-center sm:items-center items-end flex-col gap-3">
         <div
           className="group/view relative overflow-hidden sm:w-[140px] sm:h-[40px] rounded-full cursor-pointer"
-          onClick={() => setOpenViewModal(true)}
+          onClick={handleOpenViewModal}
         >
           <button
             className="sm:absolute left-0 -bottom-full sm:px-5 sm:py-2 p-3 sm:text-gray-100 text-gray-800 text-lg sm:bg-gray-900 bg-gray-100 sm:w-[140px] sm:h-[40px]
@@ -28,7 +36,7 @@ function ProductHoverButtons({
         {data.sizes && data.colors ? (
           <div
             className="group/shop relative overflow-hidden sm:w-[140px] sm:h-[40px] rounded-full bg-blue-400 cursor-pointer"
-            onClick={() => setOpenQuickShopModal(true)}
+            onClick={handleOpenQuickShopModal}
           >
             <button
               className="sm:absolute left-0 -bottom-full sm:px-5 sm:py-2 p-3 rounded-full text-gray-100 text-lg sm:w-[140px] sm:h-[40px]

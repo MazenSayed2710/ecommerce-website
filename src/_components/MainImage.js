@@ -8,7 +8,8 @@ function MainImage({ activeImg }) {
         fill
         alt="Tovi Girl with Cat Printed"
         className="object-cover duration-500"
-        sizes=""
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 45vw"
+        priority
       />
     </div>
   );

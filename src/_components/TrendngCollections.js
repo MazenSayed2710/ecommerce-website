@@ -26,6 +26,7 @@ function TrendngCollections() {
             fill
             alt=""
             className="group-hover:scale-110 duration-500 object-cover"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
           />
         </div>
       </TrendCollection>
@@ -36,6 +37,7 @@ function TrendngCollections() {
             alt=""
             fill
             className="object-cover group-hover:scale-110 duration-500"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
           />
         </div>
       </TrendCollection>
@@ -49,6 +51,7 @@ function TrendngCollections() {
             alt=""
             fill
             className="object-cover group-hover:scale-110 duration-500"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
           />
         </div>
       </TrendCollection>

@@ -7,8 +7,9 @@ import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
 import SocialMediaIcons from "./SocialMediaIcons";
 import { useState } from "react";
+import MobileFooterMenu from "./MobileFooterMenu";
 
-function Footer() {
+function Footer({ collections }) {
   const [openFirstAccordion, setOpenFirstAccordion] = useState(false);
   const [openSecondAccordion, setOpenSecondAccordion] = useState(false);
   const [openThirdAccordion, setOpenThirdAccordion] = useState(false);
@@ -202,6 +203,7 @@ function Footer() {
           </p>
         </div>
       </div>
+      <MobileFooterMenu collections={collections} />
     </>
   );
 }

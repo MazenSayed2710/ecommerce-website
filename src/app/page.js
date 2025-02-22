@@ -24,8 +24,6 @@ export default async function Home() {
   );
 }
 console.log(`
-  Product buttons
   Hamburger menu
-  bg-IMAGE
   handle errors
   `);

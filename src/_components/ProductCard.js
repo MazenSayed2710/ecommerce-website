@@ -8,20 +8,22 @@ import WishListCompareButtons from "./WishListCompareButtons";
 import ProductHoverButtons from "./ProductHoverButtons";
 import ColorOptions from "./ColorOptions";
 import DisplayPopups from "./DisplayPopups";
+import ProductStatus from "./ProductStatus";
 
 function ProductCard({ data }) {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [openQuickShopModal, setOpenQuickShopModal] = useState(false);
   const [activeImg, setActiveImg] = useState(data.images[0]);
   const [currentColor, setCurrentColor] = useState(data.colors?.[0].colorName);
-
   return (
     <div className="relative">
-      <div className="relative  overflow-hidden group aspect-[2/3]">
+      <div className="relative overflow-hidden group aspect-[2/3]">
+        <ProductStatus data={data} />
         <Image
           src={activeImg}
           alt="Product Image"
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover h-full w-full animate-zoom-out group-hover:hidden"
         />
         <div className="hidden group-hover:block">

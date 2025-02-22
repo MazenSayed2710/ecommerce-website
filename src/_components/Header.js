@@ -1,21 +1,19 @@
-import { RxHamburgerMenu } from "react-icons/rx";
 import { VscAccount } from "react-icons/vsc";
-import { FaRegHeart } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import Account from "./Account";
 import SearchComponent from "./SearchComponent";
 import { getCollections } from "@/app/_lib/data-service";
-
+import ShoppingCartIcon from "./ShoppingCartIcon";
+import WishListIcon from "./WishListIcon";
 async function Header() {
   const session = await auth();
   const collections = await getCollections();
   return (
     <div className="flex gap-5 h-14 w-full justify-between items-center p-5 ">
-      <button className="sm:hidden block">
+      {/* <button className="sm:hidden block">
         <RxHamburgerMenu />
-      </button>
+      </button> */}
       <Link href="/" className="font-bold text-4xl">
         Kalles
       </Link>
@@ -40,7 +38,7 @@ async function Header() {
         </li> */}
         <li className="text-xl hover:text-blue-300 hidden sm:block">
           <Link href="/wishlist" className="duration-[0.5s] hover:scale-[1.2]">
-            <FaRegHeart />
+            <WishListIcon />
           </Link>
         </li>
         <li className="text-xl  hover:text-blue-300">
@@ -48,7 +46,7 @@ async function Header() {
             href="/shoppingCart"
             className="duration-[0.5s] hover:scale-[1.2]"
           >
-            <FaShoppingCart />
+            <ShoppingCartIcon />
           </Link>
         </li>
       </ul>

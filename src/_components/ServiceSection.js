@@ -9,7 +9,7 @@ function ServiceSection() {
   return (
     <div className="max-w-[1200px] p-5 m-auto">
       <SectionName description="Why Choose Us?">Our Services</SectionName>
-      <div className="grid sm:grid-cols-4 gap-5 grid-cols-1 ">
+      <div className="grid sm:grid-cols-2 gap-5 md:grid-cols-4 grid-cols-1 ">
         <ServiceBox
           title="FREE SHIPPING"
           text="Free shipping on all US order or order above $100"
