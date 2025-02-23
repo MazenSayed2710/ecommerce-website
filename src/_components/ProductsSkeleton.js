@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 
 function ProductsSkeleton() {
   return (
-    <div className="max-w-[1200px] m-auto grid grid-cols-4 gap-5 justify-center">
+    <div className="max-w-[1200px] m-auto grid sm:grid-cols-3 md:grid-cols-4 grid-cols-2 gap-5 justify-center px-5">
       {Array.from({ length: 8 }, (_, i) => i + 1).map((i) => (
         <div className="relative" key={i}>
           <div className="relative overflow-hidden aspect-[2/3]">

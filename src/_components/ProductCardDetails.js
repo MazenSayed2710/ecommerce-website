@@ -18,58 +18,60 @@ export default function ProductCardDetails({
   const [currentSize, setCurrentSize] = useState(data.sizes?.[0]);
 
   return (
-    <div className={isPopup ? "" : "py-4"}>
-      <div className="flex flex-col sm:flex-row gap-5 h-full">
-        <div
-          className={`sm:w-1/2 w-full grid overflow-hidden ${
-            isPopup ? "grid-cols-1" : "sm:grid-cols-[15%_85%]"
-          } gap-3`}
-        >
-          {!isPopup && (
-            <ThumbnailList
-              data={data}
-              activeImg={activeImg}
-              setActiveImg={setActiveImg}
-            />
-          )}
-          <MainImage
+    <div
+      className={`sm:overflow-y-auto overflow-y-scroll px-3 sm:px-0 sm:flex gap-3 ${
+        isPopup ? "" : "py-4"
+      }`}
+    >
+      <div
+        className={`sm:w-1/2 w-full grid overflow-hidden ${
+          isPopup ? "grid-cols-1" : "sm:grid-cols-[15%_85%]"
+        } gap-3`}
+      >
+        {!isPopup && (
+          <ThumbnailList
             data={data}
             activeImg={activeImg}
             setActiveImg={setActiveImg}
           />
-        </div>
-        <div
-          className={`sm:w-1/2 flex flex-col gap-5 ${
-            isPopup && "py-4 overflow-y-scroll"
-          }`}
-        >
-          <ProductInfo data={data} />
+        )}
+        <MainImage
+          data={data}
+          activeImg={activeImg}
+          setActiveImg={setActiveImg}
+        />
+      </div>
+      <div
+        className={`sm:w-1/2 flex flex-col gap-5 ${
+          isPopup && "py-4 sm:overflow-y-scroll"
+        }`}
+      >
+        <ProductInfo data={data} isPopup={isPopup} />
 
-          <ColorOptions
-            data={data}
-            setActiveImg={setActiveImg}
-            currentColor={currentColor}
-            setCurrentColor={setCurrentColor}
-          />
+        <ColorOptions
+          data={data}
+          setActiveImg={setActiveImg}
+          currentColor={currentColor}
+          setCurrentColor={setCurrentColor}
+        />
 
-          <SizeOptions
-            data={data}
-            currentSize={currentSize}
-            setCurrentSize={setCurrentSize}
-          />
+        <SizeOptions
+          data={data}
+          currentSize={currentSize}
+          setCurrentSize={setCurrentSize}
+        />
 
-          <ProductButtons
-            data={data}
-            currentColor={currentColor}
-            currentSize={currentSize}
-            activeImg={activeImg}
-            handleClose={handleClose}
-          />
+        <ProductButtons
+          data={data}
+          currentColor={currentColor}
+          currentSize={currentSize}
+          activeImg={activeImg}
+          handleClose={handleClose}
+        />
 
-          <ProductMeta data={data} />
+        <ProductMeta data={data} />
 
-          <SocialMediaIcons />
-        </div>
+        <SocialMediaIcons />
       </div>
     </div>
   );

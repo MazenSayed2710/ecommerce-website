@@ -47,7 +47,7 @@ function ProductButtons({
     }
   };
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       <div className="grid sm:grid-cols-[1fr_1fr_auto] grid-cols-2 grid-rows-3 sm:grid-rows-2 mb-3 gap-5 justify-items-center">
         <Quantity value={value} setValue={setValue} inputWidth="w-16" />
 

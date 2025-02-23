@@ -3,7 +3,7 @@ import Image from "next/image";
 function ThumbnailList({ data, activeImg, setActiveImg }) {
   const images = data.images;
   return (
-    <div className="flex sm:flex-col gap-3 sm:row-start-auto row-start-2 overflow-x-scroll">
+    <div className="flex sm:flex-col gap-3 sm:row-start-auto row-start-2 sm:overflow-x-hidden overflow-x-scroll">
       {images.map((img) => (
         <button
           key={img}

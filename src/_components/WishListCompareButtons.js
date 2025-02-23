@@ -18,14 +18,14 @@ function WishListCompareButtons({ data }) {
   return (
     <div>
       {pathName === "/wishlist" ? (
-        <div className="absolute left-3 top-3 grid items-center text-gray-100">
+        <div className="absolute left-3 top-3 grid items-center text-gray-700">
           <button
             className="font-thin text-xl w-8 h-8 rounded-full  bg-white flex items-center justify-center hover:bg-custom-black hover:text-gray-100"
             onClick={() => dispatch(deleteProductFromWishlist(data.id))}
           >
             <AiOutlineDelete />
           </button>
-          <button className=" font-thin text-xl w-8 h-8  flex items-center justify-center  hover:text-gray-700">
+          <button className=" font-thin text-xl w-8 h-8  flex items-center justify-center hover:text-gray-700">
             <GoGitCompare />
           </button>
         </div>
