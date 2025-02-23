@@ -24,9 +24,9 @@ export default function ProductCardDetails({
       }`}
     >
       <div
-        className={`sm:w-1/2 w-full grid overflow-hidden ${
+        className={`sm:w-1/2 w-full grid overflow-hidden gap-3 ${
           isPopup ? "grid-cols-1" : "sm:grid-cols-[15%_85%]"
-        } gap-3`}
+        } `}
       >
         {!isPopup && (
           <ThumbnailList

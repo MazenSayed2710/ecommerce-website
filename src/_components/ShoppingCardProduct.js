@@ -1,16 +1,10 @@
 "use cleint";
 import Image from "next/image";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
-import { capitalize, createPathName, formatNumberWithCommas } from "./helpers";
+import { formatNumberWithCommas } from "./helpers";
 import Quantity from "./Quantity";
-import {
-  deleteProductFromShoppingcard,
-  updateProduct,
-} from "@/lib/features/shoppingCardSlice";
+import { updateProduct } from "@/lib/features/shoppingCardSlice";
 import PopupModal from "./PopupModal";
 import EditPopup from "./EditPopup";
 import ShoppingProductInfo from "./ShoppingProductInfo";
