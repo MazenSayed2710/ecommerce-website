@@ -1,5 +1,3 @@
-import WishlistContent from "@/_components/WishlistContent";
-import WishlistHeader from "@/_components/WishlistHeader";
 import CollectionHeaderSkeleton from "@/_components/CollectionHeaderSkeleton";
 import Skeleton from "react-loading-skeleton";
 
