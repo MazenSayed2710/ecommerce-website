@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 
 function loading() {
   return (
-    <div>
+    <>
       <CollectionHeaderSkeleton />
       <div className="max-w-[1200px] m-auto grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-10 py-10 px-5">
         {Array.from({ length: 6 }, (_, i) => i + 1).map((i) => (
@@ -12,7 +12,7 @@ function loading() {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }
 
