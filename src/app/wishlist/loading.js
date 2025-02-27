@@ -5,10 +5,14 @@ function Loading() {
   return (
     <div>
       <CollectionHeaderSkeleton />
-      <div className="max-w-[1200px] m-auto grid grid-cols-3 gap-10 py-10">
+      <div className="max-w-[1200px] m-auto grid px-5 grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-10 py-10">
         {Array.from({ length: 6 }, (_, i) => i + 1).map((i) => (
-          <div className="relative aspect-[2.5/3]  h-full" key={i}>
-            <Skeleton height="100%" width="100%" className="!rounded-lg" />
+          <div key={i} className="overflow-hidden grid gap-1">
+            <div className="relative aspect-[2.5/3]">
+              <Skeleton height="100%" width="100%" className="!rounded-lg" />
+            </div>
+            <Skeleton height={15} width={100} />
+            <Skeleton height={15} width={50} />
           </div>
         ))}
       </div>

@@ -1,6 +1,6 @@
 function Quantity({ value, setValue = null, inputWidth, handleChange = null }) {
   return (
-    <div className="flex items-center rounded-full border-2 text-xl font-semibold border-gray-800 w-fit">
+    <div className="flex items-center rounded-full border text-xl font-semibold border-gray-800 w-fit">
       <button
         className="px-4 py-1  hover:text-blue-400 "
         onClick={() => {

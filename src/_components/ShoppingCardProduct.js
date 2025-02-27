@@ -38,7 +38,7 @@ function ShoppingCardProduct({ data }) {
         <p className="text-custom-white font-semibold">
           ${formatNumberWithCommas(data.price)}
         </p>
-        <div className="pb-1">
+        <div className="!pb-2">
           <Quantity
             value={data.quantity}
             inputWidth="w-16"

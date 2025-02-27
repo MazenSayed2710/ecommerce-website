@@ -5,7 +5,7 @@ function loading() {
     <div className="py-4 max-w-[1200px] m-auto p-5">
       <div className="flex flex-col sm:flex-row gap-5 h-full">
         <div className="sm:w-1/2 w-full grid sm:grid-cols-[15%_85%] gap-3">
-          <div className="flex flex-col gap-3">
+          <div className="flex sm:flex-col gap-3 sm:row-start-auto row-start-2">
             {Array.from({ length: 4 }, (_, i) => i + 1).map((i) => (
               <Skeleton width={80} height={80} key={i} />
             ))}
@@ -33,11 +33,18 @@ function loading() {
             </div>
           </div>
 
-          <div className="flex items-center gap-5 mb-3 w-full  min-h-[56px] ">
-            <Skeleton width={120} height={40} className="rounded-md" />
-            <Skeleton width={150} height={40} className="rounded-md" />
-            <Skeleton width={50} height={50} circle />
-            <Skeleton width={50} height={50} circle />
+          <div className="grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 gap-5 items-center">
+            <Skeleton width={120} height={40} />
+            <div className="flex items-center gap-5 mb-3 w-full  min-h-[56px] sm:col-start-3">
+              <Skeleton width={50} height={50} circle />
+              <Skeleton width={50} height={50} circle />
+            </div>
+            <div className="col-span-2 sm:col-span-1 sm:col-start-2 sm:row-start-1">
+              <Skeleton width="100%" height={40} />
+            </div>
+            <div className="row-start-3 sm:row-start-auto sm:col-span-3 col-span-2">
+              <Skeleton width="100%" height={40} />
+            </div>
           </div>
         </div>
       </div>
