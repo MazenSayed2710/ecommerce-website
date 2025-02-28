@@ -23,7 +23,9 @@ async function Header() {
         </li>
         <li className=" hover:text-blue-400">Sales</li>
         <li className=" hover:text-blue-400">Trinding</li>
-        <li className=" hover:text-blue-400">Shopping cart</li>
+        <li className=" hover:text-blue-400">
+          <Link href="shoppingCard">Shopping cart</Link>
+        </li>
       </ul>
       <ul className=" flex gap-3 items-center">
         <SearchComponent collections={collections} />
@@ -43,7 +45,7 @@ async function Header() {
         </li>
         <li className="text-xl  hover:text-blue-300">
           <Link
-            href="/shoppingCart"
+            href="/shoppingCard"
             className="duration-[0.5s] hover:scale-[1.2]"
           >
             <ShoppingCartIcon />
