@@ -19,10 +19,10 @@ async function Header() {
       </Link>
       <ul className="gap-5 hidden sm:flex">
         <li className=" hover:text-blue-400">
-          <Link href="/collections">collections</Link>
+          <Link href="/collections">Collections</Link>
         </li>
-        <li className=" hover:text-blue-400">sales</li>
-        <li className=" hover:text-blue-400">trinding</li>
+        <li className=" hover:text-blue-400">Sales</li>
+        <li className=" hover:text-blue-400">Trinding</li>
         <li className=" hover:text-blue-400">Shopping cart</li>
       </ul>
       <ul className=" flex gap-3 items-center">

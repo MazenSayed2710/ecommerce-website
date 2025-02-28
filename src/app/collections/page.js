@@ -1,3 +1,4 @@
+import HeaderWithImg from "@/_components/HeaderWithImg";
 import Collections from "@/_components/Collections";
 
 export const metadata = {
@@ -7,7 +8,12 @@ export const metadata = {
 };
 
 export function page() {
-  return <Collections />;
+  return (
+    <div>
+      <HeaderWithImg img="/bg-heading.jpg">Collections</HeaderWithImg>
+      <Collections />
+    </div>
+  );
 }
 
 export default page;
