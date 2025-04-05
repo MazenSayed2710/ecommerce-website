@@ -2,8 +2,8 @@ import CollectionHeader from "@/_components/CollectionHeader";
 import FilterSection from "@/_components/FilterSection";
 import Products from "@/_components/Products";
 import { capitalize } from "@/_components/helpers";
-import { getSpecificProducts } from "@/app/_lib/data-service";
-import { supabase } from "@/app/_lib/supabase";
+import { getSpecificProducts } from "@/lib/data-service";
+import { supabase } from "@/lib/supabase";
 
 export async function generateMetadata({ params }) {
   const collectionName = (await params).collectionType;

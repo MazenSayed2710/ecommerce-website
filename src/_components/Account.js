@@ -1,4 +1,4 @@
-import { signOutAccount } from "@/app/_lib/actions";
+import { signOutAccount } from "@/lib/actions";
 import Image from "next/image";
 import { MdOutlineLogout } from "react-icons/md";
 

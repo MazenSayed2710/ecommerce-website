@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
-import { signInwithSupabase } from "@/app/_lib/data-service";
+import { signInwithSupabase } from "@/lib/data-service";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google,

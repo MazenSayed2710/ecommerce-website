@@ -4,7 +4,7 @@ import Footer from "@/_components/Footer";
 import StoreProvider from "@/_components/StoreProvider";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
-import { getCollections } from "./_lib/data-service";
+import { getCollections } from "../lib/data-service";
 import { Suspense } from "react";
 import Spinner from "@/_components/Spinner";
 

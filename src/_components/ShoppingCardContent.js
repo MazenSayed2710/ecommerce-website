@@ -1,13 +1,22 @@
 "use client";
 import { useSelector } from "react-redux";
 import ShoppingCardProduct from "./ShoppingCardProduct";
-import { formatNumberWithCommas } from "./helpers";
-import { useState } from "react";
+import { formatNumberWithCommas, mergeProductQuantities } from "./helpers";
+import { useEffect, useState } from "react";
+import { getAllData, resetData } from "@/_utils/shoppingCardIndexedDb";
+import ShoppingCardProductSkeleton from "./ShoppingCardProductSkeleton";
+import {
+  getUserShoppingCardAction,
+  setUserShoppingCardAction,
+} from "@/lib/actions";
 
-function ShoppingCardContent() {
+function ShoppingCardContent({ session }) {
   const products = useSelector((state) => state.shoppingCard.products);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
   const suptotal = products.reduce((acc, cur) => acc + cur.total, 0);
   const [isChecked, setIsChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  console.log(displayedProducts);
   const handleSubmit = async () => {
     try {
       const req = await fetch("/api/checkout-session", {
@@ -25,8 +34,27 @@ function ShoppingCardContent() {
       console.error("Error during fetch:", error);
     }
   };
+  useEffect(() => {
+    async function storeData() {
+      setIsLoading(true);
+      const storedProducts = await getAllData();
+      if (session?.user) {
+        const data = await getUserShoppingCardAction(session.user.email);
+        const uniqeData = mergeProductQuantities(storedProducts, data.products);
+        await setUserShoppingCardAction(session.user.email, uniqeData);
+        const dataAfterUpdate = await getUserShoppingCardAction(
+          session.user.email
+        );
+        setDisplayedProducts(dataAfterUpdate.products);
+        resetData();
+      } else {
+        setDisplayedProducts(storedProducts);
+      }
+      setIsLoading(false);
+    }
+    storeData();
+  }, [session?.user]);
 
-  if (!products) return;
   return (
     <div className="max-w-[1200px] m-auto py-16">
       <div className="grid-cols-[40%_20%_20%_20%] font-semibold uppercase text-custom-black py-5 hidden sm:grid border-b-[1px] border-gray-300">
@@ -36,9 +64,19 @@ function ShoppingCardContent() {
         <p>Total</p>
       </div>
       <div className="py-5">
-        {products.map((product) => (
-          <ShoppingCardProduct data={product} key={product.id} />
-        ))}
+        {isLoading ? (
+          <ShoppingCardProductSkeleton />
+        ) : displayedProducts?.length ? (
+          displayedProducts.map((product) => (
+            <ShoppingCardProduct
+              data={product}
+              key={product.id}
+              setDisplayedProducts={setDisplayedProducts}
+            />
+          ))
+        ) : (
+          <p>No products in your shopping cart.</p>
+        )}
       </div>
 
       <div className="flex flex-col items-center sm:items-end text-custom-white gap-3 px-5">

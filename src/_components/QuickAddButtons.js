@@ -1,3 +1,5 @@
+import { addData, getAllData } from "@/_utils/shoppingCardIndexedDb";
+import { addToCard } from "@/lib/actions";
 import { setProduct } from "@/lib/features/shoppingCardSlice";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -7,8 +9,20 @@ import { useDispatch } from "react-redux";
 function QuickAddButtons({ data }) {
   const [value, setValue] = useState(1);
   const dispatch = useDispatch();
-  const handleAddToCard = () => {
+  const handleAddToCard = async () => {
     dispatch(setProduct({ ...data, quantity: value, img: data.images[0] }));
+    const allData = await getAllData();
+    console.log(data, allData);
+    const duplicatedProduct = allData.find(
+      (p) =>
+        p.name === data.name && p.color === data.color && p.size === data.size
+    );
+    await addData({
+      ...data,
+      quantity: value,
+      img: data.images[0],
+      total: value * data.price,
+    });
     toast.success("Product added to cart");
   };
   return (

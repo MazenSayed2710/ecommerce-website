@@ -8,13 +8,14 @@ export const metadata = {
 };
 async function page() {
   const session = await auth();
-  if (!session) redirect("/api/auth/signin");
+  // console.log(session);
+  // if (!session) redirect("/api/auth/signin");
   return (
     <div>
       <HeaderWithImg img="/shopping-cart-head.jpg">
         <span className="uppercase font-semibold">shopping card</span>
       </HeaderWithImg>
-      <ShoppingCardContent />
+      <ShoppingCardContent session={session} />
     </div>
   );
 }

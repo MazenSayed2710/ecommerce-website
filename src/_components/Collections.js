@@ -1,4 +1,4 @@
-import { getCollections } from "@/app/_lib/data-service";
+import { getCollections } from "@/lib/data-service";
 import Collection from "./Collection";
 async function Collections() {
   const collections = await getCollections();

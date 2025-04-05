@@ -1,4 +1,4 @@
-import { getSliderData } from "@/app/_lib/data-service";
+import { getSliderData } from "@/lib/data-service";
 import SliderCleint from "./SliderCleint";
 
 async function Slider() {

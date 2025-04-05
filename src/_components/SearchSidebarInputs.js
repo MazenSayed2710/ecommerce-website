@@ -1,5 +1,5 @@
 "use client";
-import { searchApi } from "@/app/_lib/actions";
+import { searchApi } from "@/lib/actions";
 import { useState } from "react";
 
 function SearchSidebarInputs({ collections, setResults }) {

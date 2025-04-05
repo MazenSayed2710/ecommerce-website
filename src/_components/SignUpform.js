@@ -1,5 +1,5 @@
 "use client";
-import { signUpwithSupabase } from "@/app/_lib/actions";
+import { signUpwithSupabase } from "@/lib/actions";
 import { useState } from "react";
 import toast from "react-hot-toast";
 

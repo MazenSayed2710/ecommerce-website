@@ -1,4 +1,4 @@
-import { getTrindingProducts } from "@/app/_lib/data-service";
+import { getTrindingProducts } from "@/lib/data-service";
 import TrendingAndBestSeller from "./TrendingAndBestSeller";
 async function TrindingProducts() {
   const triningProducts = await getTrindingProducts();

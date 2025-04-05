@@ -2,11 +2,14 @@ import Link from "next/link";
 import { capitalize, createPathName } from "./helpers";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { deleteProductFromShoppingcard } from "@/lib/features/shoppingCardSlice";
-import { useDispatch } from "react-redux";
+import { deleteData, getAllData } from "@/_utils/shoppingCardIndexedDb";
 
-function ShoppingProductInfo({ data, OpenModalBtnref, setOpenEditComponent }) {
-  const dispatch = useDispatch();
+function ShoppingProductInfo({
+  data,
+  OpenModalBtnref,
+  setOpenEditComponent,
+  setDisplayedProducts,
+}) {
   return (
     <div className="text-custom-white grid gap-2">
       <Link
@@ -40,8 +43,10 @@ function ShoppingProductInfo({ data, OpenModalBtnref, setOpenEditComponent }) {
           </button>
         )}
         <button
-          onClick={() => {
-            dispatch(deleteProductFromShoppingcard(data));
+          onClick={async () => {
+            await deleteData(data.id);
+            const dataAfterDelete = await getAllData();
+            setDisplayedProducts(dataAfterDelete);
           }}
         >
           <MdDeleteOutline />

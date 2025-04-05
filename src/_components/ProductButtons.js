@@ -1,5 +1,4 @@
 "use client";
-import { setProduct } from "@/lib/features/shoppingCardSlice";
 import { useState } from "react";
 import { GoGitCompare } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +8,11 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import {
+  addData,
+  getAllData,
+  updateData,
+} from "@/_utils/shoppingCardIndexedDb";
 function ProductButtons({
   data,
   currentColor,
@@ -28,6 +32,20 @@ function ProductButtons({
     img: activeImg,
     id: `${data.id}-${currentColor}-${currentSize}`,
     total: Number(data.price) * value,
+  };
+  const handleAddToCard = async () => {
+    const allData = await getAllData();
+    const duplicatedProduct = allData.find((p) => p.id === newproduct.id);
+    if (duplicatedProduct) {
+      await updateData(data.id, {
+        ...duplicatedProduct,
+        quantity: +duplicatedProduct.quantity + newproduct.quantity,
+      });
+    } else {
+      await addData(newproduct);
+    }
+    toast.success("Successfully added to card");
+    handleClose?.();
   };
   const handleSubmit = async () => {
     try {
@@ -53,11 +71,7 @@ function ProductButtons({
 
         <motion.button
           className="bg-blue-400 text-white px-6 py-2 w-full rounded-full font-semibold hover:bg-blue-500 sm:col-span-1 col-span-2"
-          onClick={() => {
-            dispatch(setProduct(newproduct));
-            toast.success("Successfully added to card");
-            handleClose?.();
-          }}
+          onClick={handleAddToCard}
           animate={{
             x: [
               "5px",

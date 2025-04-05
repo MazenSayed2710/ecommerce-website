@@ -33,3 +33,18 @@ export const createPathName = (name, id) => {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "")}`;
 };
+
+export function mergeProductQuantities(arr1, arr2) {
+  const merged = [...arr1];
+
+  arr2.forEach((item2) => {
+    const existingItem = merged.find((item1) => item1.id === item2.id);
+    if (existingItem) {
+      existingItem.quantity += item2.quantity;
+    } else {
+      merged.push(item2);
+    }
+  });
+
+  return merged;
+}

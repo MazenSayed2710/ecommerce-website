@@ -1,6 +1,6 @@
 import { createUrlName } from "@/_components/helpers";
 import ProductCardDetails from "@/_components/ProductCardDetails";
-import { getProductById } from "@/app/_lib/data-service";
+import { getProductById } from "@/lib/data-service";
 export const generateMetadata = async ({ params }) => {
   const productId = (await params).productId.split("-")[0];
   const product = await getProductById(productId);

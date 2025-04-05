@@ -10,16 +10,37 @@ import { GoGitCompare } from "react-icons/go";
 import { IoMdClose } from "react-icons/io";
 import { closePopup } from "@/lib/features/popupModalSlice";
 import { useClickOutside } from "./useClickOutside";
+import { getAllData, updateData } from "@/_utils/shoppingCardIndexedDb";
 
-function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
+function EditPopup({
+  data,
+  setOpenEditComponent,
+  OpenModalBtnref,
+  setDisplayedProducts,
+}) {
   const [quantityValue, setQuantityValue] = useState(data.quantity);
   const [curentColor, setCurentColor] = useState(data.color);
+  const [curentImage, setCurentImage] = useState(data.img);
   const dispatch = useDispatch();
 
   const handleClosePopup = () => {
     dispatch(closePopup());
     setOpenEditComponent(false);
   };
+
+  const handleReplace = async () => {
+    await updateData(data.id, {
+      ...data,
+      quantity: quantityValue,
+      color: curentColor,
+      total: data.price * quantityValue,
+      img: curentImage,
+    });
+    const dataAfterEdit = await getAllData();
+    setDisplayedProducts(dataAfterEdit);
+    handleClosePopup();
+  };
+
   const ref = useClickOutside(handleClosePopup, OpenModalBtnref);
   return (
     <div
@@ -42,10 +63,13 @@ function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
             {data.colors.map((color) => (
               <button
                 key={color.color}
-                onClick={() => setCurentColor(color.colorName)}
+                onClick={() => {
+                  setCurentColor(color.colorName);
+                  setCurentImage(color.img);
+                }}
               >
                 <Image
-                  src={color.img}
+                  src={color.img || data.images[0]}
                   width={50}
                   height={50}
                   alt="product-img"
@@ -75,17 +99,7 @@ function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
       <div className="w-full">
         <button
           className="bg-blue-400 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-500 uppercase w-full mb-3"
-          onClick={() => {
-            dispatch(
-              updateProduct({
-                ...data,
-                quantity: quantityValue,
-                color: curentColor,
-                total: data.price * quantityValue,
-              })
-            );
-            handleClosePopup();
-          }}
+          onClick={handleReplace}
         >
           replace item
         </button>

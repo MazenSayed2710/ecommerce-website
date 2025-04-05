@@ -3,17 +3,17 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import Account from "./Account";
 import SearchComponent from "./SearchComponent";
-import { getCollections } from "@/app/_lib/data-service";
+import { getCollections } from "@/lib/data-service";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import WishListIcon from "./WishListIcon";
+import { MdOutlineLogout } from "react-icons/md";
+import { signOutAccount } from "@/lib/actions";
 async function Header() {
   const session = await auth();
   const collections = await getCollections();
+  // console.log(session);
   return (
     <div className="flex gap-5 h-14 w-full justify-between items-center p-5 ">
-      {/* <button className="sm:hidden block">
-        <RxHamburgerMenu />
-      </button> */}
       <Link href="/" className="font-bold text-4xl">
         Kalles
       </Link>
@@ -29,15 +29,17 @@ async function Header() {
       </ul>
       <ul className=" flex gap-3 items-center">
         <SearchComponent collections={collections} />
-        {/* <li className="text-xl  hover:text-blue-300">
+        <li className="text-xl  hover:text-blue-300">
           {session?.user ? (
-            <Account name={session.user.name} img={session.user.image} />
+            <button className="ml-5" onClick={signOutAccount}>
+              <MdOutlineLogout />
+            </button>
           ) : (
             <Link href="/signIn" className="duration-[0.5s] hover:scale-[1.2]">
               <VscAccount />
             </Link>
           )}
-        </li> */}
+        </li>
         <li className="text-xl hover:text-blue-300 hidden sm:block">
           <Link href="/wishlist" className="duration-[0.5s] hover:scale-[1.2]">
             <WishListIcon />

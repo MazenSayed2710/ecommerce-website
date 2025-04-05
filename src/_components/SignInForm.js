@@ -1,5 +1,5 @@
 "use client";
-import { facebookSignIn, googleSignIn, handleSignIn } from "@/app/_lib/actions";
+import { facebookSignIn, googleSignIn, handleSignIn } from "@/lib/actions";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

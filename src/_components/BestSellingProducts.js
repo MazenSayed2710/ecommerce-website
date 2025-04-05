@@ -1,6 +1,6 @@
 import TrendingAndBestSeller from "./TrendingAndBestSeller";
 
-const { getbestsellingProducts } = require("@/app/_lib/data-service");
+const { getbestsellingProducts } = require("@/lib/data-service");
 
 async function BestSellingProducts() {
   const bestsellingProducts = await getbestsellingProducts();

@@ -141,3 +141,26 @@ export async function searchProducts(search, collection) {
 
   return products;
 }
+
+export async function setUserShoppingCard(email, products) {
+  const { data, error } = await supabase
+    .from("shoppingCard")
+    .upsert([{ email: email, products: products }], { onConflict: ["email"] })
+    .select();
+  if (error) console.error(error.message);
+
+  return data;
+}
+export async function getUserShoppingCard(email) {
+  console.log(email);
+  let { data, error } = await supabase
+    .from("shoppingCard")
+    .select("*")
+    .eq("email", email)
+    .single()
+    .select("products");
+
+  if (error) console.error(error.message);
+
+  return data;
+}
