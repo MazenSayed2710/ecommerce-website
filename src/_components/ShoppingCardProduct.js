@@ -8,7 +8,7 @@ import EditPopup from "./EditPopup";
 import ShoppingProductInfo from "./ShoppingProductInfo";
 import { getAllData, updateData } from "@/_utils/shoppingCardIndexedDb";
 
-function ShoppingCardProduct({ data, setDisplayedProducts }) {
+function ShoppingCardProduct({ data, setDisplayedProducts, session }) {
   const [openEditComponent, setOpenEditComponent] = useState(false);
   const OpenModalBtnref = useRef(null);
   const handleQuantityChange = async (value) => {
@@ -33,6 +33,7 @@ function ShoppingCardProduct({ data, setDisplayedProducts }) {
               OpenModalBtnref={OpenModalBtnref}
               setOpenEditComponent={setOpenEditComponent}
               setDisplayedProducts={setDisplayedProducts}
+              session={session}
             />
           </div>
         </div>
@@ -42,6 +43,7 @@ function ShoppingCardProduct({ data, setDisplayedProducts }) {
             OpenModalBtnref={OpenModalBtnref}
             setOpenEditComponent={setOpenEditComponent}
             setDisplayedProducts={setDisplayedProducts}
+            session={session}
           />
         </div>
         <p className="text-custom-white font-semibold">
@@ -65,6 +67,7 @@ function ShoppingCardProduct({ data, setDisplayedProducts }) {
             setOpenEditComponent={setOpenEditComponent}
             OpenModalBtnref={OpenModalBtnref}
             setDisplayedProducts={setDisplayedProducts}
+            session={session}
           />
         </PopupModal>
       )}

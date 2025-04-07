@@ -35,7 +35,7 @@ function ProductButtons({
   };
   const handleAddToCard = async () => {
     const allData = await getAllData();
-    const duplicatedProduct = allData.find((p) => p.id === newproduct.id);
+    const duplicatedProduct = allData.find((p) => p.name === newproduct.name);
     if (duplicatedProduct) {
       await updateData(data.id, {
         ...duplicatedProduct,
@@ -126,7 +126,6 @@ function ProductButtons({
           Buy it now
         </button>
       </div>
-      {/* <div className="w-full"></div> */}
     </div>
   );
 }

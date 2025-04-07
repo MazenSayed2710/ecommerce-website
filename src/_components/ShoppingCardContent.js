@@ -1,5 +1,4 @@
 "use client";
-import { useSelector } from "react-redux";
 import ShoppingCardProduct from "./ShoppingCardProduct";
 import { formatNumberWithCommas, mergeProductQuantities } from "./helpers";
 import { useEffect, useState } from "react";
@@ -11,18 +10,16 @@ import {
 } from "@/lib/actions";
 
 function ShoppingCardContent({ session }) {
-  const products = useSelector((state) => state.shoppingCard.products);
   const [displayedProducts, setDisplayedProducts] = useState([]);
-  const suptotal = products.reduce((acc, cur) => acc + cur.total, 0);
+  const suptotal = displayedProducts.reduce((acc, cur) => acc + cur.total, 0);
   const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(displayedProducts);
   const handleSubmit = async () => {
     try {
       const req = await fetch("/api/checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ products }),
+        body: JSON.stringify({ displayedProducts }),
       });
       if (req.ok) {
         const { url } = await req.json();
@@ -40,12 +37,17 @@ function ShoppingCardContent({ session }) {
       const storedProducts = await getAllData();
       if (session?.user) {
         const data = await getUserShoppingCardAction(session.user.email);
-        const uniqeData = mergeProductQuantities(storedProducts, data.products);
-        await setUserShoppingCardAction(session.user.email, uniqeData);
-        const dataAfterUpdate = await getUserShoppingCardAction(
-          session.user.email
-        );
-        setDisplayedProducts(dataAfterUpdate.products);
+        if (!data) {
+          await setUserShoppingCardAction(session.user.email, storedProducts);
+          setDisplayedProducts(storedProducts);
+        } else {
+          const uniqeData = mergeProductQuantities(storedProducts, data);
+          await setUserShoppingCardAction(session.user.email, uniqeData);
+          const dataAfterUpdate = await getUserShoppingCardAction(
+            session.user.email
+          );
+          setDisplayedProducts(dataAfterUpdate);
+        }
         resetData();
       } else {
         setDisplayedProducts(storedProducts);
@@ -72,6 +74,7 @@ function ShoppingCardContent({ session }) {
               data={product}
               key={product.id}
               setDisplayedProducts={setDisplayedProducts}
+              session={session}
             />
           ))
         ) : (

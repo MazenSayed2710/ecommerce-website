@@ -152,15 +152,13 @@ export async function setUserShoppingCard(email, products) {
   return data;
 }
 export async function getUserShoppingCard(email) {
-  console.log(email);
   let { data, error } = await supabase
     .from("shoppingCard")
-    .select("*")
+    .select("products")
     .eq("email", email)
-    .single()
-    .select("products");
+    .single();
 
   if (error) console.error(error.message);
 
-  return data;
+  return data.products;
 }

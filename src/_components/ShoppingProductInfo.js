@@ -3,13 +3,36 @@ import { capitalize, createPathName } from "./helpers";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { deleteData, getAllData } from "@/_utils/shoppingCardIndexedDb";
+import {
+  getUserShoppingCardAction,
+  setUserShoppingCardAction,
+} from "@/lib/actions";
+import toast from "react-hot-toast";
 
 function ShoppingProductInfo({
   data,
   OpenModalBtnref,
   setOpenEditComponent,
   setDisplayedProducts,
+  session,
 }) {
+  const handleDelete = async () => {
+    if (session.user) {
+      const products = await getUserShoppingCardAction(session.user.email);
+      console.log(products);
+      const dataAfterDelete = products.filter(
+        (product) => data.id !== product.id
+      );
+      console.log(session.user.email, dataAfterDelete);
+      await setUserShoppingCardAction(session.user.email, dataAfterDelete);
+      setDisplayedProducts(dataAfterDelete);
+    } else {
+      await deleteData(data.id);
+      const dataAfterDelete = await getAllData();
+      setDisplayedProducts(dataAfterDelete);
+    }
+    toast.success("Sucessfully deleted");
+  };
   return (
     <div className="text-custom-white grid gap-2">
       <Link
@@ -42,13 +65,7 @@ function ShoppingProductInfo({
             <FaEdit />
           </button>
         )}
-        <button
-          onClick={async () => {
-            await deleteData(data.id);
-            const dataAfterDelete = await getAllData();
-            setDisplayedProducts(dataAfterDelete);
-          }}
-        >
+        <button onClick={handleDelete}>
           <MdDeleteOutline />
         </button>
       </div>

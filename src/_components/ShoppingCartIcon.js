@@ -1,13 +1,15 @@
 "use client";
+import { useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { NumOfProducts } from "./NumOfProductsContext";
 function ShoppingCartIcon() {
-  const products = useSelector((state) => state.shoppingCard.products);
+  const { shoppingCard } = useContext(NumOfProducts);
+
   return (
     <div className="relative">
       <FaShoppingCart />
       <span className="absolute top-[-8px] right-[-10px] text-xs bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
-        {products.length}
+        {shoppingCard}
       </span>
     </div>
   );

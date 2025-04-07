@@ -1,28 +1,46 @@
-import { addData, getAllData } from "@/_utils/shoppingCardIndexedDb";
-import { addToCard } from "@/lib/actions";
+import {
+  addData,
+  getAllData,
+  updateData,
+} from "@/_utils/shoppingCardIndexedDb";
+import { getUserShoppingCardAction } from "@/lib/actions";
 import { setProduct } from "@/lib/features/shoppingCardSlice";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-
+import { NumOfProducts } from "./NumOfProductsContext";
+import { useSession } from "next-auth/react";
 function QuickAddButtons({ data }) {
   const [value, setValue] = useState(1);
   const dispatch = useDispatch();
+  const { data: session } = useSession();
+  // console.log(session);
+  const { setShoppingCard } = useContext(NumOfProducts);
   const handleAddToCard = async () => {
     dispatch(setProduct({ ...data, quantity: value, img: data.images[0] }));
     const allData = await getAllData();
-    console.log(data, allData);
     const duplicatedProduct = allData.find(
       (p) =>
         p.name === data.name && p.color === data.color && p.size === data.size
     );
-    await addData({
-      ...data,
-      quantity: value,
-      img: data.images[0],
-      total: value * data.price,
-    });
+    if (duplicatedProduct) {
+      await updateData(data.id, {
+        ...data,
+        quantity: duplicatedProduct.quantity + value,
+        img: data.images[0],
+        total: value * data.price,
+      });
+    } else {
+      await addData({
+        ...data,
+        quantity: value,
+        img: data.images[0],
+        total: value * data.price,
+      });
+      const products = await getUserShoppingCardAction(session.user.email);
+      setShoppingCard(products.length);
+    }
     toast.success("Product added to cart");
   };
   return (

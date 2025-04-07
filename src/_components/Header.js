@@ -11,7 +11,6 @@ import { signOutAccount } from "@/lib/actions";
 async function Header() {
   const session = await auth();
   const collections = await getCollections();
-  // console.log(session);
   return (
     <div className="flex gap-5 h-14 w-full justify-between items-center p-5 ">
       <Link href="/" className="font-bold text-4xl">
