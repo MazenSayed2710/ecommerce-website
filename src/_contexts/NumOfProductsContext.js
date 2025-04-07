@@ -6,19 +6,19 @@ import { useSession } from "next-auth/react";
 
 import { createContext, useState, useEffect } from "react";
 
-export const NumOfProducts = createContext(null);
+export const ShoppingCardCountContext = createContext(null);
 export function NumOfProductsProvider({ children }) {
-  const [shoppingCard, setShoppingCard] = useState(0);
+  const [shoppingCardCount, setShoppingCardCount] = useState(0);
   const { data: session } = useSession();
   useEffect(
     function () {
       async function countNumOfProducts() {
         if (session?.user) {
           const products = await getUserShoppingCardAction(session.user.email);
-          setShoppingCard(products.length);
+          setShoppingCardCount(products.length);
         } else {
           const products = await getAllData();
-          setShoppingCard(products.length);
+          setShoppingCardCount(products.length);
         }
       }
       countNumOfProducts();
@@ -26,8 +26,10 @@ export function NumOfProductsProvider({ children }) {
     [session?.user]
   );
   return (
-    <NumOfProducts.Provider value={{ shoppingCard, setShoppingCard }}>
+    <ShoppingCardCountContext.Provider
+      value={{ shoppingCardCount, setShoppingCardCount }}
+    >
       {children}
-    </NumOfProducts.Provider>
+    </ShoppingCardCountContext.Provider>
   );
 }

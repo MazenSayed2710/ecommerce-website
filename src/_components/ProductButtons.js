@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GoGitCompare } from "react-icons/go";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Quantity from "./Quantity";
 import { setWishlistProducts } from "@/lib/features/wishlistSlice";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -13,6 +13,12 @@ import {
   getAllData,
   updateData,
 } from "@/_utils/shoppingCardIndexedDb";
+import {
+  getUserShoppingCardAction,
+  setUserShoppingCardAction,
+} from "@/lib/actions";
+import { useSession } from "next-auth/react";
+import { ShoppingCardCountContext } from "@/_contexts/NumOfProductsContext";
 function ProductButtons({
   data,
   currentColor,
@@ -21,7 +27,8 @@ function ProductButtons({
   handleClose,
 }) {
   const [value, setValue] = useState(1);
-  const dispatch = useDispatch();
+  const { setShoppingCardCount } = useContext(ShoppingCardCountContext);
+  const { data: session } = useSession();
   const products = useSelector((state) => state.wishlist.products);
   const ids = products?.map((product) => product.id);
   const newproduct = {
@@ -34,15 +41,39 @@ function ProductButtons({
     total: Number(data.price) * value,
   };
   const handleAddToCard = async () => {
-    const allData = await getAllData();
-    const duplicatedProduct = allData.find((p) => p.name === newproduct.name);
+    const allData = session?.user
+      ? await getUserShoppingCardAction(session.user.email)
+      : await getAllData();
+    const duplicatedProduct = allData.find((p) => p.id === newproduct.id);
     if (duplicatedProduct) {
-      await updateData(data.id, {
-        ...duplicatedProduct,
-        quantity: +duplicatedProduct.quantity + newproduct.quantity,
-      });
+      if (session?.user) {
+        const dataAfterEdit = allData.map((product) =>
+          product.name === data.name
+            ? {
+                ...duplicatedProduct,
+                quantity: duplicatedProduct.quantity + value,
+                total: value * data.price,
+              }
+            : product
+        );
+        await setUserShoppingCardAction(session.user.email, dataAfterEdit);
+      } else {
+        await updateData(data.id, {
+          ...duplicatedProduct,
+          quantity: +duplicatedProduct.quantity + newproduct.quantity,
+          total: value * data.price,
+        });
+      }
     } else {
-      await addData(newproduct);
+      if (session?.user) {
+        await setUserShoppingCardAction(session.user.email, [
+          ...allData,
+          newproduct,
+        ]);
+      } else {
+        await addData(newproduct);
+      }
+      setShoppingCardCount(allData.length + 1);
     }
     toast.success("Successfully added to card");
     handleClose?.();
@@ -109,7 +140,7 @@ function ProductButtons({
           ) : (
             <button
               className="w-10 h-10 rounded-full border   text-2xl flex items-center justify-center font-thin  border-gray-700 hover:text-blue-400 hover:border-blue-400"
-              onClick={() => dispatch(setWishlistProducts(data))}
+              // onClick={() => dispatch(setWishlistProducts(data))}
             >
               <FaRegHeart />
             </button>

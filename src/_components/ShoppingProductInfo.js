@@ -8,6 +8,8 @@ import {
   setUserShoppingCardAction,
 } from "@/lib/actions";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { ShoppingCardCountContext } from "@/_contexts/NumOfProductsContext";
 
 function ShoppingProductInfo({
   data,
@@ -16,14 +18,15 @@ function ShoppingProductInfo({
   setDisplayedProducts,
   session,
 }) {
+  const { shoppingCardCount, setShoppingCardCount } = useContext(
+    ShoppingCardCountContext
+  );
   const handleDelete = async () => {
     if (session.user) {
       const products = await getUserShoppingCardAction(session.user.email);
-      console.log(products);
       const dataAfterDelete = products.filter(
         (product) => data.id !== product.id
       );
-      console.log(session.user.email, dataAfterDelete);
       await setUserShoppingCardAction(session.user.email, dataAfterDelete);
       setDisplayedProducts(dataAfterDelete);
     } else {
@@ -32,6 +35,7 @@ function ShoppingProductInfo({
       setDisplayedProducts(dataAfterDelete);
     }
     toast.success("Sucessfully deleted");
+    setShoppingCardCount(() => shoppingCardCount - 1);
   };
   return (
     <div className="text-custom-white grid gap-2">

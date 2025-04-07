@@ -7,7 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { getCollections } from "../lib/data-service";
 import { Suspense } from "react";
 import Spinner from "@/_components/Spinner";
-import { NumOfProductsProvider } from "@/_components/NumOfProductsContext";
+import { NumOfProductsProvider } from "@/_contexts/NumOfProductsContext";
 import { SessionProvider } from "next-auth/react";
 export default async function RootLayout({ children }) {
   const collections = await getCollections();

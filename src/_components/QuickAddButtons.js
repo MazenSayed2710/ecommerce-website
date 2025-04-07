@@ -3,43 +3,64 @@ import {
   getAllData,
   updateData,
 } from "@/_utils/shoppingCardIndexedDb";
-import { getUserShoppingCardAction } from "@/lib/actions";
-import { setProduct } from "@/lib/features/shoppingCardSlice";
+import {
+  getUserShoppingCardAction,
+  setUserShoppingCardAction,
+} from "@/lib/actions";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { FaCartShopping } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
-import { NumOfProducts } from "./NumOfProductsContext";
+import { ShoppingCardCountContext } from "../_contexts/NumOfProductsContext";
 import { useSession } from "next-auth/react";
 function QuickAddButtons({ data }) {
   const [value, setValue] = useState(1);
-  const dispatch = useDispatch();
   const { data: session } = useSession();
-  // console.log(session);
-  const { setShoppingCard } = useContext(NumOfProducts);
+  const { setShoppingCardCount } = useContext(ShoppingCardCountContext);
+
   const handleAddToCard = async () => {
-    dispatch(setProduct({ ...data, quantity: value, img: data.images[0] }));
-    const allData = await getAllData();
-    const duplicatedProduct = allData.find(
-      (p) =>
-        p.name === data.name && p.color === data.color && p.size === data.size
-    );
+    const allData = session?.user
+      ? await getUserShoppingCardAction(session.user.email)
+      : await getAllData();
+    const duplicatedProduct = allData.find((p) => p.name === data.name);
     if (duplicatedProduct) {
-      await updateData(data.id, {
-        ...data,
-        quantity: duplicatedProduct.quantity + value,
-        img: data.images[0],
-        total: value * data.price,
-      });
+      if (session?.user) {
+        const dataAfterEdit = allData.map((product) =>
+          product.name === data.name
+            ? {
+                ...duplicatedProduct,
+                quantity: duplicatedProduct.quantity + value,
+                total: value * data.price,
+              }
+            : product
+        );
+        await setUserShoppingCardAction(session.user.email, dataAfterEdit);
+      } else {
+        await updateData(data.id, {
+          ...duplicatedProduct,
+          quantity: duplicatedProduct.quantity + value,
+          total: value * data.price,
+        });
+      }
     } else {
-      await addData({
-        ...data,
-        quantity: value,
-        img: data.images[0],
-        total: value * data.price,
-      });
-      const products = await getUserShoppingCardAction(session.user.email);
-      setShoppingCard(products.length);
+      if (session?.user) {
+        await setUserShoppingCardAction(session.user.email, [
+          ...allData,
+          {
+            ...data,
+            quantity: value,
+            img: data.images[0],
+            total: value * data.price,
+          },
+        ]);
+      } else {
+        await addData({
+          ...data,
+          quantity: value,
+          img: data.images[0],
+          total: value * data.price,
+        });
+      }
+      setShoppingCardCount(allData.length + 1);
     }
     toast.success("Product added to cart");
   };
