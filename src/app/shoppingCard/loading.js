@@ -1,5 +1,5 @@
-import CollectionHeaderSkeleton from "@/_components/CollectionHeaderSkeleton";
-import ShoppingCardProductSkeleton from "@/_components/ShoppingCardProductSkeleton";
+import CollectionHeaderSkeleton from "@/_components/collections/CollectionHeaderSkeleton";
+import ShoppingCardProductSkeleton from "@/_components/shoppingCard/ShoppingCardProductSkeleton";
 import Skeleton from "react-loading-skeleton";
 
 function loading() {

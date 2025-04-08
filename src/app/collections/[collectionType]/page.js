@@ -1,7 +1,7 @@
 import CollectionHeader from "@/_components/CollectionHeader";
-import FilterSection from "@/_components/FilterSection";
-import Products from "@/_components/Products";
-import { capitalize } from "@/_components/helpers";
+import FilterSection from "@/_components/common/FilterSection";
+import Products from "@/_components/product/Products";
+import { capitalize } from "@/_utils/helpers";
 import { getSpecificProducts } from "@/lib/data-service";
 import { supabase } from "@/lib/supabase";
 

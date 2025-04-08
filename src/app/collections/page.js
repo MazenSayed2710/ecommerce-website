@@ -1,4 +1,4 @@
-import HeaderWithImg from "@/_components/HeaderWithImg";
+import HeaderWithImg from "@/_components/common/HeaderWithImg";
 import Collections from "@/_components/Collections";
 
 export const metadata = {

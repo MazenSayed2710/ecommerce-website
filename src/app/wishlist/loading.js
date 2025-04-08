@@ -1,4 +1,4 @@
-import CollectionHeaderSkeleton from "@/_components/CollectionHeaderSkeleton";
+import CollectionHeaderSkeleton from "@/_components/collections/CollectionHeaderSkeleton";
 import Skeleton from "react-loading-skeleton";
 
 function Loading() {

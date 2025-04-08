@@ -1,5 +1,5 @@
-import WishlistContent from "@/_components/WishlistContent";
-import WishlistHeader from "@/_components/WishlistHeader";
+import WishlistContent from "@/_components/wishlist/WishlistContent";
+import WishlistHeader from "@/_components/wishlist/WishlistHeader";
 
 export const metadata = {
   title: "Wishlist | Kalles",

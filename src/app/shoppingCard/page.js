@@ -1,5 +1,5 @@
-import HeaderWithImg from "@/_components/HeaderWithImg";
-import ShoppingCardContent from "@/_components/ShoppingCardContent";
+import HeaderWithImg from "@/_components/common/HeaderWithImg";
+import ShoppingCardContent from "@/_components/shoppingCard/ShoppingCardContent";
 import { auth } from "@/lib/auth";
 
 export const metadata = {

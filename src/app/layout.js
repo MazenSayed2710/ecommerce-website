@@ -1,12 +1,12 @@
-import Header from "@/_components/Header";
+import Header from "@/_components/layout/Header";
 import "./globals.css";
-import Footer from "@/_components/Footer";
+import Footer from "@/_components/layout/Footer";
 import StoreProvider from "@/_components/StoreProvider";
 import { Toaster } from "react-hot-toast";
 import "react-loading-skeleton/dist/skeleton.css";
 import { getCollections } from "../lib/data-service";
 import { Suspense } from "react";
-import Spinner from "@/_components/Spinner";
+import Spinner from "@/_components/common/Spinner";
 import { NumOfProductsProvider } from "@/_contexts/NumOfProductsContext";
 import { SessionProvider } from "next-auth/react";
 export default async function RootLayout({ children }) {

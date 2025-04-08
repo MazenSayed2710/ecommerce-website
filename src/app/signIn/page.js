@@ -1,4 +1,4 @@
-import SignInForm from "@/_components/SignInForm";
+import SignInForm from "@/_components/signInOut/SignInForm";
 export const metadata = {
   title: "Sign In | Kalles",
 };

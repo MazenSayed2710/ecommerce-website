@@ -1,9 +1,9 @@
-import TrendngCollections from "@/_components/TrendngCollections";
-import ServiceSection from "@/_components/ServiceSection";
-import HighlightSection from "@/_components/HighlightSection";
-import Slider from "@/_components/Slider";
-import TrindingProducts from "@/_components/TrindingProducts";
-import BestSellingProducts from "@/_components/BestSellingProducts";
+import TrendngCollections from "@/_components/layout/TrendngCollections";
+import ServiceSection from "@/_components/layout/ServiceSection";
+import HighlightSection from "@/_components/layout/HighlightSection";
+import Slider from "@/_components/layout/Slider";
+import TrindingProducts from "@/_components/layout/TrindingProducts";
+import BestSellingProducts from "@/_components/layout/BestSellingProducts";
 
 export const metadata = {
   title: "Kalles Shopify",
