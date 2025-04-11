@@ -9,13 +9,14 @@ import { GoGitCompare } from "react-icons/go";
 import { IoMdClose } from "react-icons/io";
 import { closePopup } from "@/lib/features/popupModalSlice";
 import { useClickOutside } from "../../_hooks/useClickOutside";
-import { getAllData, updateData } from "@/_utils/shoppingCardIndexedDb";
+
 import {
   getUserShoppingCardAction,
   setUserShoppingCardAction,
 } from "@/lib/actions";
 import toast from "react-hot-toast";
 import SizeOptions from "../common/SizeOptions";
+import { getAllShoppingItems, updateShoppingItem } from "@/_utils/IndexedDb";
 
 function EditPopup({
   data,
@@ -52,7 +53,7 @@ function EditPopup({
       await setUserShoppingCardAction(session.user.email, productsAfterUpdate);
       setDisplayedProducts(productsAfterUpdate);
     } else {
-      await updateData(data.id, {
+      await updateShoppingItem(data.id, {
         ...data,
         quantity: quantityValue,
         color: currentColor,
@@ -60,7 +61,7 @@ function EditPopup({
         total: data.price * quantityValue,
         img: currentImage,
       });
-      const dataAfterEdit = await getAllData();
+      const dataAfterEdit = await getAllShoppingItems();
       setDisplayedProducts(dataAfterEdit);
     }
     handleClosePopup();

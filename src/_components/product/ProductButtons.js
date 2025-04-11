@@ -7,6 +7,11 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useAddToCard } from "@/_hooks/useAddToCard";
+import {
+  getUserWishlistCardAction,
+  setUserWishlistCardAction,
+} from "@/lib/actions";
+import { useAddToWishlist } from "@/_hooks/useAddToWishlist";
 function ProductButtons({
   data,
   currentColor,
@@ -15,8 +20,7 @@ function ProductButtons({
   handleClose,
 }) {
   const [quantity, setQuantity] = useState(1);
-  const products = useSelector((state) => state.wishlist.products);
-  const ids = products?.map((product) => product.id);
+  const [ids, setIds] = useState([]);
   const addProduct = useAddToCard({
     data,
     quantity,
@@ -54,6 +58,8 @@ function ProductButtons({
       console.error("Error during fetch:", error);
     }
   };
+  const handleAddToWishlist = useAddToWishlist(data, setIds);
+
   return (
     <div className="w-full px-3">
       <div className="grid sm:grid-cols-[1fr_1fr_auto] grid-cols-2 grid-rows-3 sm:grid-rows-2 mb-3 gap-5 justify-items-center">
@@ -99,7 +105,7 @@ function ProductButtons({
           ) : (
             <button
               className="w-10 h-10 rounded-full border   text-2xl flex items-center justify-center font-thin  border-gray-700 hover:text-blue-400 hover:border-blue-400"
-              // onClick={() => dispatch(setWishlistProducts(data))}
+              onClick={handleAddToWishlist}
             >
               <FaRegHeart />
             </button>

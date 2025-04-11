@@ -4,6 +4,7 @@ import HighlightSection from "@/_components/layout/HighlightSection";
 import Slider from "@/_components/layout/Slider";
 import TrindingProducts from "@/_components/layout/TrindingProducts";
 import BestSellingProducts from "@/_components/layout/BestSellingProducts";
+import SessionHandler from "@/_components/layout/SessionHandler ";
 
 export const metadata = {
   title: "Kalles Shopify",
@@ -14,6 +15,7 @@ export const metadata = {
 export default async function Home() {
   return (
     <>
+      <SessionHandler />
       <Slider />
       <TrendngCollections />
       <TrindingProducts />
@@ -23,7 +25,3 @@ export default async function Home() {
     </>
   );
 }
-console.log(`
-  Hamburger menu
-  handle errors
-  `);

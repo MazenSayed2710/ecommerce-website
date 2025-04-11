@@ -1,5 +1,5 @@
+import Collections from "@/_components/collections/Collections";
 import HeaderWithImg from "@/_components/common/HeaderWithImg";
-import Collections from "@/_components/Collections";
 
 export const metadata = {
   title: "Collections",

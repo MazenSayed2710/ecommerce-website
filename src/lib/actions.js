@@ -1,13 +1,17 @@
 "use server";
-import { auth, signIn, signOut } from "@/lib/auth";
+import { signIn, signOut } from "@/lib/auth";
 import {
+  checkEmailExisting,
   getUserShoppingCard,
+  getUserWishlistCard,
   searchProducts,
+  setUser,
   setUserShoppingCard,
+  setUserWishlistCard,
   signInwithSupabase,
   signUp,
 } from "./data-service";
-import { addData, getAllData, resetData } from "@/_utils/shoppingCardIndexedDb";
+import { revalidatePath } from "next/cache";
 
 export async function signUpwithSupabase(formData) {
   console.log(formData.get("email"));
@@ -45,14 +49,31 @@ export async function searchApi(search, collection) {
   const products = await searchProducts(search, collection);
   return products;
 }
-export async function addToCard(data) {
-  await addData(data);
-}
 
+export async function checkEmailExistingAction(email) {
+  const isExist = await checkEmailExisting(email);
+  return isExist;
+}
+export async function setUserAction(
+  email,
+  shoppingCartProducts,
+  wishlistProductsCart
+) {
+  await setUser(email, shoppingCartProducts, wishlistProductsCart);
+}
 export async function setUserShoppingCardAction(email, products) {
   await setUserShoppingCard(email, products);
 }
 export async function getUserShoppingCardAction(email) {
   const data = await getUserShoppingCard(email);
+  return data;
+}
+export async function setUserWishlistCardAction(email, products) {
+  await setUserWishlistCard(email, products);
+  revalidatePath("/wishlist");
+  revalidatePath("/", "layout");
+}
+export async function getUserWishlistCardAction(email) {
+  const data = await getUserWishlistCard(email);
   return data;
 }

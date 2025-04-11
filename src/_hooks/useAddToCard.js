@@ -1,9 +1,10 @@
 import { ShoppingCardCountContext } from "@/_contexts/NumOfProductsContext";
 import {
-  addData,
-  getAllData,
-  updateData,
-} from "@/_utils/shoppingCardIndexedDb";
+  addShoppingItem,
+  getAllShoppingItems,
+  updateShoppingItem,
+} from "@/_utils/IndexedDb";
+
 import {
   getUserShoppingCardAction,
   setUserShoppingCardAction,
@@ -34,7 +35,7 @@ export function useAddToCard({
   const addProduct = async () => {
     const allData = session?.user
       ? await getUserShoppingCardAction(session.user.email)
-      : await getAllData();
+      : await getAllShoppingItems();
     const duplicatedProduct = allData.find((p) => p.id === newproduct.id);
 
     if (duplicatedProduct) {
@@ -49,7 +50,7 @@ export function useAddToCard({
         );
         await setUserShoppingCardAction(session.user.email, dataAfterEdit);
       } else {
-        await updateData(newproduct.id, updatedProduct);
+        await updateShoppingItem(newproduct.id, updatedProduct);
       }
     } else {
       if (session?.user) {
@@ -58,7 +59,7 @@ export function useAddToCard({
           newproduct,
         ]);
       } else {
-        await addData(newproduct);
+        await addShoppingItem(newproduct);
       }
       setShoppingCardCount(allData.length + 1);
     }

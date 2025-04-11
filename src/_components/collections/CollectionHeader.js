@@ -1,5 +1,5 @@
 import Link from "next/link";
-import HeaderWithImg from "./HeaderWithImg";
+import HeaderWithImg from "../common/HeaderWithImg";
 
 function CollectionHeader({ collectionName, img }) {
   return (

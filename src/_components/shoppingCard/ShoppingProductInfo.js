@@ -2,7 +2,6 @@ import Link from "next/link";
 import { capitalize, createPathName } from "../../_utils/helpers";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { deleteData, getAllData } from "@/_utils/shoppingCardIndexedDb";
 import {
   getUserShoppingCardAction,
   setUserShoppingCardAction,
@@ -10,6 +9,7 @@ import {
 import toast from "react-hot-toast";
 import { useContext } from "react";
 import { ShoppingCardCountContext } from "@/_contexts/NumOfProductsContext";
+import { deleteShoppingItem, getAllShoppingItems } from "@/_utils/IndexedDb";
 
 function ShoppingProductInfo({
   data,
@@ -30,8 +30,8 @@ function ShoppingProductInfo({
       await setUserShoppingCardAction(session.user.email, dataAfterDelete);
       setDisplayedProducts(dataAfterDelete);
     } else {
-      await deleteData(data.id);
-      const dataAfterDelete = await getAllData();
+      await deleteShoppingItem(data.id);
+      const dataAfterDelete = await getAllShoppingItems();
       setDisplayedProducts(dataAfterDelete);
     }
     toast.success("Sucessfully deleted");

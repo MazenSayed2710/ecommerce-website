@@ -1,6 +1,6 @@
 "use client";
 
-import { getAllData } from "@/_utils/shoppingCardIndexedDb";
+import { getAllShoppingItems } from "@/_utils/IndexedDb";
 import { getUserShoppingCardAction } from "@/lib/actions";
 import { useSession } from "next-auth/react";
 
@@ -17,7 +17,7 @@ export function NumOfProductsProvider({ children }) {
           const products = await getUserShoppingCardAction(session.user.email);
           setShoppingCardCount(products.length);
         } else {
-          const products = await getAllData();
+          const products = await getAllShoppingItems();
           setShoppingCardCount(products.length);
         }
       }

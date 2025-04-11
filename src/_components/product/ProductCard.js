@@ -4,22 +4,23 @@ import ProductHoverDetails from "./ProductHoverDetails";
 import Link from "next/link";
 import { formatNumberWithCommas } from "../../_utils/helpers";
 import { useState } from "react";
-import WishListCompareButtons from "../wishlist/WishListCompareButtons";
 import ProductHoverButtons from "./ProductHoverButtons";
 import ColorOptions from "./ColorOptions";
 import ProductStatus from "./ProductStatus";
 import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import DisplayPopups from "../popups/DisplayPopups";
-
-function ProductCard({ data }) {
+import { usePathname } from "next/navigation";
+import { AiOutlineDelete } from "react-icons/ai";
+import { ImSpinner2 } from "react-icons/im";
+import { useManageWishlist } from "@/_hooks/useManageWishlist";
+function ProductCard({ data, ids }) {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [openQuickShopModal, setOpenQuickShopModal] = useState(false);
   const [activeImg, setActiveImg] = useState(data.images[0]);
   const [currentColor, setCurrentColor] = useState(data.colors?.[0].colorName);
-  const products = useSelector((state) => state.wishlist.products);
-  const ids = products?.map((product) => product.id);
+  const { handleDeletefromWishlist, isLoading } = useManageWishlist();
+  const pathName = usePathname();
   const imagevariant = {
     initial: { opacity: 1 },
     hover: { opacity: 0, transition: { duration: 0.3 } },
@@ -58,14 +59,30 @@ function ProductCard({ data }) {
             data={data}
             setOpenViewModal={setOpenViewModal}
             setOpenQuickShopModal={setOpenQuickShopModal}
+            ids={ids}
           />
         </motion.div>
         <div className="absolute left-3 top-3 grid gap-1">
-          {ids.includes(data.id) && (
+          {ids.includes(data.id) && pathName !== "/wishlist" ? (
             <Link className="font-thin text-lg" href="/wishlist">
               <FaHeart className="text-red-700" />
             </Link>
-          )}{" "}
+          ) : pathName === "/wishlist" ? (
+            <button
+              className="font-thin text-xl w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-custom-black hover:text-gray-100 z-50"
+              onClick={() => {
+                handleDeletefromWishlist(data.id);
+              }}
+            >
+              {isLoading ? (
+                <ImSpinner2 className="animate-spin text-xl" />
+              ) : (
+                <AiOutlineDelete />
+              )}
+            </button>
+          ) : (
+            ""
+          )}
         </div>
         <div className="flex flex-col gap-2 absolute right-1 bottom-1 sm:hidden items-end">
           <ProductHoverButtons

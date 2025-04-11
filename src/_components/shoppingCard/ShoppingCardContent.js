@@ -5,7 +5,6 @@ import {
   mergeProductQuantities,
 } from "../../_utils/helpers";
 import { useEffect, useState } from "react";
-import { getAllData, resetData } from "@/_utils/shoppingCardIndexedDb";
 import ShoppingCardProductSkeleton from "./ShoppingCardProductSkeleton";
 import {
   getUserShoppingCardAction,
@@ -34,31 +33,31 @@ function ShoppingCardContent({ session }) {
       console.error("Error during fetch:", error);
     }
   };
-  useEffect(() => {
-    async function storeData() {
-      setIsLoading(true);
-      const storedProducts = await getAllData();
-      if (session?.user) {
-        const data = await getUserShoppingCardAction(session.user.email);
-        if (!data) {
-          await setUserShoppingCardAction(session.user.email, storedProducts);
-          setDisplayedProducts(storedProducts);
-        } else {
-          const uniqeData = mergeProductQuantities(storedProducts, data);
-          await setUserShoppingCardAction(session.user.email, uniqeData);
-          const dataAfterUpdate = await getUserShoppingCardAction(
-            session.user.email
-          );
-          setDisplayedProducts(dataAfterUpdate);
-        }
-        resetData();
-      } else {
-        setDisplayedProducts(storedProducts);
-      }
-      setIsLoading(false);
-    }
-    storeData();
-  }, [session?.user]);
+  // useEffect(() => {
+  //   async function storeData() {
+  //     setIsLoading(true);
+  //     const storedProducts = await getAllData();
+  //     if (session?.user) {
+  //       const data = await getUserShoppingCardAction(session.user.email);
+  //       if (!data) {
+  //         await setUserShoppingCardAction(session.user.email, storedProducts);
+  //         setDisplayedProducts(storedProducts);
+  //       } else {
+  //         const uniqeData = mergeProductQuantities(storedProducts, data);
+  //         await setUserShoppingCardAction(session.user.email, uniqeData);
+  //         const dataAfterUpdate = await getUserShoppingCardAction(
+  //           session.user.email
+  //         );
+  //         setDisplayedProducts(dataAfterUpdate);
+  //       }
+  //       resetData();
+  //     } else {
+  //       setDisplayedProducts(storedProducts);
+  //     }
+  //     setIsLoading(false);
+  //   }
+  //   storeData();
+  // }, [session?.user]);
 
   return (
     <div className="max-w-[1200px] m-auto py-16">

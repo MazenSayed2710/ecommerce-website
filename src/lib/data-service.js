@@ -141,11 +141,47 @@ export async function searchProducts(search, collection) {
 
   return products;
 }
+export async function checkEmailExisting(email) {
+  let { data, error } = await supabase
+    .from("userCarts")
+    .select("*")
+    .eq("email", email);
 
+  if (error) console.error(error.message);
+
+  if (!data.length) return false;
+
+  return true;
+}
+
+export async function setUser(
+  email,
+  shoppingCartProducts,
+  wishlistProductsCart
+) {
+  const { error } = await supabase
+    .from("userCarts")
+    .upsert(
+      [
+        {
+          email,
+          shoppingCartProducts,
+          wishlistProductsCart,
+        },
+      ],
+      {
+        onConflict: ["email"],
+      }
+    )
+    .select();
+  if (error) console.error(error.message);
+}
 export async function setUserShoppingCard(email, products) {
   const { data, error } = await supabase
-    .from("shoppingCard")
-    .upsert([{ email: email, products: products }], { onConflict: ["email"] })
+    .from("userCarts")
+    .upsert([{ email: email, shoppingCartProducts: products }], {
+      onConflict: ["email"],
+    })
     .select();
   if (error) console.error(error.message);
 
@@ -153,12 +189,34 @@ export async function setUserShoppingCard(email, products) {
 }
 export async function getUserShoppingCard(email) {
   let { data, error } = await supabase
-    .from("shoppingCard")
-    .select("products")
+    .from("userCarts")
+    .select("shoppingCartProducts")
     .eq("email", email)
     .single();
 
   if (error) console.error(error.message);
 
-  return data.products;
+  return data.shoppingCartProducts;
+}
+export async function setUserWishlistCard(email, wishlistCartProducts) {
+  const { data, error } = await supabase
+    .from("userCarts")
+    .update({ wishlistCartProducts })
+    .eq("email", email)
+    .select();
+
+  if (error) console.error(error.message);
+
+  return data;
+}
+export async function getUserWishlistCard(email) {
+  let { data, error } = await supabase
+    .from("userCarts")
+    .select("wishlistCartProducts")
+    .eq("email", email)
+    .single();
+
+  if (error) console.error(error.message);
+
+  return data.wishlistCartProducts;
 }

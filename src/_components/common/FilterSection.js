@@ -3,7 +3,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IoFilterOutline } from "react-icons/io5";
 import Sidebar from "../layout/Sidebar";
 import { useRef, useState } from "react";
-import FilterSidebar from "../FilterSidebar";
+import FilterSidebar from "./FilterSidebar";
 
 function FilterSection({ sortOptions, products }) {
   const router = useRouter();

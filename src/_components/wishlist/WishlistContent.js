@@ -1,14 +1,17 @@
 "use client";
-import { useSelector } from "react-redux";
 import ProductCard from "../product/ProductCard";
+import { useManageWishlist } from "@/_hooks/useManageWishlist";
 
 function WishlistContent() {
-  const products = useSelector((state) => state.wishlist.products);
-
+  const { wishlistItems, WishlistProductsIds } = useManageWishlist();
   return (
     <div className="max-w-[1200px] m-auto grid grid-cols-2 sm:grid-cols-3 gap-5 justify-center py-10 p-5">
-      {products?.map((product) => (
-        <ProductCard data={product} key={product.id} />
+      {wishlistItems?.map((product) => (
+        <ProductCard
+          data={product}
+          key={product.id}
+          ids={WishlistProductsIds}
+        />
       ))}
     </div>
   );

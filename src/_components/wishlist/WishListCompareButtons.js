@@ -1,20 +1,13 @@
 "use client";
-import {
-  deleteProductFromWishlist,
-  setWishlistProducts,
-} from "@/lib/features/wishlistSlice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { GoGitCompare } from "react-icons/go";
-import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-function WishListCompareButtons({ data }) {
+import { useManageWishlist } from "@/_hooks/useManageWishlist";
+function WishListCompareButtons({ data, ids }) {
   const pathName = usePathname();
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.wishlist.products);
-  const ids = products?.map((product) => product.id);
   const wishListButtonVariant = {
     initial: {
       x: "-50px",
@@ -26,17 +19,15 @@ function WishListCompareButtons({ data }) {
       opacity: 1,
     },
   };
+  const { handleAddToWishlist } = useManageWishlist();
   return (
     <motion.div
       variants={wishListButtonVariant}
-      className="absolute left-3 top-3 grid items-center text-gray-700 z-50"
+      className="absolute left-3 top-3 grid items-center text-gray-700 z-40"
     >
       {pathName === "/wishlist" ? (
         <div className="grid gap-1">
-          <button
-            className="font-thin text-xl w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-custom-black hover:text-gray-100"
-            onClick={() => dispatch(deleteProductFromWishlist(data.id))}
-          >
+          <button className="opacity-0 font-thin text-xl w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-custom-black hover:text-gray-100">
             <AiOutlineDelete />
           </button>
           <button className="font-thin text-xl w-8 h-8 flex items-center justify-center hover:text-gray-700">
@@ -52,7 +43,7 @@ function WishListCompareButtons({ data }) {
           ) : (
             <button
               className="font-thin hover:text-blue-400 text-lg text-white"
-              onClick={() => dispatch(setWishlistProducts(data))}
+              onClick={() => handleAddToWishlist(data)}
             >
               <FaRegHeart />
             </button>

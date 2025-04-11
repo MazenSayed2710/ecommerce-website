@@ -1,4 +1,4 @@
-import CollectionHeader from "@/_components/CollectionHeader";
+import CollectionHeader from "@/_components/collections/CollectionHeader";
 import FilterSection from "@/_components/common/FilterSection";
 import Products from "@/_components/product/Products";
 import { capitalize } from "@/_utils/helpers";

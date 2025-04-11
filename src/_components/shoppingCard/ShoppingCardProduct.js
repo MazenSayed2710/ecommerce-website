@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import ShoppingProductInfo from "./ShoppingProductInfo";
-import { getAllData, updateData } from "@/_utils/shoppingCardIndexedDb";
 import PopupModal from "../popups/PopupModal";
 import Quantity from "../common/Quantity";
 import { formatNumberWithCommas } from "../../_utils/helpers";
@@ -11,6 +10,7 @@ import {
   getUserShoppingCardAction,
   setUserShoppingCardAction,
 } from "@/lib/actions";
+import { getAllShoppingItems, updateShoppingItem } from "@/_utils/IndexedDb";
 
 function ShoppingCardProduct({ data, setDisplayedProducts, session }) {
   const [openEditComponent, setOpenEditComponent] = useState(false);
@@ -29,8 +29,8 @@ function ShoppingCardProduct({ data, setDisplayedProducts, session }) {
       await setUserShoppingCardAction(session.user.email, updatedProducts);
       setDisplayedProducts(updatedProducts);
     } else {
-      await updateData(data.id, updatedProduct);
-      const editedData = await getAllData();
+      await updateShoppingItem(data.id, updatedProduct);
+      const editedData = await getAllShoppingItems();
       setDisplayedProducts(editedData);
     }
   };
