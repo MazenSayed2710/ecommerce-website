@@ -1,23 +1,20 @@
-import { getUserWishlistCardAction } from "@/lib/actions";
+import { getAllWishlistItems } from "@/_utils/IndexedDb";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
-export function useWishlistIds(setIds) {
+export function useWishlistIds(WishlistProducts, setWishlistProducts) {
   const { data: session } = useSession();
-  useEffect(
-    function () {
-      const getWishListProductsIds = async () => {
-        if (session?.user) {
-          const ids = (await getUserWishlistCardAction(session.user.email)).map(
-            (p) => p.id
-          );
-          setIds(ids);
-        }
-      };
-      getWishListProductsIds();
-      return () => getWishListProductsIds();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [session?.user.email, setIds]
-  );
+
+  useEffect(() => {
+    const getWishlistProducts = async () => {
+      if (!session?.user?.email) {
+        console.log("here");
+        const allData = await getAllWishlistItems();
+        setWishlistProducts(allData);
+      }
+    };
+    getWishlistProducts();
+  }, [session?.user?.email, setWishlistProducts]);
+
+  // return {  WishlistProducts };
 }

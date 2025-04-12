@@ -1,13 +1,11 @@
 "use client";
 import { facebookSignIn, googleSignIn, handleSignIn } from "@/lib/actions";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 function SignInForm() {
-  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -21,7 +19,7 @@ function SignInForm() {
       toast.error(result.error);
     } else {
       toast.success("Successfully signed in");
-      router.push("/");
+      window.location.href = "/";
     }
   };
   return (
@@ -44,6 +42,7 @@ function SignInForm() {
               name="email"
               className="w-full p-2 border rounded mt-1"
               required
+              defaultValue={"ma3en.mohamed@gmail.com"}
             />
           </div>
           <div className="mb-4">
@@ -57,6 +56,7 @@ function SignInForm() {
               className="w-full p-2 border rounded mt-1"
               required
               minLength={8}
+              defaultValue={"12345678"}
             />
           </div>
           <button className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">

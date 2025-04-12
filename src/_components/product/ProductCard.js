@@ -13,13 +13,14 @@ import DisplayPopups from "../popups/DisplayPopups";
 import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 import { ImSpinner2 } from "react-icons/im";
-import { useManageWishlist } from "@/_hooks/useManageWishlist";
-function ProductCard({ data, ids }) {
+import { useWishlist } from "@/_contexts/WishlistContext";
+function ProductCard({ data }) {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [openQuickShopModal, setOpenQuickShopModal] = useState(false);
   const [activeImg, setActiveImg] = useState(data.images[0]);
   const [currentColor, setCurrentColor] = useState(data.colors?.[0].colorName);
-  const { handleDeletefromWishlist, isLoading } = useManageWishlist();
+  const { wishlistProductsIds, handleDeletefromWishlist, isLoading } =
+    useWishlist();
   const pathName = usePathname();
   const imagevariant = {
     initial: { opacity: 1 },
@@ -59,11 +60,10 @@ function ProductCard({ data, ids }) {
             data={data}
             setOpenViewModal={setOpenViewModal}
             setOpenQuickShopModal={setOpenQuickShopModal}
-            ids={ids}
           />
         </motion.div>
         <div className="absolute left-3 top-3 grid gap-1">
-          {ids.includes(data.id) && pathName !== "/wishlist" ? (
+          {wishlistProductsIds.includes(data.id) && pathName !== "/wishlist" ? (
             <Link className="font-thin text-lg" href="/wishlist">
               <FaHeart className="text-red-700" />
             </Link>

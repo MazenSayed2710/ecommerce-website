@@ -5,9 +5,10 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { GoGitCompare } from "react-icons/go";
 import { motion } from "framer-motion";
-import { useManageWishlist } from "@/_hooks/useManageWishlist";
-function WishListCompareButtons({ data, ids }) {
+import { useWishlist } from "@/_contexts/WishlistContext";
+function WishListCompareButtons({ data }) {
   const pathName = usePathname();
+  const { wishlistProductsIds, handleAddToWishlist } = useWishlist();
   const wishListButtonVariant = {
     initial: {
       x: "-50px",
@@ -19,7 +20,6 @@ function WishListCompareButtons({ data, ids }) {
       opacity: 1,
     },
   };
-  const { handleAddToWishlist } = useManageWishlist();
   return (
     <motion.div
       variants={wishListButtonVariant}
@@ -36,7 +36,7 @@ function WishListCompareButtons({ data, ids }) {
         </div>
       ) : (
         <div className="grid gap-1">
-          {ids.includes(data.id) ? (
+          {wishlistProductsIds.includes(data.id) ? (
             <Link className="font-thin text-lg opacity-0" href="/wishlist">
               <FaHeart className="text-red-700" />
             </Link>

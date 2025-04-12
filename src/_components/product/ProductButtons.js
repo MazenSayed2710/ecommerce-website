@@ -7,11 +7,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useAddToCard } from "@/_hooks/useAddToCard";
-import {
-  getUserWishlistCardAction,
-  setUserWishlistCardAction,
-} from "@/lib/actions";
-import { useAddToWishlist } from "@/_hooks/useAddToWishlist";
+import { useWishlist } from "@/_contexts/WishlistContext";
 function ProductButtons({
   data,
   currentColor,
@@ -20,15 +16,15 @@ function ProductButtons({
   handleClose,
 }) {
   const [quantity, setQuantity] = useState(1);
-  const [ids, setIds] = useState([]);
-  const addProduct = useAddToCard({
-    data,
-    quantity,
-    currentColor,
-    currentSize,
-    activeImg,
-    handleClose,
-  });
+  const { wishlistProductsIds, handleAddToWishlist } = useWishlist();
+  // const addProduct = useAddToCard({
+  //   data,
+  //   quantity,
+  //   currentColor,
+  //   currentSize,
+  //   activeImg,
+  //   handleClose,
+  // });
   const newproduct = {
     ...data,
     quantity,
@@ -39,7 +35,7 @@ function ProductButtons({
     total: Number(data.price) * quantity,
   };
   const handleAddToCard = async () => {
-    await addProduct();
+    // await addProduct();
   };
   const handleSubmit = async () => {
     try {
@@ -58,7 +54,6 @@ function ProductButtons({
       console.error("Error during fetch:", error);
     }
   };
-  const handleAddToWishlist = useAddToWishlist(data, setIds);
 
   return (
     <div className="w-full px-3">
@@ -95,7 +90,7 @@ function ProductButtons({
         </motion.button>
 
         <div className="flex items-center gap-3 col-start-2 row-start-1 sm:row-start-auto sm:col-start-auto">
-          {ids.includes(data.id) ? (
+          {wishlistProductsIds.includes(data.id) ? (
             <Link
               className="w-10 h-10 rounded-full border text-2xl flex items-center justify-center font-thin  border-red-700"
               href="/wishlist"
@@ -105,7 +100,7 @@ function ProductButtons({
           ) : (
             <button
               className="w-10 h-10 rounded-full border   text-2xl flex items-center justify-center font-thin  border-gray-700 hover:text-blue-400 hover:border-blue-400"
-              onClick={handleAddToWishlist}
+              onClick={() => handleAddToWishlist(data)}
             >
               <FaRegHeart />
             </button>

@@ -7,25 +7,27 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { getCollections } from "../lib/data-service";
 import { Suspense } from "react";
 import Spinner from "@/_components/common/Spinner";
-import { NumOfProductsProvider } from "@/_contexts/NumOfProductsContext";
 import { SessionProvider } from "next-auth/react";
+import { WishlistProvider } from "@/_contexts/WishlistContext";
+import { auth } from "@/lib/auth";
 export default async function RootLayout({ children }) {
   const collections = await getCollections();
+  const session = await auth();
   return (
     <html lang="en">
       <SessionProvider>
-        <NumOfProductsProvider>
-          <StoreProvider>
+        <StoreProvider>
+          <WishlistProvider>
             <body>
               <Toaster position="top-center" reverseOrder={false} />
-              <Header />
+              <Header collections={collections} session={session} />
               <main>
                 <Suspense fallback={<Spinner />}> {children}</Suspense>
               </main>
-              <Footer collections={collections} />
+              {/* <Footer collections={collections} /> */}
             </body>
-          </StoreProvider>
-        </NumOfProductsProvider>
+          </WishlistProvider>
+        </StoreProvider>
       </SessionProvider>
     </html>
   );

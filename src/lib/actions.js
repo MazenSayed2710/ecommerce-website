@@ -1,5 +1,5 @@
 "use server";
-import { signIn, signOut } from "@/lib/auth";
+import { signIn } from "@/lib/auth";
 import {
   checkEmailExisting,
   getUserShoppingCard,
@@ -42,9 +42,6 @@ export async function googleSignIn() {
 export async function facebookSignIn() {
   await signIn("facebook", { redirectTo: "/" });
 }
-export async function signOutAccount() {
-  await signOut();
-}
 export async function searchApi(search, collection) {
   const products = await searchProducts(search, collection);
   return products;
@@ -70,7 +67,6 @@ export async function getUserShoppingCardAction(email) {
 }
 export async function setUserWishlistCardAction(email, products) {
   await setUserWishlistCard(email, products);
-  revalidatePath("/wishlist");
   revalidatePath("/", "layout");
 }
 export async function getUserWishlistCardAction(email) {

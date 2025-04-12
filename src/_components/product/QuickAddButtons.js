@@ -3,9 +3,9 @@ import { FaCartShopping } from "react-icons/fa6";
 import { useAddToCard } from "@/_hooks/useAddToCard";
 function QuickAddButtons({ data }) {
   const [quantity, setQuantity] = useState(1);
-  const addProduct = useAddToCard({ data, quantity });
+  // const addProduct = useAddToCard({ data, quantity });
   const handleAddToCard = async () => {
-    addProduct();
+    // addProduct();
   };
   return (
     <div className="flex rounded-full overflow-hidden w-fit mb-1">

@@ -1,16 +1,15 @@
+"use client";
 import { VscAccount } from "react-icons/vsc";
 import Link from "next/link";
-import { auth } from "@/lib/auth";
-import Account from "../Account";
+// import Account from "../Account";
 import SearchComponent from "./SearchComponent";
-import { getCollections } from "@/lib/data-service";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import WishListIcon from "./WishListIcon";
 import { MdOutlineLogout } from "react-icons/md";
-import { signOutAccount } from "@/lib/actions";
-async function Header() {
-  const session = await auth();
-  const collections = await getCollections();
+import { useWishlist } from "@/_contexts/WishlistContext";
+import { signOut } from "next-auth/react";
+function Header({ collections, session }) {
+  const { wishlistProductsIds } = useWishlist();
   return (
     <div className="flex gap-5 h-14 w-full justify-between items-center p-5 ">
       <Link href="/" className="font-bold text-4xl">
@@ -30,7 +29,7 @@ async function Header() {
         <SearchComponent collections={collections} />
         <li className="text-xl  hover:text-blue-300">
           {session?.user ? (
-            <button className="ml-5" onClick={signOutAccount}>
+            <button className="ml-5" onClick={() => signOut()}>
               <MdOutlineLogout />
             </button>
           ) : (
@@ -41,7 +40,7 @@ async function Header() {
         </li>
         <li className="text-xl hover:text-blue-300 hidden sm:block">
           <Link href="/wishlist" className="duration-[0.5s] hover:scale-[1.2]">
-            <WishListIcon />
+            <WishListIcon ids={wishlistProductsIds} />
           </Link>
         </li>
         <li className="text-xl  hover:text-blue-300">

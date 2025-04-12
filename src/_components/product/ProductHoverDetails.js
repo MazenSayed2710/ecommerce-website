@@ -7,7 +7,6 @@ function ProductHoverDetails({
   data,
   setOpenViewModal,
   setOpenQuickShopModal,
-  ids,
 }) {
   const buttonsVariant = {
     initial: {
@@ -33,7 +32,7 @@ function ProductHoverDetails({
         />
       </div>
 
-      <WishListCompareButtons data={data} ids={ids} />
+      <WishListCompareButtons data={data} />
 
       <div
         className="hidden absolute left-0 top-0 w-full h-full sm:flex justify-center items-center flex-col gap-3"

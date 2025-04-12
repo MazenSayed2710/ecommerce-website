@@ -3,7 +3,9 @@ import Link from "next/link";
 import { VscAccount } from "react-icons/vsc";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import WishListIcon from "./WishListIcon";
+import { useWishlistIds } from "@/_hooks/useGetWishlistIds";
 function MobileFooterMenu({ collections }) {
+  const { WishlistProductsIds } = useWishlistIds();
   return (
     <div className="w-full fixed bottom-0 left-0 bg-white z-50 shadow-md flex items-center justify-between px-5 py-3 sm:hidden">
       <Link
@@ -17,7 +19,7 @@ function MobileFooterMenu({ collections }) {
         href="/wishlist"
         className="flex flex-col items-center justify-center"
       >
-        <WishListIcon />
+        <WishListIcon ids={WishlistProductsIds} />
         <p className="text-sm font-semibold">Wishlist</p>
       </Link>
       <Link

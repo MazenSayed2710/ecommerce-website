@@ -48,3 +48,8 @@ export function mergeProductQuantities(arr1, arr2) {
 
   return merged;
 }
+
+export const mergeUniqeProducts = (a, b) => [
+  ...a.filter((x) => !b.some((y) => x.id === y.id)),
+  ...b,
+];
