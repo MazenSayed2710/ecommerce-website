@@ -1,27 +1,24 @@
 "use client";
 import ShoppingCardProduct from "./ShoppingCardProduct";
-import {
-  formatNumberWithCommas,
-  mergeProductQuantities,
-} from "../../_utils/helpers";
-import { useEffect, useState } from "react";
+import { formatNumberWithCommas } from "../../_utils/helpers";
+import { useState } from "react";
 import ShoppingCardProductSkeleton from "./ShoppingCardProductSkeleton";
-import {
-  getUserShoppingCardAction,
-  setUserShoppingCardAction,
-} from "@/lib/actions";
+import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 
-function ShoppingCardContent({ session }) {
-  const [displayedProducts, setDisplayedProducts] = useState([]);
-  const suptotal = displayedProducts.reduce((acc, cur) => acc + cur.total, 0);
+function ShoppingCardContent() {
+  const { shoppingCartProducts, isLoading } = useShoppingCart();
+  const suptotal = shoppingCartProducts.reduce(
+    (acc, cur) => acc + cur.total,
+    0
+  );
   const [isChecked, setIsChecked] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+
   const handleSubmit = async () => {
     try {
       const req = await fetch("/api/checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ displayedProducts }),
+        body: JSON.stringify({ shoppingCartProducts }),
       });
       if (req.ok) {
         const { url } = await req.json();
@@ -33,31 +30,6 @@ function ShoppingCardContent({ session }) {
       console.error("Error during fetch:", error);
     }
   };
-  // useEffect(() => {
-  //   async function storeData() {
-  //     setIsLoading(true);
-  //     const storedProducts = await getAllData();
-  //     if (session?.user) {
-  //       const data = await getUserShoppingCardAction(session.user.email);
-  //       if (!data) {
-  //         await setUserShoppingCardAction(session.user.email, storedProducts);
-  //         setDisplayedProducts(storedProducts);
-  //       } else {
-  //         const uniqeData = mergeProductQuantities(storedProducts, data);
-  //         await setUserShoppingCardAction(session.user.email, uniqeData);
-  //         const dataAfterUpdate = await getUserShoppingCardAction(
-  //           session.user.email
-  //         );
-  //         setDisplayedProducts(dataAfterUpdate);
-  //       }
-  //       resetData();
-  //     } else {
-  //       setDisplayedProducts(storedProducts);
-  //     }
-  //     setIsLoading(false);
-  //   }
-  //   storeData();
-  // }, [session?.user]);
 
   return (
     <div className="max-w-[1200px] m-auto py-16">
@@ -70,14 +42,9 @@ function ShoppingCardContent({ session }) {
       <div className="py-5">
         {isLoading ? (
           <ShoppingCardProductSkeleton />
-        ) : displayedProducts?.length ? (
-          displayedProducts.map((product) => (
-            <ShoppingCardProduct
-              data={product}
-              key={product.id}
-              setDisplayedProducts={setDisplayedProducts}
-              session={session}
-            />
+        ) : shoppingCartProducts?.length ? (
+          shoppingCartProducts.map((product) => (
+            <ShoppingCardProduct data={product} key={product.id} />
           ))
         ) : (
           <p>No products in your shopping cart.</p>

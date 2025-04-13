@@ -16,19 +16,18 @@ const WishlistContext = createContext(null);
 
 export function WishlistProvider({ children }) {
   const [wishlistProducts, setWishlistProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { data: session, status } = useSession();
 
   useEffect(
     function () {
       const loadAllWishlistItems = async () => {
-        if (session?.user.email) {
-          const products = await getUserWishlistCardAction(session?.user.email);
-          setWishlistProducts(products);
-        } else {
-          const products = await getAllWishlistItems();
-          setWishlistProducts(products);
-        }
+        setIsLoading(true);
+        const products = session?.user
+          ? await getUserWishlistCardAction(session?.user.email)
+          : await getAllWishlistItems();
+        setWishlistProducts(products);
+        setIsLoading(false);
       };
       if (status !== "loading") {
         loadAllWishlistItems();
@@ -56,13 +55,13 @@ export function WishlistProvider({ children }) {
 
   const handleDeletefromWishlist = async (id) => {
     if (session?.user) {
-      setIsLoading(true);
+      setIsLoading(id);
       const products = await getUserWishlistCardAction(session.user.email);
       const productsAfterDelete = products.filter((p) => p.id !== id);
       await setUserWishlistCardAction(session.user.email, productsAfterDelete);
       setWishlistProducts(productsAfterDelete);
       toast.success("Successfully Deleted");
-      setIsLoading(false);
+      setIsLoading("");
     } else {
       await deleteWishlistItem(id);
       const products = await getAllWishlistItems();
@@ -79,6 +78,7 @@ export function WishlistProvider({ children }) {
         handleAddToWishlist,
         handleDeletefromWishlist,
         isLoading,
+        setWishlistProducts,
       }}
     >
       {children}

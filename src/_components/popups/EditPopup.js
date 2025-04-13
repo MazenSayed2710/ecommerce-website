@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { capitalize, formatNumberWithCommas } from "../../_utils/helpers";
-import Quantity from "../common/Quantity";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CiHeart } from "react-icons/ci";
@@ -9,61 +8,32 @@ import { GoGitCompare } from "react-icons/go";
 import { IoMdClose } from "react-icons/io";
 import { closePopup } from "@/lib/features/popupModalSlice";
 import { useClickOutside } from "../../_hooks/useClickOutside";
-
-import {
-  getUserShoppingCardAction,
-  setUserShoppingCardAction,
-} from "@/lib/actions";
 import toast from "react-hot-toast";
 import SizeOptions from "../common/SizeOptions";
-import { getAllShoppingItems, updateShoppingItem } from "@/_utils/IndexedDb";
-
-function EditPopup({
-  data,
-  setOpenEditComponent,
-  OpenModalBtnref,
-  setDisplayedProducts,
-  session,
-}) {
+import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
+import ButtonControlledQuantity from "../common/QuantityButtonControlled";
+function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
   const [quantityValue, setQuantityValue] = useState(data.quantity);
   const [currentColor, setCurrentColor] = useState(data.color);
   const [currentImage, setCurrentImage] = useState(data.img);
   const [currentSize, setCurrentSize] = useState(data.size);
   const dispatch = useDispatch();
-
+  const { handleUpdateShoppingCart } = useShoppingCart();
   const handleClosePopup = () => {
     dispatch(closePopup());
     setOpenEditComponent(false);
   };
+  const updatedProduct = {
+    ...data,
+    quantity: quantityValue,
+    color: currentColor,
+    size: currentSize,
+    total: data.price * quantityValue,
+    img: currentImage,
+  };
+
   const handleReplace = async () => {
-    if (session.user) {
-      const products = await getUserShoppingCardAction(session.user.email);
-      const productsAfterUpdate = products.map((product) =>
-        product.id === data.id
-          ? {
-              ...data,
-              quantity: quantityValue,
-              color: currentColor,
-              size: currentSize,
-              total: data.price * quantityValue,
-              img: currentImage,
-            }
-          : product
-      );
-      await setUserShoppingCardAction(session.user.email, productsAfterUpdate);
-      setDisplayedProducts(productsAfterUpdate);
-    } else {
-      await updateShoppingItem(data.id, {
-        ...data,
-        quantity: quantityValue,
-        color: currentColor,
-        size: currentSize,
-        total: data.price * quantityValue,
-        img: currentImage,
-      });
-      const dataAfterEdit = await getAllShoppingItems();
-      setDisplayedProducts(dataAfterEdit);
-    }
+    await handleUpdateShoppingCart(data.id, updatedProduct, "edit");
     handleClosePopup();
     toast.success("Successfully editing");
   };
@@ -116,7 +86,7 @@ function EditPopup({
         </>
       )}
       <div className="flex items-center gap-5">
-        <Quantity
+        <ButtonControlledQuantity
           value={quantityValue}
           inputWidth="w-16"
           setValue={setQuantityValue}

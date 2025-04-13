@@ -2,40 +2,11 @@ import Link from "next/link";
 import { capitalize, createPathName } from "../../_utils/helpers";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import {
-  getUserShoppingCardAction,
-  setUserShoppingCardAction,
-} from "@/lib/actions";
-import toast from "react-hot-toast";
-import { useContext } from "react";
-import { ShoppingCardCountContext } from "@/_contexts/NumOfProductsContext";
-import { deleteShoppingItem, getAllShoppingItems } from "@/_utils/IndexedDb";
-
-function ShoppingProductInfo({
-  data,
-  OpenModalBtnref,
-  setOpenEditComponent,
-  setDisplayedProducts,
-  session,
-}) {
-  const { shoppingCardCount, setShoppingCardCount } = useContext(
-    ShoppingCardCountContext
-  );
+import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
+function ShoppingProductInfo({ data, OpenModalBtnref, setOpenEditComponent }) {
+  const { handleDeleteFromShoppingCart } = useShoppingCart();
   const handleDelete = async () => {
-    if (session.user) {
-      const products = await getUserShoppingCardAction(session.user.email);
-      const dataAfterDelete = products.filter(
-        (product) => data.id !== product.id
-      );
-      await setUserShoppingCardAction(session.user.email, dataAfterDelete);
-      setDisplayedProducts(dataAfterDelete);
-    } else {
-      await deleteShoppingItem(data.id);
-      const dataAfterDelete = await getAllShoppingItems();
-      setDisplayedProducts(dataAfterDelete);
-    }
-    toast.success("Sucessfully deleted");
-    setShoppingCardCount(() => shoppingCardCount - 1);
+    await handleDeleteFromShoppingCart(data.id);
   };
   return (
     <div className="text-custom-white grid gap-2">

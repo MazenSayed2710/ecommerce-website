@@ -74,7 +74,7 @@ function ProductCard({ data }) {
                 handleDeletefromWishlist(data.id);
               }}
             >
-              {isLoading ? (
+              {isLoading === data.id ? (
                 <ImSpinner2 className="animate-spin text-xl" />
               ) : (
                 <AiOutlineDelete />

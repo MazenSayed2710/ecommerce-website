@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import {
   checkEmailExistingAction,
+  getUserShoppingCardAction,
   getUserWishlistCardAction,
   setUserAction,
+  setUserShoppingCardAction,
   setUserWishlistCardAction,
 } from "@/lib/actions";
 import {
@@ -14,44 +16,54 @@ import {
   getAllShoppingItems,
   getAllWishlistItems,
 } from "@/_utils/IndexedDb";
-import { mergeUniqeProducts } from "@/_utils/helpers";
+import { mergeProductQuantities, mergeUniqeProducts } from "@/_utils/helpers";
+import { useWishlist } from "@/_contexts/WishlistContext";
 
 export default function SessionHandler() {
   const { data: session, status } = useSession();
+  const { setWishlistProducts } = useWishlist();
   useEffect(() => {
     const setupUserWishlist = async () => {
       if (session?.user?.email) {
         const isExist = await checkEmailExistingAction(session.user.email);
-        console.log(isExist);
         if (!isExist) {
-          const shoppingCartProducts = await getAllShoppingItems();
-          const wishlistProducts = await getAllWishlistItems();
+          const [shoppingCartProducts, wishlistProducts] = await Promise.all([
+            getAllShoppingItems(),
+            getAllWishlistItems(),
+          ]);
           await setUserAction(
             session.user.email,
             shoppingCartProducts,
             wishlistProducts
           );
         } else {
-          const guestWishlistProducts = await getAllWishlistItems();
-          const userWishlistProducts = await getUserWishlistCardAction(
-            session?.user.email
-          );
-
+          // Wishlist Cart
+          const [guestWishlistProducts, userWishlistProducts] =
+            await Promise.all([
+              getAllWishlistItems(),
+              getUserWishlistCardAction(session?.user.email),
+            ]);
           const mergedProducts = mergeUniqeProducts(
             guestWishlistProducts,
             userWishlistProducts
           );
           await setUserWishlistCardAction(session.user.email, mergedProducts);
+          setWishlistProducts(mergedProducts);
+
+          // Shopping Cart
+          const storedProducts = await getAllShoppingItems();
+          const data = await getUserShoppingCardAction(session.user.email);
+          const uniqeData = mergeProductQuantities(storedProducts, data);
+          await setUserShoppingCardAction(session.user.email, uniqeData);
         }
-        await clearShoppingCart();
-        await clearWishlist();
+        await Promise.all([clearShoppingCart(), clearWishlist()]);
       }
     };
 
-    if (status !== "loading") {
+    if (status === "authenticated") {
       setupUserWishlist();
     }
-  }, [session?.user.email, status]);
+  }, [session?.user.email, status, setWishlistProducts]);
 
   return null;
 }

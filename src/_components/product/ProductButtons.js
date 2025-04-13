@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import { GoGitCompare } from "react-icons/go";
-import { useSelector } from "react-redux";
-import Quantity from "../common/Quantity";
+import Quantity from "../common/QuantityInputOnBlur";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useAddToCard } from "@/_hooks/useAddToCard";
 import { useWishlist } from "@/_contexts/WishlistContext";
+import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
+import ButtonControlledQuantity from "../common/QuantityButtonControlled";
 function ProductButtons({
   data,
   currentColor,
@@ -17,14 +17,8 @@ function ProductButtons({
 }) {
   const [quantity, setQuantity] = useState(1);
   const { wishlistProductsIds, handleAddToWishlist } = useWishlist();
-  // const addProduct = useAddToCard({
-  //   data,
-  //   quantity,
-  //   currentColor,
-  //   currentSize,
-  //   activeImg,
-  //   handleClose,
-  // });
+  const { handleAddToShoppingCart } = useShoppingCart();
+
   const newproduct = {
     ...data,
     quantity,
@@ -35,7 +29,8 @@ function ProductButtons({
     total: Number(data.price) * quantity,
   };
   const handleAddToCard = async () => {
-    // await addProduct();
+    await handleAddToShoppingCart(newproduct, quantity);
+    handleClose?.();
   };
   const handleSubmit = async () => {
     try {
@@ -58,7 +53,11 @@ function ProductButtons({
   return (
     <div className="w-full px-3">
       <div className="grid sm:grid-cols-[1fr_1fr_auto] grid-cols-2 grid-rows-3 sm:grid-rows-2 mb-3 gap-5 justify-items-center">
-        <Quantity value={quantity} setValue={setQuantity} inputWidth="w-16" />
+        <ButtonControlledQuantity
+          value={quantity}
+          setValue={setQuantity}
+          inputWidth="w-16"
+        />
 
         <motion.button
           className="bg-blue-400 text-white px-6 py-2 w-full rounded-full font-semibold hover:bg-blue-500 sm:col-span-1 col-span-2"

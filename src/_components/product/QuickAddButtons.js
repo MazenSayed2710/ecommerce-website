@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
-import { useAddToCard } from "@/_hooks/useAddToCard";
+import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 function QuickAddButtons({ data }) {
   const [quantity, setQuantity] = useState(1);
-  // const addProduct = useAddToCard({ data, quantity });
+  const { handleAddToShoppingCart } = useShoppingCart();
+  const newproduct = {
+    ...data,
+    quantity,
+    img: data.images[0],
+    total: data.price * quantity,
+  };
   const handleAddToCard = async () => {
-    // addProduct();
+    console.log(data);
+    handleAddToShoppingCart(newproduct, quantity);
   };
   return (
     <div className="flex rounded-full overflow-hidden w-fit mb-1">

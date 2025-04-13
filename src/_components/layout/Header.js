@@ -8,8 +8,11 @@ import WishListIcon from "./WishListIcon";
 import { MdOutlineLogout } from "react-icons/md";
 import { useWishlist } from "@/_contexts/WishlistContext";
 import { signOut } from "next-auth/react";
+import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 function Header({ collections, session }) {
-  const { wishlistProductsIds } = useWishlist();
+  const { wishlistProductsIds, isLoading: wishlistLoading } = useWishlist();
+  const { shoppingCartProducts, isLoading: shoppingCartLoading } =
+    useShoppingCart();
   return (
     <div className="flex gap-5 h-14 w-full justify-between items-center p-5 ">
       <Link href="/" className="font-bold text-4xl">
@@ -29,7 +32,10 @@ function Header({ collections, session }) {
         <SearchComponent collections={collections} />
         <li className="text-xl  hover:text-blue-300">
           {session?.user ? (
-            <button className="ml-5" onClick={() => signOut()}>
+            <button
+              className="ml-5"
+              onClick={() => signOut({ redirectTo: "/" })}
+            >
               <MdOutlineLogout />
             </button>
           ) : (
@@ -40,7 +46,10 @@ function Header({ collections, session }) {
         </li>
         <li className="text-xl hover:text-blue-300 hidden sm:block">
           <Link href="/wishlist" className="duration-[0.5s] hover:scale-[1.2]">
-            <WishListIcon ids={wishlistProductsIds} />
+            <WishListIcon
+              ids={wishlistProductsIds}
+              isLoading={wishlistLoading}
+            />
           </Link>
         </li>
         <li className="text-xl  hover:text-blue-300">
@@ -48,7 +57,10 @@ function Header({ collections, session }) {
             href="/shoppingCard"
             className="duration-[0.5s] hover:scale-[1.2]"
           >
-            <ShoppingCartIcon />
+            <ShoppingCartIcon
+              shoppingCartProducts={shoppingCartProducts}
+              isLoading={shoppingCartLoading}
+            />
           </Link>
         </li>
       </ul>

@@ -3,40 +3,28 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import ShoppingProductInfo from "./ShoppingProductInfo";
 import PopupModal from "../popups/PopupModal";
-import Quantity from "../common/Quantity";
+import Quantity from "../common/QuantityInputOnBlur";
 import { formatNumberWithCommas } from "../../_utils/helpers";
 import EditPopup from "../popups/EditPopup";
-import {
-  getUserShoppingCardAction,
-  setUserShoppingCardAction,
-} from "@/lib/actions";
-import { getAllShoppingItems, updateShoppingItem } from "@/_utils/IndexedDb";
-
-function ShoppingCardProduct({ data, setDisplayedProducts, session }) {
+import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
+import ShoppingCartProductLoader from "./ShoppingCartProductLoader";
+function ShoppingCardProduct({ data }) {
   const [openEditComponent, setOpenEditComponent] = useState(false);
   const OpenModalBtnref = useRef(null);
+  const { handleUpdateShoppingCart, isUpdating } = useShoppingCart();
+  // console.log(data);
   const handleQuantityChange = async (value) => {
     const updatedProduct = {
       ...data,
       quantity: value,
       total: data.price * value,
     };
-    if (session?.user) {
-      const products = await getUserShoppingCardAction(session.user.email);
-      const updatedProducts = products.map((p) =>
-        p.name === data.name ? updatedProduct : p
-      );
-      await setUserShoppingCardAction(session.user.email, updatedProducts);
-      setDisplayedProducts(updatedProducts);
-    } else {
-      await updateShoppingItem(data.id, updatedProduct);
-      const editedData = await getAllShoppingItems();
-      setDisplayedProducts(editedData);
-    }
+    await handleUpdateShoppingCart(data.id, updatedProduct);
   };
   return (
-    <>
-      <div className="grid px-5 grid-cols-[auto_1fr] sm:grid-rows-1 grid-rows-[1fr_auto_auto_auto] gap-3 sm:*:border-0 *:border-b *:pb-1 *:border-gray-200 sm:grid-cols-[40%_20%_20%_20%] sm:items-center items-start border-b-[1px] border-gray-300 py-5">
+    <div className="relative">
+      <ShoppingCartProductLoader isUpdating={isUpdating} id={data.id} />
+      <div className="grid  grid-cols-[auto_1fr] sm:grid-rows-1 grid-rows-[1fr_auto_auto_auto] gap-3 sm:*:border-0 *:border-b *:pb-1 *:border-gray-200 sm:grid-cols-[40%_20%_20%_20%] sm:items-center items-start border-b-[1px] border-gray-300 py-5">
         <div className="flex gap-3 items-center sm:row-span-1 row-span-4 !border-0">
           <div className="relative w-40 h-48">
             <Image src={data.img} alt="product image" fill sizes="25vw" />
@@ -46,8 +34,6 @@ function ShoppingCardProduct({ data, setDisplayedProducts, session }) {
               data={data}
               OpenModalBtnref={OpenModalBtnref}
               setOpenEditComponent={setOpenEditComponent}
-              setDisplayedProducts={setDisplayedProducts}
-              session={session}
             />
           </div>
         </div>
@@ -56,8 +42,6 @@ function ShoppingCardProduct({ data, setDisplayedProducts, session }) {
             data={data}
             OpenModalBtnref={OpenModalBtnref}
             setOpenEditComponent={setOpenEditComponent}
-            setDisplayedProducts={setDisplayedProducts}
-            session={session}
           />
         </div>
         <p className="text-custom-white font-semibold">
@@ -80,12 +64,10 @@ function ShoppingCardProduct({ data, setDisplayedProducts, session }) {
             data={data}
             setOpenEditComponent={setOpenEditComponent}
             OpenModalBtnref={OpenModalBtnref}
-            setDisplayedProducts={setDisplayedProducts}
-            session={session}
           />
         </PopupModal>
       )}
-    </>
+    </div>
   );
 }
 
