@@ -11,6 +11,7 @@ import { SessionProvider } from "next-auth/react";
 import { WishlistProvider } from "@/_contexts/WishlistContext";
 import { auth } from "@/lib/auth";
 import ShoppingCartProvider from "@/_contexts/ShoppingCartProvider";
+import Footer from "@/_components/layout/Footer";
 export default async function RootLayout({ children }) {
   const collections = await getCollections();
   const session = await auth();
@@ -20,13 +21,13 @@ export default async function RootLayout({ children }) {
         <StoreProvider>
           <WishlistProvider>
             <ShoppingCartProvider>
-              <body>
+              <body className="min-h-screen flex flex-col">
                 <Toaster position="top-center" reverseOrder={false} />
                 <Header collections={collections} session={session} />
-                <main>
+                <main className="flex-grow">
                   <Suspense fallback={<Spinner />}> {children}</Suspense>
                 </main>
-                {/* <Footer collections={collections} /> */}
+                <Footer collections={collections} />
               </body>
             </ShoppingCartProvider>
           </WishlistProvider>
