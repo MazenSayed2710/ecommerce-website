@@ -11,6 +11,11 @@ function ColorOptions({
     setCurrentColor(color.colorName);
     color.img && setActiveImg?.(color.img);
   };
+  const size =
+    circleSize === "small"
+      ? "sm:w-6 sm:h-6 w-5 h-5 border"
+      : "w-8 h-8 border-2";
+
   if (!colors) return;
   return (
     <div>
@@ -23,11 +28,7 @@ function ColorOptions({
         {colors.map((color) => (
           <button
             onClick={() => handleClick(color)}
-            className={`${
-              circleSize === "small"
-                ? "sm:w-6 sm:h-6 w-5 h-5 border"
-                : "w-8 h-8 border-2"
-            }  rounded-full    ${
+            className={`relative ${size} rounded-full overflow-hidden ${
               currentColor === color.colorName
                 ? "border-gray-700"
                 : "border-gray-300"
@@ -37,7 +38,13 @@ function ColorOptions({
               backgroundColor: color.color,
             }}
             key={color.color}
-          ></button>
+          >
+            {!data.isAvailable && (
+              <span
+                className={`absolute w-8 h-[4rem] border-0 rotate-45 border-l border-black left-0 top-0`}
+              ></span>
+            )}
+          </button>
         ))}
       </div>
     </div>

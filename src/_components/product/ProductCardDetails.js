@@ -8,6 +8,7 @@ import SocialMediaIcons from "../common/SocialMediaIcons";
 import ProductButtons from "./ProductButtons";
 import { useState } from "react";
 import ThumbnailList from "./ThumbnailList";
+import ProductStatus from "./ProductStatus";
 export default function ProductCardDetails({
   data,
   isPopup = false,
@@ -24,7 +25,7 @@ export default function ProductCardDetails({
       }`}
     >
       <div
-        className={`sm:w-1/2 w-full grid overflow-hidden gap-3 ${
+        className={`sm:w-1/2 w-full grid overflow-hidden gap-3 relative ${
           isPopup ? "grid-cols-1" : "sm:grid-cols-[15%_85%]"
         } `}
       >
@@ -40,6 +41,7 @@ export default function ProductCardDetails({
           activeImg={activeImg}
           setActiveImg={setActiveImg}
         />
+        <ProductStatus data={data} />
       </div>
       <div
         className={`sm:w-1/2 flex flex-col gap-5 ${

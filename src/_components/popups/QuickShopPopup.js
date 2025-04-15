@@ -5,7 +5,7 @@ import ColorOptions from "../product/ColorOptions";
 import ProductButtons from "../product/ProductButtons";
 import SizeOptions from "../common/SizeOptions";
 import { useClickOutside } from "@/_hooks/useClickOutside";
-
+import CloseIcon from "../common/CloseIcon";
 function QuickShopPopup({ product: data, handleClose }) {
   const [currentColor, setCurrentColor] = useState(data.colors?.[0].colorName);
   const [currentSize, setCurrentSize] = useState(data.sizes?.[0]);
@@ -17,12 +17,7 @@ function QuickShopPopup({ product: data, handleClose }) {
       className="h-fit bg-white flex flex-col gap-3 text-custom-black relative p-5"
       ref={ref}
     >
-      <button
-        className="absolute -top-5 -right-5 p-3 bg-black text-white w-10 h-10 flex items-center justify-center"
-        onClick={handleClose}
-      >
-        X
-      </button>
+      <CloseIcon handleClose={handleClose} />
       <div className="flex h-full">
         <div>
           <div className="flex flex-col gap-5 h-full">

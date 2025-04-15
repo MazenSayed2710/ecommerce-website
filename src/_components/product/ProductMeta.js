@@ -40,12 +40,6 @@ function ProductMeta({ data }) {
             {categories.join(",")}
           </span>
         </p>
-        {/* <p className="text-gray-500">
-        Tags:{" "}
-        <span className="text-gray-800 font-semibold">
-        {categories.join(",")}
-        </span>
-        </p> */}
       </div>
     </>
   );

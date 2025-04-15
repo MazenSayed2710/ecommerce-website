@@ -2,8 +2,7 @@ import CollectionHeader from "@/_components/collections/CollectionHeader";
 import FilterSection from "@/_components/common/FilterSection";
 import Products from "@/_components/product/Products";
 import { capitalize } from "@/_utils/helpers";
-import { getSpecificProducts } from "@/lib/data-service";
-import { supabase } from "@/lib/supabase";
+import { getSpecificProducts, getCollectionImg } from "@/lib/data-service";
 
 export async function generateMetadata({ params }) {
   const collectionName = (await params).collectionType;
@@ -62,18 +61,15 @@ async function page({ params, searchParams }) {
     ...searchParamsValues,
   };
   const products = await getSpecificProducts(collectionType, sortAndfilter);
-  let { data: productForFilterData, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("mainCategorie", collectionType);
-  if (error) throw Error(error.message);
+  const productForFilterData = await getSpecificProducts(collectionType);
+  const collectionImg = await getCollectionImg(collectionName);
+  console.log(collectionName);
+
   if (!products) return;
+
   return (
     <div className="py-10">
-      <CollectionHeader
-        collectionName={collectionName}
-        img="/woman-heading.jpg"
-      />
+      <CollectionHeader collectionName={collectionName} img={collectionImg} />
       <FilterSection
         sortOptions={sortOptions}
         products={productForFilterData}

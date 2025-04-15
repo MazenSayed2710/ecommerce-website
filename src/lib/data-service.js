@@ -47,51 +47,63 @@ export async function getSpecificProducts(categore, sortAndfilter) {
 
   const sort = sortAndfilter?.sort?.split("-")[0];
   const isAscending = sortAndfilter?.sort?.split("-")[1] === "ascending";
-  if (sortAndfilter.sort !== "all") {
+  if (sortAndfilter?.sort && sortAndfilter?.sort !== "all") {
     query = query.order(sort, {
       ascending: isAscending,
     });
   }
   // Filter by Availability
-  if (sortAndfilter.inStock === "true" && sortAndfilter.outStock !== "true") {
+  if (sortAndfilter?.inStock === "true" && sortAndfilter?.outStock !== "true") {
     query = query.eq("isAvailable", true);
   } else if (
-    sortAndfilter.outStock === "true" &&
-    sortAndfilter.inStock !== "true"
+    sortAndfilter?.outStock === "true" &&
+    sortAndfilter?.inStock !== "true"
   ) {
     query = query.eq("isAvailable", false);
   }
 
   // Filter by Size
 
-  if (sortAndfilter.size) {
+  if (sortAndfilter?.size) {
     query = query.contains(
       "sizes",
-      Array.isArray(sortAndfilter) ? sortAndfilter.size : [sortAndfilter.size]
+      Array.isArray(sortAndfilter?.size)
+        ? sortAndfilter?.size
+        : [sortAndfilter?.size]
     );
   }
 
   // Filter by Price
 
-  if (sortAndfilter.price) {
+  if (sortAndfilter?.price) {
     query = query
-      .gte("price", Number(sortAndfilter.price[0]))
-      .lte("price", Number(sortAndfilter.price[1]));
+      .gte("price", Number(sortAndfilter?.price[0]))
+      .lte("price", Number(sortAndfilter?.price[1]));
   }
 
   // Filter by Color
-  if (sortAndfilter.color) {
+  if (sortAndfilter?.color) {
     query.contains(
       "arrayOfColors",
-      Array.isArray(sortAndfilter.color)
-        ? sortAndfilter.color
-        : [sortAndfilter.color]
+      Array.isArray(sortAndfilter?.color)
+        ? sortAndfilter?.color
+        : [sortAndfilter?.color]
     );
   }
 
   let { data: products, error } = await query;
   if (error) throw Error(error.message);
   return products;
+}
+export async function getCollectionImg(categore) {
+  let { data: collectionImg, error } = await supabase
+    .from("collections")
+    .select("headerImg")
+    .eq("text", categore)
+    .single();
+
+  if (error) throw Error(error.message);
+  return collectionImg.headerImg;
 }
 export async function getProductById(id) {
   let { data: product, error } = await supabase

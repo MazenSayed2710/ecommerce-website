@@ -13,7 +13,7 @@ function Account({ session }) {
 
   const wishlistCount = wishlistProductsIds?.length || 0;
   const cartCount = shoppingCartProducts?.length || 0;
-
+  console.log(session.user.image);
   return (
     <div className="max-w-6xl mx-auto px-4 py-16 flex flex-col md:flex-row gap-10">
       {session ? (
@@ -21,7 +21,15 @@ function Account({ session }) {
           {/* Sidebar */}
           <div className="w-full md:w-1/3 bg-gray-100 rounded-xl p-6 flex flex-col items-center text-center shadow">
             <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-2xl font-bold text-white mb-4">
-              {session.user.email[0].toUpperCase()}
+              {session.user.image ? (
+                <img
+                  src={session.user.image}
+                  alt="user"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              ) : (
+                session.user.email[0].toUpperCase()
+              )}
             </div>
             <h2 className="text-xl font-semibold mb-1">Hello!</h2>
             <p className="text-gray-600 text-sm">{session.user.email}</p>

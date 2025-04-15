@@ -3,6 +3,9 @@ import { formatNumberWithCommas } from "../../_utils/helpers";
 
 function ProductInfo({ data, isPopup }) {
   const { name, price, description } = data;
+  const finalPrice = data.discount
+    ? price - price * (data.discount / 100)
+    : price;
   return (
     <div>
       {isPopup ? (
@@ -18,7 +21,20 @@ function ProductInfo({ data, isPopup }) {
       ) : (
         <h1 className="text-2xl font-semibold mb-1">{name}</h1>
       )}
-      <p className="text-gray-600 text-lg">${formatNumberWithCommas(price)}</p>
+      <div className="flex items-center gap-2">
+        <p
+          className={`text-gray-600 text-2xl font-semibold ${
+            data.discount && "line-through"
+          }`}
+        >
+          ${formatNumberWithCommas(price)}
+        </p>
+        {data.discount && (
+          <p className="text-2xl font-semibold text-red-500">
+            ${formatNumberWithCommas(finalPrice)}
+          </p>
+        )}
+      </div>
       <p className="text-base text-custom-white mt-5">{description}</p>
     </div>
   );

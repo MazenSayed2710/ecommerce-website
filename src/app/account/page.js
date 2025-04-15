@@ -19,3 +19,14 @@ async function page() {
 }
 
 export default page;
+// {
+//   session.user.image ? (
+//     <img
+//       src={session.user.image}
+//       alt="user"
+//       className="w-full h-full object-cover rounded-full"
+//     />
+//   ) : (
+//     session.user.email[0].toUpperCase()
+//   );
+// }

@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import SizeOptions from "../common/SizeOptions";
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 import ButtonControlledQuantity from "../common/QuantityButtonControlled";
+import CloseIcon from "../common/CloseIcon";
 function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
   const [quantityValue, setQuantityValue] = useState(data.quantity);
   const [currentColor, setCurrentColor] = useState(data.color);
@@ -109,12 +110,7 @@ function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
           buy it now
         </button>
       </div>
-      <button
-        className="text-2xl absolute right-2 top-2"
-        onClick={handleClosePopup}
-      >
-        <IoMdClose />
-      </button>
+      <CloseIcon handleClose={handleClosePopup} />
     </div>
   );
 }

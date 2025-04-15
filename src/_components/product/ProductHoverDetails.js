@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import ProductHoverButtons from "./ProductHoverButtons";
-import WishListCompareButtons from "../wishlist/WishListCompareButtons";
+import WishListButton from "../wishlist/WishListButton";
 import { motion } from "framer-motion";
 function ProductHoverDetails({
   data,
@@ -32,7 +32,7 @@ function ProductHoverDetails({
         />
       </div>
 
-      <WishListCompareButtons data={data} />
+      <WishListButton data={data} />
 
       <div
         className="hidden absolute left-0 top-0 w-full h-full sm:flex justify-center items-center flex-col gap-3"

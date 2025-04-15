@@ -1,8 +1,8 @@
 import TrendCollection from "./TrendCollection";
 import wom from "../../../public/woman-section-img.webp";
 import bag from "../../../public/bag.avif";
-import whatch from "../../../public/whatch.webp";
-import shose from "../../../public/shose.jpg";
+import watch from "../../../public/watch.webp";
+import footwear from "../../../public/footwear.jpg";
 import Image from "next/image";
 
 function TrendngCollections() {
@@ -30,10 +30,10 @@ function TrendngCollections() {
           />
         </div>
       </TrendCollection>
-      <TrendCollection collectionName="shose">
+      <TrendCollection collectionName="Footwear">
         <div className="relative aspect-[1/1]">
           <Image
-            src={shose}
+            src={footwear}
             alt=""
             fill
             className="object-cover group-hover:scale-110 duration-500"
@@ -42,12 +42,12 @@ function TrendngCollections() {
         </div>
       </TrendCollection>
       <TrendCollection
-        collectionName="whatch"
+        collectionName="watch"
         className="sm:row-start-1 sm:row-end-3 sm:col-start-4 h-full col-start-2  row-start-3 row-span-2"
       >
         <div className="relative h-full aspect-[1/2]">
           <Image
-            src={whatch}
+            src={watch}
             alt=""
             fill
             className="object-cover group-hover:scale-110 duration-500"

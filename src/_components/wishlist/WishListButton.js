@@ -3,10 +3,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { GoGitCompare } from "react-icons/go";
 import { motion } from "framer-motion";
 import { useWishlist } from "@/_contexts/WishlistContext";
-function WishListCompareButtons({ data }) {
+function WishListButton({ data }) {
   const pathName = usePathname();
   const { wishlistProductsIds, handleAddToWishlist } = useWishlist();
   const wishListButtonVariant = {
@@ -30,9 +29,6 @@ function WishListCompareButtons({ data }) {
           <button className="opacity-0 font-thin text-xl w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-custom-black hover:text-gray-100">
             <AiOutlineDelete />
           </button>
-          <button className="font-thin text-xl w-8 h-8 flex items-center justify-center hover:text-gray-700">
-            <GoGitCompare />
-          </button>
         </div>
       ) : (
         <div className="grid gap-1">
@@ -48,11 +44,10 @@ function WishListCompareButtons({ data }) {
               <FaRegHeart />
             </button>
           )}
-          <GoGitCompare className="text-white" />
         </div>
       )}
     </motion.div>
   );
 }
 
-export default WishListCompareButtons;
+export default WishListButton;

@@ -13,6 +13,9 @@ export const metadata = {
 };
 
 export default async function Home() {
+  console.log(
+    "Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-elemen"
+  );
   return (
     <>
       <SessionHandler />
