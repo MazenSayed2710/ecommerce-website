@@ -3,10 +3,22 @@ import { capitalize, createPathName } from "../../_utils/helpers";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
-function ShoppingProductInfo({ data, OpenModalBtnref, setOpenEditComponent }) {
+import { usePopupModal } from "@/_contexts/PopupModalProvider";
+function ShoppingProductInfo({
+  data,
+  OpenModalBtnref,
+  setOpenEditComponent,
+  openEditComponent,
+}) {
+  const { setIsOpen } = usePopupModal();
   const { handleDeleteFromShoppingCart } = useShoppingCart();
   const handleDelete = async () => {
     await handleDeleteFromShoppingCart(data.id);
+  };
+  const handleOpenEditPopup = () => {
+    setIsOpen(true);
+    openEditComponent && document.body.classList.add("open");
+    setOpenEditComponent(true);
   };
   return (
     <div className="text-custom-white grid gap-2">
@@ -33,10 +45,7 @@ function ShoppingProductInfo({ data, OpenModalBtnref, setOpenEditComponent }) {
       )}
       <div className="flex text-2xl gap-2">
         {(data.size || data.color) && (
-          <button
-            onClick={() => setOpenEditComponent(true)}
-            ref={OpenModalBtnref}
-          >
+          <button onClick={handleOpenEditPopup} ref={OpenModalBtnref}>
             <FaEdit />
           </button>
         )}

@@ -12,7 +12,6 @@ function ShoppingCardProduct({ data }) {
   const [openEditComponent, setOpenEditComponent] = useState(false);
   const OpenModalBtnref = useRef(null);
   const { handleUpdateShoppingCart, isUpdating } = useShoppingCart();
-  // console.log(data);
   const handleQuantityChange = async (value) => {
     const updatedProduct = {
       ...data,
@@ -34,6 +33,7 @@ function ShoppingCardProduct({ data }) {
               data={data}
               OpenModalBtnref={OpenModalBtnref}
               setOpenEditComponent={setOpenEditComponent}
+              openEditComponent={openEditComponent}
             />
           </div>
         </div>

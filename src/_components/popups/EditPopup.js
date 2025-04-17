@@ -2,27 +2,26 @@
 import Image from "next/image";
 import { capitalize, formatNumberWithCommas } from "../../_utils/helpers";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { CiHeart } from "react-icons/ci";
 import { GoGitCompare } from "react-icons/go";
-import { IoMdClose } from "react-icons/io";
-import { closePopup } from "@/lib/features/popupModalSlice";
 import { useClickOutside } from "../../_hooks/useClickOutside";
 import toast from "react-hot-toast";
 import SizeOptions from "../common/SizeOptions";
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 import ButtonControlledQuantity from "../common/QuantityButtonControlled";
 import CloseIcon from "../common/CloseIcon";
+import { usePopupModal } from "@/_contexts/PopupModalProvider";
 function EditPopup({ data, setOpenEditComponent, OpenModalBtnref }) {
   const [quantityValue, setQuantityValue] = useState(data.quantity);
   const [currentColor, setCurrentColor] = useState(data.color);
   const [currentImage, setCurrentImage] = useState(data.img);
   const [currentSize, setCurrentSize] = useState(data.size);
-  const dispatch = useDispatch();
+
   const { handleUpdateShoppingCart } = useShoppingCart();
+  const { setIsOpen } = usePopupModal();
   const handleClosePopup = () => {
-    dispatch(closePopup());
     setOpenEditComponent(false);
+    setIsOpen(false);
   };
   const updatedProduct = {
     ...data,

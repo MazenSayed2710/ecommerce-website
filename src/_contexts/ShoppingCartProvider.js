@@ -22,18 +22,22 @@ function ShoppingCartProvider({ children }) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [shoppingCartProducts, setShoppingCartProducts] = useState([]);
 
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   useEffect(() => {
     async function storeData() {
+      if (hasLoaded) return;
       setIsLoading(true);
       const data = session?.user
         ? await getUserShoppingCardAction(session.user.email)
         : await getAllShoppingItems();
       setShoppingCartProducts(data);
       setIsLoading(false);
+      setHasLoaded(true);
     }
 
     status !== "loading" && storeData();
-  }, [session?.user, status]);
+  }, [session?.user, status, hasLoaded]);
 
   const handleAddToShoppingCart = async (newproduct, quantity) => {
     const allData = session?.user

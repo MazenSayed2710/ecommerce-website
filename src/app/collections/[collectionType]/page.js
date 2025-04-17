@@ -14,43 +14,7 @@ export async function generateMetadata({ params }) {
 async function page({ params, searchParams }) {
   const collectionType = (await params).collectionType;
   const collectionName = capitalize(collectionType);
-  const sortOptions = [
-    {
-      text: "Featured",
-      value: "popularity",
-    },
 
-    {
-      text: "Best Selling",
-      value: "numOfSales",
-    },
-    {
-      text: "Alphabetically, A-Z",
-      value: "name-ascending",
-    },
-
-    {
-      text: "Alphabetically, Z-A",
-      value: "name-descending",
-    },
-    {
-      text: "Price, low to high",
-      value: "price-ascending",
-    },
-    {
-      text: "Price, high to low",
-      value: "price-descending",
-    },
-    {
-      text: "Date, new to old",
-      value: "created_at-descending",
-    },
-
-    {
-      text: "Date, old to new",
-      value: "created_at-ascending",
-    },
-  ];
   const searchParamsValues = await searchParams;
   const sortAndfilter = {
     outStock: "false",
@@ -60,20 +24,17 @@ async function page({ params, searchParams }) {
     price: "",
     ...searchParamsValues,
   };
-  const products = await getSpecificProducts(collectionType, sortAndfilter);
-  const productForFilterData = await getSpecificProducts(collectionType);
+  const products = await getSpecificProducts([collectionType], sortAndfilter);
+  const productForFilterData = await getSpecificProducts([collectionType]);
   const collectionImg = await getCollectionImg(collectionName);
-  console.log(collectionName);
+  console.log(productForFilterData);
 
   if (!products) return;
 
   return (
     <div className="py-10">
       <CollectionHeader collectionName={collectionName} img={collectionImg} />
-      <FilterSection
-        sortOptions={sortOptions}
-        products={productForFilterData}
-      />
+      <FilterSection products={productForFilterData} />
       <Products data={products} />
     </div>
   );

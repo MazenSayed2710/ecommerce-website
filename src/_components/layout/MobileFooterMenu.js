@@ -3,7 +3,7 @@ import Link from "next/link";
 import { VscAccount } from "react-icons/vsc";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import WishListIcon from "./WishListIcon";
-import { useWishlist } from "@/_contexts/WishlistContext";
+import { useWishlist } from "@/_contexts/WishlistProvider";
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 function MobileFooterMenu({ collections }) {
   const { wishlistProductsIds, isLoading: wishlistLoading } = useWishlist();

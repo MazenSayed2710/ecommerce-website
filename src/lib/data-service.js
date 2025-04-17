@@ -43,7 +43,7 @@ export async function getSpecificProducts(categore, sortAndfilter) {
   let query = supabase
     .from("products")
     .select("*")
-    .eq("mainCategorie", categore);
+    .contains("categories", categore);
 
   const sort = sortAndfilter?.sort?.split("-")[0];
   const isAscending = sortAndfilter?.sort?.split("-")[1] === "ascending";
@@ -102,7 +102,7 @@ export async function getCollectionImg(categore) {
     .eq("text", categore)
     .single();
 
-  if (error) throw Error(error.message);
+  if (error) return;
   return collectionImg.headerImg;
 }
 export async function getProductById(id) {

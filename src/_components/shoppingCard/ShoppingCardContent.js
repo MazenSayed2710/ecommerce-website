@@ -12,13 +12,13 @@ function ShoppingCardContent() {
     0
   );
   const [isChecked, setIsChecked] = useState(false);
-
+  console.log(shoppingCartProducts);
   const handleSubmit = async () => {
     try {
       const req = await fetch("/api/checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ shoppingCartProducts }),
+        body: JSON.stringify({ products: shoppingCartProducts }),
       });
       if (req.ok) {
         const { url } = await req.json();

@@ -4,7 +4,7 @@ import Link from "next/link";
 import SearchComponent from "./SearchComponent";
 import ShoppingCartIcon from "./ShoppingCartIcon";
 import WishListIcon from "./WishListIcon";
-import { useWishlist } from "@/_contexts/WishlistContext";
+import { useWishlist } from "@/_contexts/WishlistProvider";
 
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 function Header({ collections, session }) {
@@ -20,10 +20,14 @@ function Header({ collections, session }) {
         <li className=" hover:text-blue-400">
           <Link href="/collections">Collections</Link>
         </li>
-        <li className=" hover:text-blue-400">Sales</li>
-        <li className=" hover:text-blue-400">Trinding</li>
         <li className=" hover:text-blue-400">
-          <Link href="shoppingCard">Shopping cart</Link>
+          <Link href="/collections/sales">Sales</Link>
+        </li>
+        <li className=" hover:text-blue-400">
+          <Link href="/wishlist">Wishlist cart</Link>
+        </li>
+        <li className=" hover:text-blue-400">
+          <Link href="/shoppingCard">Shopping cart</Link>
         </li>
       </ul>
       <ul className=" flex gap-3 items-center">

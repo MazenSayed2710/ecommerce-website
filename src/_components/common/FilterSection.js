@@ -5,7 +5,45 @@ import Sidebar from "../layout/Sidebar";
 import { useRef, useState } from "react";
 import FilterSidebar from "./FilterSidebar";
 
-function FilterSection({ sortOptions, products }) {
+const sortOptions = [
+  {
+    text: "Featured",
+    value: "popularity",
+  },
+
+  {
+    text: "Best Selling",
+    value: "numOfSales",
+  },
+  {
+    text: "Alphabetically, A-Z",
+    value: "name-ascending",
+  },
+
+  {
+    text: "Alphabetically, Z-A",
+    value: "name-descending",
+  },
+  {
+    text: "Price, low to high",
+    value: "price-ascending",
+  },
+  {
+    text: "Price, high to low",
+    value: "price-descending",
+  },
+  {
+    text: "Date, new to old",
+    value: "created_at-descending",
+  },
+
+  {
+    text: "Date, old to new",
+    value: "created_at-ascending",
+  },
+];
+
+function FilterSection({ products }) {
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();

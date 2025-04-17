@@ -17,23 +17,26 @@ const WishlistContext = createContext(null);
 export function WishlistProvider({ children }) {
   const [wishlistProducts, setWishlistProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const { data: session, status } = useSession();
 
   useEffect(
     function () {
+      if (hasLoaded) return;
       const loadAllWishlistItems = async () => {
         setIsLoading(true);
         const products = session?.user
           ? await getUserWishlistCardAction(session?.user.email)
           : await getAllWishlistItems();
         setWishlistProducts(products);
+        setHasLoaded(true);
         setIsLoading(false);
       };
       if (status !== "loading") {
         loadAllWishlistItems();
       }
     },
-    [session, status]
+    [session, status, hasLoaded]
   );
 
   const handleAddToWishlist = async (data) => {

@@ -6,6 +6,8 @@ export default {
     "./src/_components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: ["overflow-hidden"],
+
   theme: {
     extend: {
       gridTemplateColumns: {

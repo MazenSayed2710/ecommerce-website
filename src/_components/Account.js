@@ -4,7 +4,7 @@ import { FaRegHeart, FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
-import { useWishlist } from "@/_contexts/WishlistContext";
+import { useWishlist } from "@/_contexts/WishlistProvider";
 
 function Account({ session }) {
   const { shoppingCartProducts, isLoading: shoppingCartLoading } =

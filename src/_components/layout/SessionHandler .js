@@ -17,7 +17,7 @@ import {
   getAllWishlistItems,
 } from "@/_utils/IndexedDb";
 import { mergeProductQuantities, mergeUniqeProducts } from "@/_utils/helpers";
-import { useWishlist } from "@/_contexts/WishlistContext";
+import { useWishlist } from "@/_contexts/WishlistProvider";
 
 export default function SessionHandler() {
   const { data: session, status } = useSession();

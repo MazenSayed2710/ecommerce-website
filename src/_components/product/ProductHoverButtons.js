@@ -3,18 +3,20 @@ import { FaCartShopping } from "react-icons/fa6";
 import QuickAddButtons from "./QuickAddButtons";
 import { MdOutlineLink } from "react-icons/md";
 import Link from "next/link";
+import { usePopupModal } from "@/_contexts/PopupModalProvider";
 
 function ProductHoverButtons({
   data,
   setOpenQuickShopModal,
   setOpenViewModal,
 }) {
+  const { setIsOpen } = usePopupModal();
   const handleOpenViewModal = () => {
-    document.body.classList.add("open");
+    setIsOpen(true);
     setOpenViewModal(true);
   };
   const handleOpenQuickShopModal = () => {
-    document.body.classList.add("open");
+    setIsOpen(true);
     setOpenQuickShopModal(true);
   };
   return (

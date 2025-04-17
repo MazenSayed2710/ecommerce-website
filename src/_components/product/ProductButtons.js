@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
-import { useWishlist } from "@/_contexts/WishlistContext";
+import { useWishlist } from "@/_contexts/WishlistProvider";
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 import ButtonControlledQuantity from "../common/QuantityButtonControlled";
 import AddToCartButton from "../common/AddToCartButton";

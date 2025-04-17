@@ -1,19 +1,21 @@
 "use client";
 import { useRef, useState } from "react";
-import { GoSearch } from "react-icons/go";
-
+import { FiSearch } from "react-icons/fi";
+import { usePopupModal } from "@/_contexts/PopupModalProvider";
 import Sidebar from "./Sidebar";
 import SearchSidebar from "./SearchSidebar";
 
 function SearchComponent({ collections, forMobile = false }) {
   const [openSearchMenu, setOpenSearchMenu] = useState(false);
   const searchButtonRef = useRef(null);
+  const { setIsOpen } = usePopupModal();
   const handleClose = () => {
-    document.body.classList.remove("open");
+    setIsOpen(false);
     setOpenSearchMenu(false);
   };
   const handleOpen = () => {
-    document.body.classList.add("open");
+    setIsOpen(true);
+    console.log("open");
     setOpenSearchMenu(true);
   };
 
@@ -25,7 +27,7 @@ function SearchComponent({ collections, forMobile = false }) {
           ref={searchButtonRef}
           onClick={handleOpen}
         >
-          <GoSearch />
+          <FiSearch />
           <p className="text-sm font-semibold">Search</p>
         </div>
       ) : (
@@ -35,7 +37,7 @@ function SearchComponent({ collections, forMobile = false }) {
           onClick={handleOpen}
         >
           <button className="duration-[0.5s] hover:scale-[1.2]">
-            <GoSearch />
+            <FiSearch />
           </button>
         </li>
       )}

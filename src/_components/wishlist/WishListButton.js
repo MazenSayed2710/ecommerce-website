@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useWishlist } from "@/_contexts/WishlistContext";
+import { useWishlist } from "@/_contexts/WishlistProvider";
 function WishListButton({ data }) {
   const pathName = usePathname();
   const { wishlistProductsIds, handleAddToWishlist } = useWishlist();

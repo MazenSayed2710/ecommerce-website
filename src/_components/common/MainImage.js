@@ -1,15 +1,13 @@
-import Image from "next/image";
-
+import InnerImageZoom from "react-inner-image-zoom";
+import "react-inner-image-zoom/lib/styles.min.css";
 function MainImage({ activeImg }) {
   return (
-    <div className="relative aspect-[1/1.3] h-full">
-      <Image
+    <div className="relative aspect-[1/1.3] h-full select-none">
+      <InnerImageZoom
         src={activeImg}
-        fill
-        alt="Tovi Girl with Cat Printed"
-        className="object-cover duration-500"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 45vw"
-        priority
+        zoomSrc={activeImg}
+        zoomType="hover"
+        zoomPreload={true}
       />
     </div>
   );

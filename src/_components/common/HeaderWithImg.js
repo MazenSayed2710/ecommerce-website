@@ -7,14 +7,16 @@ function HeaderWithImg({ img, children }) {
         className="absolute left-0 top-0 w-full h-full z-10"
         style={{ backgroundColor: "rgb(0 0 0 / 21%)" }}
       ></div>
-      <Image
-        src={img}
-        alt="background Heading"
-        fill
-        className="absolute object-cover left-0 top-0"
-        sizes="100vw"
-        priority
-      />
+      {img && (
+        <Image
+          src={img}
+          alt="background Heading"
+          fill
+          className="absolute object-cover left-0 top-0"
+          sizes="100vw"
+          priority
+        />
+      )}
       <div className=" text-xl text-white z-20">{children}</div>
     </div>
   );

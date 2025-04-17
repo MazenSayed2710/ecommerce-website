@@ -1,7 +1,7 @@
 import PopupModal from "./PopupModal";
 import QuickShopPopup from "./QuickShopPopup";
 import ViewPopup from "./ViewPopup";
-
+import { usePopupModal } from "@/_contexts/PopupModalProvider";
 function DisplayPopups({
   data,
   openViewModal,
@@ -9,12 +9,13 @@ function DisplayPopups({
   setOpenViewModal,
   setOpenQuickShopModal,
 }) {
+  const { setIsOpen } = usePopupModal();
   const handleCloseViewModal = () => {
-    document.body.classList.remove("open");
+    setIsOpen(false);
     setOpenViewModal(false);
   };
   const handleCloseQuickShopModal = () => {
-    document.body.classList.remove("open");
+    setIsOpen(false);
     setOpenQuickShopModal(false);
   };
   return (

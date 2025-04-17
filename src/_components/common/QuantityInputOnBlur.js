@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 function QuantityInputOnBlur({ value, inputWidth, handleChange }) {
   const [inputValue, setInputValue] = useState(value);
-  console.log(inputValue, value);
   useEffect(() => {
     setInputValue(value);
   }, [value]);

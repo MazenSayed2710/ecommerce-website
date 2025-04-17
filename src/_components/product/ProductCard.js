@@ -13,7 +13,7 @@ import DisplayPopups from "../popups/DisplayPopups";
 import { usePathname } from "next/navigation";
 import { AiOutlineDelete } from "react-icons/ai";
 import { ImSpinner2 } from "react-icons/im";
-import { useWishlist } from "@/_contexts/WishlistContext";
+import { useWishlist } from "@/_contexts/WishlistProvider";
 function ProductCard({ data }) {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [openQuickShopModal, setOpenQuickShopModal] = useState(false);
