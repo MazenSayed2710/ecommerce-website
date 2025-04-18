@@ -1,5 +1,6 @@
 "use client";
 import { signUpwithSupabase } from "@/lib/actions";
+import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -106,12 +107,12 @@ function SignUpform() {
               </button>
               <p className="text-sm font-light text-gray-500">
                 Already have an account?{" "}
-                <a
-                  href="#"
+                <Link
+                  href="/signIn"
                   className="font-medium text-primary-600 hover:underline"
                 >
                   Login here
-                </a>
+                </Link>
               </p>
             </form>
           </div>

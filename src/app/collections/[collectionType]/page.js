@@ -12,24 +12,29 @@ export async function generateMetadata({ params }) {
 }
 
 async function page({ params, searchParams }) {
-  const collectionType = (await params).collectionType;
+  const { collectionType } = await params;
   const collectionName = capitalize(collectionType);
 
-  const searchParamsValues = await searchParams;
-  const sortAndfilter = {
+  const defaultFilters = {
     outStock: "false",
     inStock: "false",
     sort: "all",
     size: "",
     price: "",
-    ...searchParamsValues,
   };
-  const products = await getSpecificProducts([collectionType], sortAndfilter);
-  const productForFilterData = await getSpecificProducts([collectionType]);
-  const collectionImg = await getCollectionImg(collectionName);
-  console.log(productForFilterData);
 
-  if (!products) return;
+  const activeFilters = {
+    ...defaultFilters,
+    ...(await searchParams),
+  };
+
+  const [products, productForFilterData, collectionImg] = await Promise.all([
+    getSpecificProducts([collectionType], activeFilters),
+    getSpecificProducts([collectionType]),
+    getCollectionImg(collectionName),
+  ]);
+
+  if (!products) return null;
 
   return (
     <div className="py-10">

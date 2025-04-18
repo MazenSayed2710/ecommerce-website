@@ -33,10 +33,7 @@ function Header({ collections, session }) {
       <ul className=" flex gap-3 items-center">
         <SearchComponent collections={collections} />
         <li className="text-xl hover:text-blue-300">
-          <Link
-            href={session?.user ? "/account" : "/signIn"}
-            className="duration-[0.5s] hover:scale-[1.2]"
-          >
+          <Link href="/account" className="duration-[0.5s] hover:scale-[1.2]">
             <VscAccount />
           </Link>
         </li>
