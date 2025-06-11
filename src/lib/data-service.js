@@ -116,6 +116,19 @@ export async function getProductById(id) {
   return product;
 }
 
+export async function getRelatedProducts(arr, id) {
+  console.log("arr", arr);
+  let { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .neq("id", id)
+    .overlaps("categories", arr)
+    .limit(4);
+  if (error) console.error(error.message);
+
+  return products;
+}
+
 export async function signUp(obj) {
   let { error } = await supabase.auth.signUp(obj);
 

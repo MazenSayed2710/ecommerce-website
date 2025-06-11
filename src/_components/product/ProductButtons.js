@@ -6,6 +6,8 @@ import { useWishlist } from "@/_contexts/WishlistProvider";
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
 import ButtonControlledQuantity from "../common/QuantityButtonControlled";
 import AddToCartButton from "../common/AddToCartButton";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 function ProductButtons({
   data,
   currentColor,
@@ -16,7 +18,7 @@ function ProductButtons({
   const [quantity, setQuantity] = useState(1);
   const { wishlistProductsIds, handleAddToWishlist } = useWishlist();
   const { handleAddToShoppingCart } = useShoppingCart();
-
+  const { data: session } = useSession();
   const newproduct = {
     ...data,
     quantity,
@@ -31,6 +33,10 @@ function ProductButtons({
     handleClose?.();
   };
   const handleSubmit = async () => {
+    if (!session) {
+      toast.error("Please sign in to continue");
+      return;
+    }
     try {
       const req = await fetch("/api/checkout-session", {
         method: "POST",
