@@ -69,7 +69,7 @@ export async function getSpecificProducts(categore, sortAndfilter) {
       "sizes",
       Array.isArray(sortAndfilter?.size)
         ? sortAndfilter?.size
-        : [sortAndfilter?.size]
+        : [sortAndfilter?.size],
     );
   }
 
@@ -87,7 +87,7 @@ export async function getSpecificProducts(categore, sortAndfilter) {
       "arrayOfColors",
       Array.isArray(sortAndfilter?.color)
         ? sortAndfilter?.color
-        : [sortAndfilter?.color]
+        : [sortAndfilter?.color],
     );
   }
 
@@ -117,7 +117,6 @@ export async function getProductById(id) {
 }
 
 export async function getRelatedProducts(arr, id) {
-  console.log("arr", arr);
   let { data: products, error } = await supabase
     .from("products")
     .select("*")
@@ -182,7 +181,7 @@ export async function checkEmailExisting(email) {
 export async function setUser(
   email,
   shoppingCartProducts,
-  wishlistProductsCart
+  wishlistProductsCart,
 ) {
   const { error } = await supabase
     .from("userCarts")
@@ -196,7 +195,7 @@ export async function setUser(
       ],
       {
         onConflict: ["email"],
-      }
+      },
     )
     .select();
   if (error) console.error(error.message);

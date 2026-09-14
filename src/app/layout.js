@@ -1,6 +1,7 @@
 import Header from "@/_components/layout/Header";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { getCollections } from "../lib/data-service";
 import { Suspense } from "react";
@@ -21,12 +22,14 @@ export default async function RootLayout({ children }) {
           <ShoppingCartProvider>
             <PopupModalProvider>
               <body className="min-h-screen flex flex-col">
-                <Toaster position="top-center" reverseOrder={false} />
-                <Header collections={collections} session={session} />
-                <main className="flex-grow">
-                  <Suspense fallback={<Spinner />}> {children}</Suspense>
-                </main>
-                <Footer collections={collections} />
+                <SkeletonTheme baseColor="#9e9e9e87" highlightColor="#bdbdbd87">
+                  <Toaster position="top-center" reverseOrder={false} />
+                  <Header collections={collections} session={session} />
+                  <main className="flex-grow">
+                    <Suspense fallback={<Spinner />}> {children}</Suspense>
+                  </main>
+                  <Footer collections={collections} />
+                </SkeletonTheme>
               </body>
             </PopupModalProvider>
           </ShoppingCartProvider>

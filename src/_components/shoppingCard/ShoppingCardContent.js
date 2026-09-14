@@ -9,10 +9,9 @@ function ShoppingCardContent() {
   const { shoppingCartProducts, isLoading } = useShoppingCart();
   const suptotal = shoppingCartProducts.reduce(
     (acc, cur) => acc + cur.total,
-    0
+    0,
   );
   const [isChecked, setIsChecked] = useState(false);
-  console.log(shoppingCartProducts);
   const handleSubmit = async () => {
     try {
       const req = await fetch("/api/checkout-session", {

@@ -7,7 +7,7 @@ import WishListIcon from "./WishListIcon";
 import { useWishlist } from "@/_contexts/WishlistProvider";
 
 import { useShoppingCart } from "@/_contexts/ShoppingCartProvider";
-function Header({ collections, session }) {
+function Header({ collections }) {
   const { wishlistProductsIds, isLoading: wishlistLoading } = useWishlist();
   const { shoppingCartProducts, isLoading: shoppingCartLoading } =
     useShoppingCart();
@@ -21,7 +21,7 @@ function Header({ collections, session }) {
           <Link href="/collections">Collections</Link>
         </li>
         <li className=" hover:text-blue-400">
-          <Link href="/collections/sales">Sales</Link>
+          <Link href="/collections/sale">Sales</Link>
         </li>
         <li className=" hover:text-blue-400">
           <Link href="/wishlist">Wishlist cart</Link>

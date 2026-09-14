@@ -1,6 +1,7 @@
 import Collections from "@/_components/collections/Collections";
 import HeaderWithImg from "@/_components/common/HeaderWithImg";
-
+import CollectionsSkeleton from "@/_components/collections/CollectionsSkeleton";
+import { Suspense } from "react";
 export const metadata = {
   title: "Collections",
   description:
@@ -11,7 +12,10 @@ export function page() {
   return (
     <div>
       <HeaderWithImg img="/bg-heading.jpg">Collections</HeaderWithImg>
-      <Collections />
+      <Suspense fallback={<CollectionsSkeleton />}>
+        <Collections />
+      </Suspense>
+      ;
     </div>
   );
 }
