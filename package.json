@@ -13,7 +13,7 @@
     "@supabase/supabase-js": "^2.48.1",
     "framer-motion": "^12.4.5",
     "idb": "^8.0.2",
-    "next": "^15.1.4",
+    "next": "15.1.11",
     "next-auth": "^5.0.0-beta.25",
     "rc-slider": "^11.1.8",
     "react": "^19.0.0",
